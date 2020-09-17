@@ -1,5 +1,5 @@
-# volto-addon-template
-[![Releases](https://img.shields.io/github/v/release/eea/volto-addon-template)](https://github.com/eea/volto-addon-template/releases)
+# volto-columns-block
+[![Releases](https://img.shields.io/github/v/release/eea/volto-columns-block)](https://github.com/eea/volto-columns-block/releases)
 
 [Volto](https://github.com/plone/volto) add-on
 
@@ -28,11 +28,11 @@ Note: this is a work in progress, UX will be improved.
 1. Update `package.json`:
     ``` JSON
     "addons": [
-        "@eeacms/volto-addon-template"
+        "@eeacms/volto-columns-block"
     ],
 
     "dependencies": {
-        "@eeacms/volto-addon-template": "github:eea/volto-addon-template#0.1.0"
+        "@eeacms/volto-columns-block": "github:eea/volto-columns-block#0.1.0"
     }
     ```
 
