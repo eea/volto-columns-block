@@ -1,0 +1,8 @@
+#!/bin/bash
+TEMPLATE="volto-addon-template"
+ADDON="$(basename $PWD)"
+
+echo "Replacing $TEMPLATE with $ADDON"
+grep -rlZ $TEMPLATE . --exclude="bootstrap" --exclude-dir=".git" | xargs -0 sed -i "s/$TEMPLATE/$ADDON/g"
+echo "Done!"
+echo "See git diff for details"

@@ -1,0 +1,16 @@
+{
+  "name": "@eeacms/volto-addon-template",
+  "version": "0.1.0",
+  "description": "volto-addon-template: Volto add-on",
+  "main": "src/index.js",
+  "repository": "https://github.com/eea/volto-addon-template",
+  "author": "European Environment Agency: IDM2 A-Team",
+  "license": "MIT",
+  "devDependencies": {
+    "release-it": "*"
+  },
+  "scripts": {
+    "release": "release-it",
+    "bootstrap": "./bootstrap"
+  }
+}
