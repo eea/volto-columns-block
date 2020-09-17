@@ -5,9 +5,16 @@
 
 ## Features
 
+This package gives you a block with columns. Each column is its own separate
+blocks container.
+
+Note: for the moment this relies on the https://github.com/plone/volto/pull/1826 PR.
+
+Note: this is a work in progress, UX will be improved.
+
 ###
 
-Demo GIF
+![first alpha screenshot](screenshot-a0.png)
 
 ## Getting started
 
