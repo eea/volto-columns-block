@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-// import { renderBlocks } from '@plone/volto/helpers';
-import { getColumns, empty } from './utils';
 import { RenderBlocks } from '@plone/volto/components';
+
+import { getColumns, empty } from './utils';
 
 const ColumnsBlockView = (props) => {
   const { coldata = empty(), block_title } = props.data;

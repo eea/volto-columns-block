@@ -32,7 +32,11 @@ class ColumnsBlockEdit extends React.Component {
     // }
     // volto-slate needs to be neutral, to work in the main Volto form, but
     // also these types of subforms, so it should continue to use batched
-    // onChangeField, as that works fine.
+    // onChangeField, as that works fine. So volto-columns-block needs that
+    // blockState trick to overcome this. If there would be a onChangeBlocks or
+    // onChangeFormData in Volto core, then BlocksForm could match that API
+    // and this wouldn't be needed (together with the unstable_batchedUpdates
+    // calls.
     this.blocksState = {};
   }
 
@@ -46,6 +50,8 @@ class ColumnsBlockEdit extends React.Component {
       selected,
     } = this.props;
 
+    // TODO: need to reinitialize with empty data, there's a bug when trying to
+    // add a new column and the column block has just been created
     const { coldata = empty() } = data;
     const columnList = getColumns(coldata);
 
