@@ -4,7 +4,6 @@ import { isEmpty } from 'lodash';
 import { BlocksForm, SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm
 import { emptyBlocksForm } from '@plone/volto/helpers';
 
-// import  from BlocksForm '../futurevolto/BlocksForm';
 import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
 
@@ -16,6 +15,24 @@ class ColumnsBlockEdit extends React.Component {
     this.state = {
       colSelections: {},
     };
+
+    // This special variable is needed because of the onChangeField(block...) is
+    // immediately followed by onChangeField(blocks_layout...), we want to save
+    // this incoming information as data for the block, but because it is only
+    // partial, we'll overwrite it in the second request. So we take advantage
+    // of what happens between batched updates, we know that there will be two
+    // calls, so even if we overwrite the state improperly on the first pass,
+    // it will be fixed on the second pass if we have access to the proper
+    // value from the first pass.
+    //
+    // We have volto-slate that does:
+    // ReactDOM.unstable_batchedUpdates(() => {
+    //    this.onChangeField(blocks, {})
+    //    this.onChangeField(blocks_layout, {})
+    // }
+    // volto-slate needs to be neutral, to work in the main Volto form, but
+    // also these types of subforms, so it should continue to use batched
+    // onChangeField, as that works fine.
     this.blocksState = {};
   }
 
@@ -28,13 +45,6 @@ class ColumnsBlockEdit extends React.Component {
       pathname,
       selected,
     } = this.props;
-
-    // React.useEffect(() => {
-    //   if (!data.coldata) {
-    //     // TODO: this is a hack that causes volto-slate to lose focus
-    //     onChangeBlock(block, { ...data, coldata: empty() });
-    //   }
-    // });
 
     const { coldata = empty() } = data;
     const columnList = getColumns(coldata);
