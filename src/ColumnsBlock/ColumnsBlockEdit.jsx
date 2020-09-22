@@ -6,6 +6,10 @@ import { emptyBlocksForm } from '@plone/volto/helpers';
 
 import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
+import DeviceSelect from './DeviceSelect';
+import ColumnControls from './ColumnControls';
+
+import moreIcon from '@plone/volto/icons/more.svg';
 
 import './styles.less';
 
@@ -58,6 +62,9 @@ class ColumnsBlockEdit extends React.Component {
     return (
       <>
         <div className="columns-block">
+          <DeviceSelect />
+          <ColumnControls />
+          <hr class="splitter" />
           {/* {<h3>{data.block_title}</h3>} */}
           <Grid columns={columnList.length}>
             {columnList.map(([colId, column], index) => {
