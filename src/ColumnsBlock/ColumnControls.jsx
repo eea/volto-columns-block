@@ -1,13 +1,19 @@
 import React from 'react';
+
 export default (props) => {
   // selector for column sizes
-  return <div>25 33 50 66 75</div>;
+  return (
+    <div>
+      <div>25 33 50 66 75</div>
+    </div>
+  );
+
 
   // 25% 25% 50% 75%-> grid de 4 coloane
   // 33% 66% -> grid de 3 coloane
-  //
-  //
-  // 4 coloane:
+
+  //  Pentru desktop:
+  //  4 coloane:
   //  25 25 25 25
   //
   //  3 coloane
@@ -23,5 +29,9 @@ export default (props) => {
   //  33 66
   //  66 33
   //
-  //  100% ---> pt mobile
+  // Pentru tableta:
+  // 2 coloane si 100%
+  //
+  // Pentru mobile:
+  // 100%
 };

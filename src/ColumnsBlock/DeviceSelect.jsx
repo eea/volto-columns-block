@@ -9,9 +9,9 @@ import tabletIcon from './icons/device-tablet.svg';
 export default (props) => {
   return (
     <div>
-      <Icon name={computerIcon} size="18px" />
-      <Icon name={tabletIcon} size="18px" />
-      <Icon name={mobileIcon} size="18px" />
+      <Icon name={computerIcon} size="24px" />
+      <Icon name={tabletIcon} size="24px" />
+      <Icon name={mobileIcon} size="24px" />
     </div>
   );
 };
