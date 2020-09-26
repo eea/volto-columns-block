@@ -23,12 +23,14 @@ const empty = () => {
 };
 
 const ColumnsWidget = (props) => {
-  const { value = {}, id, onChange } = props;
+  const { value = {}, id, onChange, maxSize = 4 } = props;
   const { columns = {} } = value;
   const columnsList = (value.columns_layout?.items || []).map((id) => [
     id,
     columns[id],
   ]);
+
+  const showAdd = value.columns_layout?.items?.length < maxSize;
   return (
     <FormFieldWrapper
       {...props}
@@ -66,47 +68,55 @@ const ColumnsWidget = (props) => {
                 </div>
                 <div className="column-area">
                   <div className="label">Column {index}</div>
-                  <button
-                    onClick={() => {
-                      const newFormData = {
-                        ...value,
-                        columns: omit({ ...value.columns }, [childId]),
-                        columns_layout: {
-                          ...value.columns_layout,
-                          items: without(
-                            [...value.columns_layout?.items],
-                            childId,
-                          ),
-                        },
-                      };
-                      onChange(id, newFormData);
-                    }}
-                  >
-                    <Icon name={trashSVG} size="18px" />
-                  </button>
+                  {value.columns_layout?.items?.length > 1 ? (
+                    <button
+                      onClick={() => {
+                        const newFormData = {
+                          ...value,
+                          columns: omit({ ...value.columns }, [childId]),
+                          columns_layout: {
+                            ...value.columns_layout,
+                            items: without(
+                              [...value.columns_layout?.items],
+                              childId,
+                            ),
+                          },
+                        };
+                        onChange(id, newFormData);
+                      }}
+                    >
+                      <Icon name={trashSVG} size="18px" />
+                    </button>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
             </div>
           )}
         />
-        <button
-          onClick={() => {
-            const [newId, newData] = empty();
-            onChange(id, {
-              ...value,
-              columns: {
-                ...value.columns,
-                [newId]: newData,
-              },
-              columns_layout: {
-                ...value.columns_layout,
-                items: [...value.columns_layout?.items, newId],
-              },
-            });
-          }}
-        >
-          <Icon name={plusSVG} size="18px" />
-        </button>
+        {showAdd ? (
+          <button
+            onClick={() => {
+              const [newId, newData] = empty();
+              onChange(id, {
+                ...value,
+                columns: {
+                  ...value.columns,
+                  [newId]: newData,
+                },
+                columns_layout: {
+                  ...value.columns_layout,
+                  items: [...value.columns_layout?.items, newId],
+                },
+              });
+            }}
+          >
+            <Icon name={plusSVG} size="18px" />
+          </button>
+        ) : (
+          ''
+        )}
       </div>
     </FormFieldWrapper>
   );

@@ -2,9 +2,11 @@ import codeSVG from '@plone/volto/icons/code.svg';
 
 import { ColumnsBlockView, ColumnsBlockEdit } from './ColumnsBlock';
 import ColumnsWidget from './ColumnsWidget';
+import { gridSizes, variants } from './grid';
+import { COLUMNSBLOCK } from './constants';
 
 export default function install(config) {
-  config.blocks.blocksConfig.columnsBlock = {
+  config.blocks.blocksConfig[COLUMNSBLOCK] = {
     id: 'columnsBlock',
     title: 'Columns',
     icon: codeSVG,
@@ -19,6 +21,8 @@ export default function install(config) {
       addPermission: [],
       view: [],
     },
+    gridSizes,
+    variants,
   };
 
   config.widgets.type.columns = ColumnsWidget;

@@ -1,15 +1,19 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
-import { BlocksForm, SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm
+import { Icon, SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm
 import { emptyBlocksForm } from '@plone/volto/helpers';
+import { BlocksForm } from '@eeacms/volto-blocks-form/components';
 
 import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
-import DeviceSelect from './DeviceSelect';
-import ColumnControls from './ColumnControls';
+import ColumnVariations from './ColumnVariations';
+import { blocks } from '~/config';
+import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+import EditBlockWrapper from './EditBlockWrapper';
 
-import moreIcon from '@plone/volto/icons/more.svg';
+import dragSVG from '@plone/volto/icons/drag.svg';
+// import dotsSVG from '@plone/volto/icons/drag.svg';
 
 import './styles.less';
 
@@ -44,6 +48,15 @@ class ColumnsBlockEdit extends React.Component {
     this.blocksState = {};
   }
 
+  createFrom = (initialData) => {
+    const { gridCols, gridSize } = initialData;
+    return {
+      coldata: empty(gridCols.length),
+      gridSize,
+      gridCols,
+    };
+  };
+
   render() {
     const {
       block,
@@ -53,26 +66,35 @@ class ColumnsBlockEdit extends React.Component {
       pathname,
       selected,
     } = this.props;
+    const { gridSizes, variants } = blocks.blocksConfig[COLUMNSBLOCK];
 
-    // TODO: need to reinitialize with empty data, there's a bug when trying to
-    // add a new column and the column block has just been created
-    const { coldata = empty() } = data;
+    const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
+    console.log('data', gridCols);
 
     return (
-      <>
+      <ColumnVariations
+        variants={variants}
+        data={data}
+        onChange={(initialData) => {
+          onChangeBlock(block, { ...data, ...this.createFrom(initialData) });
+        }}
+      >
         <div className="columns-block">
-          <DeviceSelect />
-          <ColumnControls />
-          <hr class="splitter" />
-          {/* {<h3>{data.block_title}</h3>} */}
-          <Grid columns={columnList.length}>
+          <Grid columns={gridSize} stackable>
             {columnList.map(([colId, column], index) => {
               return (
-                <Grid.Column className="block-column" key={colId}>
-                  {/* <h4>{`Column ${index}`}</h4> */}
+                <Grid.Column
+                  className="block-column"
+                  key={colId}
+                  {...(gridSizes[gridCols[index]] || gridCols[index])}
+                >
+                  <div className="column-header">
+                    <Icon name={dragSVG} size="18px" />
+                  </div>
                   <BlocksForm
                     properties={isEmpty(column) ? emptyBlocksForm() : column}
+                    blockWrapper={EditBlockWrapper}
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
                     }
@@ -109,7 +131,6 @@ class ColumnsBlockEdit extends React.Component {
                               [colId]: {
                                 ...coldata.columns?.[colId],
                                 ...this.blocksState,
-                                [id]: value,
                               },
                             },
                           },
@@ -138,9 +159,17 @@ class ColumnsBlockEdit extends React.Component {
             formData={data}
           />
         </SidebarPortal>
-      </>
+      </ColumnVariations>
     );
   }
 }
 
 export default ColumnsBlockEdit;
+//
+// import DeviceSelect from './DeviceSelect';
+// import ColumnControls from './ColumnControls';
+//
+// import moreIcon from '@plone/volto/icons/more.svg';
+// {/* <DeviceSelect /> */}
+// {/* {<h3>{data.block_title}</h3>} */}
+// { /* <h4>{`Column ${index}`}</h4> */ }

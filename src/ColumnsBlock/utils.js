@@ -8,12 +8,19 @@ export const getColumns = (coldata) => {
   ]);
 };
 
-export const empty = () => {
-  const id = uuid();
+export const empty = (count) => {
+  const columns = {};
+  const items = [];
+  for (let x = 0; x < count; x++) {
+    const id = uuid();
+    columns[id] = emptyBlocksForm();
+    items.push(id);
+  }
+
   return {
-    columns: { [id]: emptyBlocksForm() },
+    columns,
     columns_layout: {
-      items: [id],
+      items,
     },
   };
 };
