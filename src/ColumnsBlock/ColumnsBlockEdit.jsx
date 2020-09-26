@@ -70,7 +70,7 @@ class ColumnsBlockEdit extends React.Component {
 
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
-    console.log('data', gridCols);
+    // console.log('data', gridCols);
 
     return (
       <ColumnVariations
@@ -89,9 +89,7 @@ class ColumnsBlockEdit extends React.Component {
                   key={colId}
                   {...(gridSizes[gridCols[index]] || gridCols[index])}
                 >
-                  <div className="column-header">
-                    <Icon name={dragSVG} size="18px" />
-                  </div>
+                  <div className="column-header"></div>
                   <BlocksForm
                     properties={isEmpty(column) ? emptyBlocksForm() : column}
                     blockWrapper={EditBlockWrapper}
