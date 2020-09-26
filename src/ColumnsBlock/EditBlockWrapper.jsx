@@ -39,36 +39,41 @@ const EditBlockWrapper = (props) => {
     ? block.required
     : includes(blocks.requiredBlocks, type);
 
+  // visibility: visible ? 'visible' : 'hidden',
   return (
     <div
       ref={draginfo.innerRef}
       {...draginfo.draggableProps}
       className={`block-editor-${block['@type']}`}
     >
-      <div style={{ position: 'relative' }}>
-        <div
-          style={{
-            visibility: visible ? 'visible' : 'hidden',
-            display: 'inline-block',
-          }}
-          {...draginfo.dragHandleProps}
-          className="drag handle wrapper"
-        >
-          <Icon name={dragSVG} size="18px" />
-        </div>
-
-        {selected && !required && (
-          <Button
-            icon
-            basic
-            onClick={() => onDeleteBlock(blockId)}
-            className="delete-button"
-            aria-label={intl.formatMessage(messages.delete)}
+      {selected && (
+        <div className="block-toolbar">
+          <div
+            style={{
+              display: 'inline-block',
+            }}
+            {...draginfo.dragHandleProps}
+            className="drag handle wrapper-column-block"
           >
-            <Icon name={trashSVG} size="18px" />
-          </Button>
-        )}
-      </div>
+            <Button icon basic>
+              <Icon name={dragSVG} size="18px" />
+            </Button>
+          </div>
+
+          {!required && (
+            <Button
+              icon
+              basic
+              onClick={() => onDeleteBlock(blockId)}
+              className="delete-button-column-block"
+              aria-label={intl.formatMessage(messages.delete)}
+            >
+              <Icon name={trashSVG} size="18px" />
+            </Button>
+          )}
+        </div>
+      )}
+
       <div className={`ui drag block inner ${type}`}>{children}</div>
     </div>
   );
