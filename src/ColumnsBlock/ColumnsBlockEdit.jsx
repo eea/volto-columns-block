@@ -1,18 +1,20 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
-import { Icon, SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm
+import { SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm, Icon,
 import { emptyBlocksForm } from '@plone/volto/helpers';
+import { setSidebarTab } from '@plone/volto/actions';
+import { connect } from 'react-redux';
 import { BlocksForm } from '@eeacms/volto-blocks-form/components';
+import { blocks } from '~/config';
 
+import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
 import ColumnVariations from './ColumnVariations';
-import { blocks } from '~/config';
-import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import EditBlockWrapper from './EditBlockWrapper';
 
-import dragSVG from '@plone/volto/icons/drag.svg';
+// import dragSVG from '@plone/volto/icons/drag.svg';
 // import dotsSVG from '@plone/volto/icons/drag.svg';
 
 import './styles.less';
@@ -21,7 +23,9 @@ class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colSelections: {},
+      colSelections: {}, // selected block for each column
+      showSidebar: false,
+      activeColumn: null,
     };
 
     // This special variable is needed because of the onChangeField(block...) is
@@ -44,7 +48,7 @@ class ColumnsBlockEdit extends React.Component {
     // blockState trick to overcome this. If there would be a onChangeBlocks or
     // onChangeFormData in Volto core, then BlocksForm could match that API
     // and this wouldn't be needed (together with the unstable_batchedUpdates
-    // calls.
+    // calls).
     this.blocksState = {};
   }
 
@@ -92,7 +96,20 @@ class ColumnsBlockEdit extends React.Component {
                   <div className="column-header"></div>
                   <BlocksForm
                     properties={isEmpty(column) ? emptyBlocksForm() : column}
-                    blockWrapper={EditBlockWrapper}
+                    blockWrapper={(props) => (
+                      <EditBlockWrapper
+                        key={colId}
+                        {...props}
+                        onShowColumnSettings={() => {
+                          setSidebarTab(1);
+                          this.setState({
+                            showSidebar: true,
+                            activeColumn: colId,
+                            colSelections: {},
+                          });
+                        }}
+                      />
+                    )}
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
                     }
@@ -144,30 +161,33 @@ class ColumnsBlockEdit extends React.Component {
             })}
           </Grid>
         </div>
-        <SidebarPortal selected={selected}>
-          <InlineForm
-            schema={ColumnsBlockSchema}
-            title={ColumnsBlockSchema.title}
-            onChangeField={(id, value) => {
-              onChangeBlock(block, {
-                ...data,
-                [id]: value,
-              });
-            }}
-            formData={data}
-          />
-        </SidebarPortal>
+        {Object.keys(this.state.colSelections).length === 0 && (
+          <SidebarPortal selected={selected}>
+            {this.state.activeColumn ? (
+              <div>{this.state.activeColumn}</div>
+            ) : (
+              <InlineForm
+                schema={ColumnsBlockSchema}
+                title={ColumnsBlockSchema.title}
+                onChangeField={(id, value) => {
+                  onChangeBlock(block, {
+                    ...data,
+                    [id]: value,
+                  });
+                }}
+                formData={data}
+              />
+            )}
+          </SidebarPortal>
+        )}
       </ColumnVariations>
     );
   }
 }
 
-export default ColumnsBlockEdit;
-//
-// import DeviceSelect from './DeviceSelect';
-// import ColumnControls from './ColumnControls';
-//
-// import moreIcon from '@plone/volto/icons/more.svg';
-// {/* <DeviceSelect /> */}
-// {/* {<h3>{data.block_title}</h3>} */}
-// { /* <h4>{`Column ${index}`}</h4> */ }
+export default connect(
+  (state, props) => {
+    return {};
+  },
+  { setSidebarTab },
+)(ColumnsBlockEdit);

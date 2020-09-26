@@ -8,6 +8,8 @@ import isBoolean from 'lodash/isBoolean';
 import { defineMessages, injectIntl } from 'react-intl';
 import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
 
+import tuneSVG from '@plone/volto/icons/tune.svg';
+import columnSVG from '@plone/volto/icons/column.svg';
 import dragSVG from '@plone/volto/icons/drag.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
@@ -67,7 +69,9 @@ class EditBlockWrapper extends React.Component {
       onDeleteBlock,
       onMutateBlock,
       selected,
+      onShowColumnSettings,
     } = this.props;
+    console.log('draginfo', draginfo);
     const type = block['@type'];
     const { disableNewBlocks } = block;
 
@@ -81,10 +85,19 @@ class EditBlockWrapper extends React.Component {
     return (
       <div ref={this.blockNode}>
         <div
-          ref={draginfo.innerRef}
-          {...draginfo.draggableProps}
+          ref={draginfo?.innerRef}
+          {...(selected ? draginfo?.draggableProps : null)}
           className={`block-editor-${block['@type']}`}
         >
+          {!selected && (
+            <div
+              style={{
+                display: 'none',
+                // keep react-beautiful-dnd happy
+              }}
+              {...draginfo.dragHandleProps}
+            ></div>
+          )}
           {selected && (
             <div className="block-toolbar">
               <div
@@ -98,6 +111,15 @@ class EditBlockWrapper extends React.Component {
                   <Icon name={dragSVG} size="18px" />
                 </Button>
               </div>
+
+              <Button
+                icon
+                basic
+                onClick={onShowColumnSettings}
+                className="column-block-add-button"
+              >
+                <Icon name={tuneSVG} className="" size="18px" />
+              </Button>
 
               {!disableNewBlocks && !blockHasValue(block) && (
                 <Button
