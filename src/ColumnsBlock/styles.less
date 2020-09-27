@@ -1,13 +1,19 @@
 .columns-block {
+  & > .column {
+    padding: 0px;
+    & > .column {
+      padding: 4px !important;
+    }
+  }
   .block-column {
     padding: 0.3em;
 
-    .column-header {
-      width: 100%;
-      text-align: center;
-      border-bottom: 6px solid #eaeaea;
-      margin: 0.3em auto 0.8em auto;
-    }
+    // .column-header {
+    //   width: 100%;
+    //   text-align: center;
+    //   border-bottom: 6px solid #eaeaea;
+    //   margin: 0.3em auto 0.8em auto;
+    // }
 
     .block {
       .block-add-button {

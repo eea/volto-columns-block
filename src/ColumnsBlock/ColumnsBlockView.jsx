@@ -5,6 +5,7 @@ import { blocks } from '~/config';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
 import { getColumns } from './utils';
+import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
 const ColumnsBlockView = (props) => {
   const { gridSizes } = blocks.blocksConfig[COLUMNSBLOCK];
@@ -25,6 +26,7 @@ const ColumnsBlockView = (props) => {
               className="demo-column"
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
+              style={getStyle(column.settings || {})}
             >
               {/* <h4>{`Column ${index}`}</h4> */}
               <RenderBlocks {...props} content={column} />

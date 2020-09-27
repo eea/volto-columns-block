@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 import { SidebarPortal, Icon, InlineForm } from '@plone/volto/components'; // BlocksForm, Icon,
 import { emptyBlocksForm } from '@plone/volto/helpers';
@@ -9,11 +9,14 @@ import { BlocksForm } from '@eeacms/volto-blocks-form/components';
 import { Button } from 'semantic-ui-react';
 import { blocks } from '~/config';
 
-import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
 import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
+
+import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
+
 import tuneSVG from '@plone/volto/icons/tune.svg';
 
 import './styles.less';
@@ -22,16 +25,10 @@ import './styles.less';
  * not pretty, there's a lot of render props passing, to please React
  * reconciliation algos
  *
-ColumnsBlockEdit ->
-  EditBlockWrapper
-    -> EditBlock
-    -> dragProps
 
-CBE
-  -> BlocksForm
-    -> DragDropList
-      -> EditBlockWrapper
-        -> EditBlock
+ColumnsBlockEdit -> passes EditBlockWrapper into
+  -> BlocksForm -> which passes (with EditBlock) into
+    -> DragDropList -> which renders them all
 */
 class ColumnsBlockEdit extends React.Component {
   constructor(props) {
@@ -84,20 +81,38 @@ class ColumnsBlockEdit extends React.Component {
       pathname,
       selected,
     } = this.props;
-    const { gridSizes, variants } = blocks.blocksConfig[COLUMNSBLOCK];
 
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
 
+    const { gridSizes, variants, available_colors } = blocks.blocksConfig[
+      COLUMNSBLOCK
+    ];
+    const ColumnSchema = makeStyleSchema({ available_colors });
+
     return (
-      <>
-        <div className="columns-block">
+      <div className="columns-block">
+        {Object.keys(data).length === 1 ? (
+          <ColumnVariations
+            variants={variants}
+            data={data}
+            onChange={(initialData) => {
+              onChangeBlock(block, {
+                ...data,
+                ...this.createFrom(initialData),
+              });
+            }}
+          />
+        ) : (
           <Grid columns={gridSize} stackable>
             {columnList.map(([colId, column], index) => (
               <Grid.Column
                 className="block-column"
                 key={colId}
                 {...(gridSizes[gridCols[index]] || gridCols[index])}
+                style={getStyle(
+                  data?.coldata?.columns?.[colId]?.settings || {},
+                )}
               >
                 <div className="column-header"></div>
                 <BlocksForm
@@ -161,7 +176,7 @@ class ColumnsBlockEdit extends React.Component {
                             onClick={() => {
                               this.setState({
                                 showSidebar: true,
-                                activeColumn: 1, //colId,
+                                activeColumn: colId,
                                 colSelections: {},
                               });
                               this.props.setSidebarTab(1);
@@ -179,15 +194,51 @@ class ColumnsBlockEdit extends React.Component {
               </Grid.Column>
             ))}
           </Grid>
-        </div>
-        {Object.keys(this.state.colSelections).length === 0 && (
+        )}
+
+        {Object.keys(this.state.colSelections).length === 0 ? (
           <SidebarPortal selected={true}>
             {this.state.activeColumn ? (
-              <div>{this.state.activeColumn}</div>
+              <>
+                <Segment>
+                  <Button onClick={() => this.setState({ activeColumn: null })}>
+                    Edit column block
+                  </Button>
+                </Segment>
+                <InlineForm
+                  schema={ColumnSchema}
+                  title="Edit column"
+                  onChangeField={(id, value) => {
+                    const formData = {
+                      ...data,
+                      coldata: {
+                        ...coldata,
+                        columns: {
+                          ...coldata.columns,
+                          [this.state.activeColumn]: {
+                            ...coldata.columns?.[this.state.activeColumn],
+                            settings: {
+                              ...coldata.columns?.[this.state.activeColumn]
+                                ?.settings,
+                              [id]: value,
+                            },
+                          },
+                        },
+                      },
+                    };
+                    console.log('formdata', formData);
+                    onChangeBlock(block, formData);
+                  }}
+                  formData={
+                    data?.coldata?.columns?.[this.state.activeColumn]
+                      ?.settings || {}
+                  }
+                />
+              </>
             ) : (
               <InlineForm
                 schema={ColumnsBlockSchema}
-                title={ColumnsBlockSchema.title}
+                title="Edit columns block"
                 onChangeField={(id, value) => {
                   onChangeBlock(block, {
                     ...data,
@@ -198,8 +249,10 @@ class ColumnsBlockEdit extends React.Component {
               />
             )}
           </SidebarPortal>
+        ) : (
+          ''
         )}
-      </>
+      </div>
     );
   }
 }
@@ -210,7 +263,3 @@ export default connect(
   },
   { setSidebarTab },
 )(ColumnsBlockEdit);
-// import columnSVG from '@plone/volto/icons/column.svg';
-// import decorateComponentWithProps from 'decorate-component-with-props';
-// import dragSVG from '@plone/volto/icons/drag.svg';
-// import dotsSVG from '@plone/volto/icons/drag.svg';
