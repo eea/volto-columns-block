@@ -8,8 +8,6 @@ import isBoolean from 'lodash/isBoolean';
 import { defineMessages, injectIntl } from 'react-intl';
 import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
 
-import tuneSVG from '@plone/volto/icons/tune.svg';
-import columnSVG from '@plone/volto/icons/column.svg';
 import dragSVG from '@plone/volto/icons/drag.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
@@ -34,6 +32,7 @@ class EditBlockWrapper extends React.Component {
   }
 
   componentDidMount() {
+    console.log('mount editblockwrapper', this.props.blockProps.block);
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
@@ -59,27 +58,24 @@ class EditBlockWrapper extends React.Component {
   blockNode = React.createRef();
 
   render() {
+    const { intl, blockProps, draginfo, extraControls, children } = this.props;
+
     const {
       allowedBlocks,
       block,
-      blockId,
-      children,
-      draginfo,
-      intl,
+      data,
       onDeleteBlock,
       onMutateBlock,
       selected,
-      onShowColumnSettings,
-    } = this.props;
-    console.log('draginfo', draginfo);
-    const type = block['@type'];
-    const { disableNewBlocks } = block;
+    } = blockProps;
+    const type = data['@type'];
+    const { disableNewBlocks } = data;
 
     // const visible = selected && blockHasValue(block) && !block.fixed;
     // visibility: visible ? 'visible' : 'hidden',
 
-    const required = isBoolean(block.required)
-      ? block.required
+    const required = isBoolean(data.required)
+      ? data.required
       : includes(blocks.requiredBlocks, type);
 
     return (
@@ -87,7 +83,7 @@ class EditBlockWrapper extends React.Component {
         <div
           ref={draginfo?.innerRef}
           {...(selected ? draginfo?.draggableProps : null)}
-          className={`block-editor-${block['@type']}`}
+          className={`block-editor-${data['@type']}`}
         >
           {!selected && (
             <div
@@ -112,16 +108,9 @@ class EditBlockWrapper extends React.Component {
                 </Button>
               </div>
 
-              <Button
-                icon
-                basic
-                onClick={onShowColumnSettings}
-                className="column-block-add-button"
-              >
-                <Icon name={tuneSVG} className="" size="18px" />
-              </Button>
+              {extraControls}
 
-              {!disableNewBlocks && !blockHasValue(block) && (
+              {!disableNewBlocks && !blockHasValue(data) && (
                 <Button
                   icon
                   basic
@@ -139,7 +128,7 @@ class EditBlockWrapper extends React.Component {
                 <Button
                   icon
                   basic
-                  onClick={() => onDeleteBlock(blockId)}
+                  onClick={() => onDeleteBlock(block)}
                   className="delete-button-column-block"
                   aria-label={intl.formatMessage(messages.delete)}
                 >
@@ -152,7 +141,7 @@ class EditBlockWrapper extends React.Component {
                     this.setState({ addNewBlockOpened: false });
                     onMutateBlock(id, value);
                   }}
-                  currentBlock={blockId}
+                  currentBlock={block}
                   allowedBlocks={allowedBlocks}
                 />
               )}

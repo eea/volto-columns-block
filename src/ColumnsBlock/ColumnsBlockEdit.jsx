@@ -1,11 +1,12 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
-import { SidebarPortal, InlineForm } from '@plone/volto/components'; // BlocksForm, Icon,
+import { SidebarPortal, Icon, InlineForm } from '@plone/volto/components'; // BlocksForm, Icon,
 import { emptyBlocksForm } from '@plone/volto/helpers';
 import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
 import { BlocksForm } from '@eeacms/volto-blocks-form/components';
+import { Button } from 'semantic-ui-react';
 import { blocks } from '~/config';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
@@ -13,12 +14,25 @@ import { ColumnsBlockSchema } from './schema';
 import { getColumns, empty } from './utils';
 import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
-
-// import dragSVG from '@plone/volto/icons/drag.svg';
-// import dotsSVG from '@plone/volto/icons/drag.svg';
+import tuneSVG from '@plone/volto/icons/tune.svg';
 
 import './styles.less';
 
+/*
+ * not pretty, there's a lot of render props passing, to please React
+ * reconciliation algos
+ *
+ColumnsBlockEdit ->
+  EditBlockWrapper
+    -> EditBlock
+    -> dragProps
+
+CBE
+  -> BlocksForm
+    -> DragDropList
+      -> EditBlockWrapper
+        -> EditBlock
+*/
 class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
@@ -74,95 +88,100 @@ class ColumnsBlockEdit extends React.Component {
 
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
-    // console.log('data', gridCols);
 
     return (
-      <ColumnVariations
-        variants={variants}
-        data={data}
-        onChange={(initialData) => {
-          onChangeBlock(block, { ...data, ...this.createFrom(initialData) });
-        }}
-      >
+      <>
         <div className="columns-block">
           <Grid columns={gridSize} stackable>
-            {columnList.map(([colId, column], index) => {
-              return (
-                <Grid.Column
-                  className="block-column"
+            {columnList.map(([colId, column], index) => (
+              <Grid.Column
+                className="block-column"
+                key={colId}
+                {...(gridSizes[gridCols[index]] || gridCols[index])}
+              >
+                <div className="column-header"></div>
+                <BlocksForm
                   key={colId}
-                  {...(gridSizes[gridCols[index]] || gridCols[index])}
-                >
-                  <div className="column-header"></div>
-                  <BlocksForm
-                    properties={isEmpty(column) ? emptyBlocksForm() : column}
-                    blockWrapper={(props) => (
-                      <EditBlockWrapper
-                        key={colId}
-                        {...props}
-                        onShowColumnSettings={() => {
-                          setSidebarTab(1);
-                          this.setState({
-                            showSidebar: true,
-                            activeColumn: colId,
-                            colSelections: {},
-                          });
-                        }}
-                      />
-                    )}
-                    selectedBlock={
-                      selected ? this.state.colSelections[colId] : null
-                    }
-                    onSelectBlock={(id) =>
-                      this.setState({
-                        colSelections: {
-                          // this invalidates selection in all other columns
-                          [colId]: id,
+                  properties={isEmpty(column) ? emptyBlocksForm() : column}
+                  selectedBlock={
+                    selected ? this.state.colSelections[colId] : null
+                  }
+                  onSelectBlock={(id) =>
+                    this.setState({
+                      colSelections: {
+                        // this invalidates selection in all other columns
+                        [colId]: id,
+                      },
+                    })
+                  }
+                  onChangeFormData={(newFormData) => {
+                    onChangeBlock(block, {
+                      ...data,
+                      coldata: {
+                        ...coldata,
+                        columns: {
+                          ...coldata.columns,
+                          [colId]: newFormData,
                         },
-                      })
-                    }
-                    onChangeFormData={(newFormData) => {
+                      },
+                    });
+                  }}
+                  onChangeField={(id, value) => {
+                    // special handling of blocks and blocks_layout
+                    if (['blocks', 'blocks_layout'].indexOf(id) > -1) {
+                      this.blocksState[id] = value;
                       onChangeBlock(block, {
                         ...data,
                         coldata: {
                           ...coldata,
                           columns: {
                             ...coldata.columns,
-                            [colId]: newFormData,
+                            [colId]: {
+                              ...coldata.columns?.[colId],
+                              ...this.blocksState,
+                            },
                           },
                         },
                       });
-                    }}
-                    onChangeField={(id, value) => {
-                      // special handling of blocks and blocks_layout
-                      if (['blocks', 'blocks_layout'].indexOf(id) > -1) {
-                        this.blocksState[id] = value;
-                        onChangeBlock(block, {
-                          ...data,
-                          coldata: {
-                            ...coldata,
-                            columns: {
-                              ...coldata.columns,
-                              [colId]: {
-                                ...coldata.columns?.[colId],
-                                ...this.blocksState,
-                              },
-                            },
-                          },
-                        });
-                      } else {
-                        onChangeField(id, value);
+                    } else {
+                      onChangeField(id, value);
+                    }
+                  }}
+                  pathname={pathname}
+                >
+                  {({ draginfo }, editBlock, blockProps) => (
+                    <EditBlockWrapper
+                      draginfo={draginfo}
+                      blockProps={blockProps}
+                      extraControls={
+                        <>
+                          <Button
+                            icon
+                            basic
+                            onClick={() => {
+                              this.setState({
+                                showSidebar: true,
+                                activeColumn: 1, //colId,
+                                colSelections: {},
+                              });
+                              this.props.setSidebarTab(1);
+                            }}
+                          >
+                            <Icon name={tuneSVG} className="" size="18px" />
+                          </Button>
+                        </>
                       }
-                    }}
-                    pathname={pathname}
-                  />
-                </Grid.Column>
-              );
-            })}
+                    >
+                      {editBlock}
+                    </EditBlockWrapper>
+                  )}
+                </BlocksForm>
+              </Grid.Column>
+            ))}
           </Grid>
         </div>
         {Object.keys(this.state.colSelections).length === 0 && (
-          <SidebarPortal selected={selected}>
+          <SidebarPortal selected={true}>
             {this.state.activeColumn ? (
               <div>{this.state.activeColumn}</div>
             ) : (
@@ -180,7 +199,7 @@ class ColumnsBlockEdit extends React.Component {
             )}
           </SidebarPortal>
         )}
-      </ColumnVariations>
+      </>
     );
   }
 }
@@ -191,3 +210,7 @@ export default connect(
   },
   { setSidebarTab },
 )(ColumnsBlockEdit);
+// import columnSVG from '@plone/volto/icons/column.svg';
+// import decorateComponentWithProps from 'decorate-component-with-props';
+// import dragSVG from '@plone/volto/icons/drag.svg';
+// import dotsSVG from '@plone/volto/icons/drag.svg';
