@@ -15,6 +15,7 @@ import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import tuneSVG from '@plone/volto/icons/tune.svg';
@@ -116,6 +117,20 @@ class ColumnsBlockEdit extends React.Component {
     } else {
       onChangeField(id, value);
     }
+  };
+
+  getColumnsBlockSchema = () => {
+    const schema = ColumnsBlockSchema();
+    const { data } = this.props;
+    const { gridCols } = data;
+    console.log('gridcols', gridCols);
+    const available_variants = variants.filter(
+      ({ defaultData }) => defaultData.gridCols.length === gridCols.length,
+    );
+    schema.properties.layout.choices = available_variants.map(
+      ({ defaultData, title }) => [defaultData.gridCols, title],
+    );
+    return schema;
   };
 
   render() {
@@ -223,12 +238,16 @@ class ColumnsBlockEdit extends React.Component {
               <>
                 <Segment>
                   <Button onClick={() => this.setState({ activeColumn: null })}>
-                    Edit column block
+                    Edit parent column block
                   </Button>
                 </Segment>
                 <InlineForm
                   schema={ColumnSchema}
-                  title="Edit column"
+                  title={`Column ${
+                    columnList
+                      .map(([colId]) => colId)
+                      .indexOf(this.state.activeColumn) + 1
+                  }`}
                   onChangeField={this.onChangeColumnSettings}
                   formData={
                     data?.coldata?.columns?.[this.state.activeColumn]
@@ -238,8 +257,8 @@ class ColumnsBlockEdit extends React.Component {
               </>
             ) : (
               <InlineForm
-                schema={ColumnsBlockSchema}
-                title="Edit columns block"
+                schema={this.getColumnsBlockSchema()}
+                title="Columns block"
                 onChangeField={(id, value) => {
                   onChangeBlock(block, {
                     ...data,

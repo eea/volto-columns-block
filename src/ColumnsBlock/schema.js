@@ -15,13 +15,13 @@ export const ColumnSchema = {
   required: [],
 };
 
-export const ColumnsBlockSchema = {
+export const ColumnsBlockSchema = () => ({
   title: 'Columns block',
   fieldsets: [
     {
       id: 'default',
       title: 'Default',
-      fields: ['block_title', 'coldata'], //  'nrColumns'
+      fields: ['coldata', 'layout'], //  'nrColumns', 'block_title'
     },
   ],
   properties: {
@@ -34,6 +34,10 @@ export const ColumnsBlockSchema = {
       type: 'columns',
       schema: ColumnSchema,
     },
+    layout: {
+      title: 'Layout',
+      choices: [],
+    },
   },
   required: ['title'],
-};
+});
