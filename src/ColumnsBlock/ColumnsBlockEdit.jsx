@@ -72,15 +72,54 @@ class ColumnsBlockEdit extends React.Component {
     };
   };
 
+  onChangeColumnSettings = (id, value) => {
+    const { data, onChangeBlock, block } = this.props;
+    const { coldata } = data;
+    const formData = {
+      ...data,
+      coldata: {
+        ...coldata,
+        columns: {
+          ...coldata.columns,
+          [this.state.activeColumn]: {
+            ...coldata.columns?.[this.state.activeColumn],
+            settings: {
+              ...coldata.columns?.[this.state.activeColumn]?.settings,
+              [id]: value,
+            },
+          },
+        },
+      },
+    };
+    onChangeBlock(block, formData);
+  };
+
+  onChangeColumnData = (id, value, colId) => {
+    const { data, onChangeBlock, block, onChangeField } = this.props;
+    const { coldata } = data;
+    // special handling of blocks and blocks_layout
+    if (['blocks', 'blocks_layout'].indexOf(id) > -1) {
+      this.blocksState[id] = value;
+      onChangeBlock(block, {
+        ...data,
+        coldata: {
+          ...coldata,
+          columns: {
+            ...coldata.columns,
+            [colId]: {
+              ...coldata.columns?.[colId],
+              ...this.blocksState,
+            },
+          },
+        },
+      });
+    } else {
+      onChangeField(id, value);
+    }
+  };
+
   render() {
-    const {
-      block,
-      data,
-      onChangeBlock,
-      onChangeField,
-      pathname,
-      selected,
-    } = this.props;
+    const { block, data, onChangeBlock, pathname, selected } = this.props;
 
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
@@ -141,27 +180,9 @@ class ColumnsBlockEdit extends React.Component {
                       },
                     });
                   }}
-                  onChangeField={(id, value) => {
-                    // special handling of blocks and blocks_layout
-                    if (['blocks', 'blocks_layout'].indexOf(id) > -1) {
-                      this.blocksState[id] = value;
-                      onChangeBlock(block, {
-                        ...data,
-                        coldata: {
-                          ...coldata,
-                          columns: {
-                            ...coldata.columns,
-                            [colId]: {
-                              ...coldata.columns?.[colId],
-                              ...this.blocksState,
-                            },
-                          },
-                        },
-                      });
-                    } else {
-                      onChangeField(id, value);
-                    }
-                  }}
+                  onChangeField={(id, value) =>
+                    this.onChangeColumnData(id, value, colId)
+                  }
                   pathname={pathname}
                 >
                   {({ draginfo }, editBlock, blockProps) => (
@@ -208,27 +229,7 @@ class ColumnsBlockEdit extends React.Component {
                 <InlineForm
                   schema={ColumnSchema}
                   title="Edit column"
-                  onChangeField={(id, value) => {
-                    const formData = {
-                      ...data,
-                      coldata: {
-                        ...coldata,
-                        columns: {
-                          ...coldata.columns,
-                          [this.state.activeColumn]: {
-                            ...coldata.columns?.[this.state.activeColumn],
-                            settings: {
-                              ...coldata.columns?.[this.state.activeColumn]
-                                ?.settings,
-                              [id]: value,
-                            },
-                          },
-                        },
-                      },
-                    };
-                    console.log('formdata', formData);
-                    onChangeBlock(block, formData);
-                  }}
+                  onChangeField={this.onChangeColumnSettings}
                   formData={
                     data?.coldata?.columns?.[this.state.activeColumn]
                       ?.settings || {}
