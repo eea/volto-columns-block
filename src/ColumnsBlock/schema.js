@@ -21,7 +21,7 @@ export const ColumnsBlockSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['coldata', 'layout'], //  'nrColumns', 'block_title'
+      fields: ['coldata', 'gridCols'], //  'nrColumns', 'block_title'
     },
   ],
   properties: {
@@ -34,7 +34,7 @@ export const ColumnsBlockSchema = () => ({
       type: 'columns',
       schema: ColumnSchema,
     },
-    layout: {
+    gridCols: {
       title: 'Layout',
       choices: [],
     },

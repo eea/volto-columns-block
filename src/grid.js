@@ -19,7 +19,7 @@ export const gridSizes = {
   oneThird: {
     mobile: 12,
     tablet: 4,
-    computer: 3,
+    computer: 4,
   },
   halfWidthBig: {
     mobile: 12,

@@ -19,6 +19,7 @@ import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import tuneSVG from '@plone/volto/icons/tune.svg';
+import upSVG from '@plone/volto/icons/up.svg';
 
 import './styles.less';
 
@@ -127,7 +128,7 @@ class ColumnsBlockEdit extends React.Component {
     const available_variants = variants.filter(
       ({ defaultData }) => defaultData.gridCols.length === gridCols.length,
     );
-    schema.properties.layout.choices = available_variants.map(
+    schema.properties.gridCols.choices = available_variants.map(
       ({ defaultData, title }) => [defaultData.gridCols, title],
     );
     return schema;
@@ -238,6 +239,7 @@ class ColumnsBlockEdit extends React.Component {
               <>
                 <Segment>
                   <Button onClick={() => this.setState({ activeColumn: null })}>
+                    <Icon name={upSVG} size="14px" />
                     Edit parent column block
                   </Button>
                 </Segment>
