@@ -1,4 +1,4 @@
-import codeSVG from '@plone/volto/icons/code.svg';
+import columnSVG from './ColumnsBlock/icons/three-columns.svg';
 
 import { ColumnsBlockView, ColumnsBlockEdit } from './ColumnsBlock';
 import ColumnsWidget from './Widgets/ColumnsWidget';
@@ -10,7 +10,7 @@ export default function install(config) {
   config.blocks.blocksConfig[COLUMNSBLOCK] = {
     id: 'columnsBlock',
     title: 'Columns',
-    icon: codeSVG,
+    icon: columnSVG,
     group: 'common',
     view: ColumnsBlockView,
     edit: ColumnsBlockEdit,

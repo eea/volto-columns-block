@@ -17,19 +17,21 @@ const ColumnsBlockView = (props) => {
   } = props.data;
   const columnList = getColumns(coldata);
   return (
-    <div>
+    <div className="columns-view">
       {block_title ? <h3>{block_title}</h3> : ''}
-      <Grid columns={gridSize}>
+      <Grid columns={gridSize} className="column-grid">
         {columnList.map(([id, column], index) => {
           return (
             <Grid.Column
               className="demo-column"
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
-              style={getStyle(column.settings || {})}
             >
-              {/* <h4>{`Column ${index}`}</h4> */}
-              <RenderBlocks {...props} content={column} />
+              <div className="column-bocks-wrapper"
+                   style={getStyle(column.settings || {})}>
+                {/* <h4>{`Column ${index}`}</h4> */}
+                <RenderBlocks {...props} content={column} />
+              </div>
             </Grid.Column>
           );
         })}

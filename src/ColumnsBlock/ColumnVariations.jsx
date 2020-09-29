@@ -5,12 +5,13 @@ import { Icon } from '@plone/volto/components';
 export default ({ data, onChange, children, variants }) => {
   return (
     <Segment>
-      <Card.Group>
+      <h4>Select layout:</h4>
+      <Card.Group centered itemsPerRow={6}>
         {variants.map(({ icon, defaultData, title }, index) => (
           <Card key={index} onClick={() => onChange(defaultData)}>
             <Card.Content>
-              <Icon name={icon} />
-              {title ? <Card.Header>{title}</Card.Header> : ''}
+              <Icon name={icon} size="45" />
+              {title ? <p>{title}</p> : ''}
             </Card.Content>
           </Card>
         ))}

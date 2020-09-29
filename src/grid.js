@@ -1,9 +1,9 @@
-import iconA from '@plone/volto/icons/circle-left.svg';
-import iconB from '@plone/volto/icons/circle-menu.svg';
-import iconC from '@plone/volto/icons/circle-minus.svg';
-import iconD from '@plone/volto/icons/circle-plus.svg';
-import iconE from '@plone/volto/icons/circle-right.svg';
-import iconF from '@plone/volto/icons/audio.svg';
+import iconA from './ColumnsBlock/icons/two-half-columns.svg';
+import iconB from './ColumnsBlock/icons/one-third-left.svg';
+import iconC from './ColumnsBlock/icons/one-third-right.svg';
+import iconD from './ColumnsBlock/icons/three-third-columns.svg';
+import iconE from './ColumnsBlock/icons/three-columns.svg';
+import iconF from './ColumnsBlock/icons/four-quarter-columns.svg';
 
 export const gridSizes = {
   halfWidth: {
@@ -14,7 +14,7 @@ export const gridSizes = {
   twoThirds: {
     mobile: 12,
     tablet: 8,
-    computer: 9,
+    computer: 8,
   },
   oneThird: {
     mobile: 12,
