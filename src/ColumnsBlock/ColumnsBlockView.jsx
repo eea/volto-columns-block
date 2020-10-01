@@ -23,12 +23,14 @@ const ColumnsBlockView = (props) => {
         {columnList.map(([id, column], index) => {
           return (
             <Grid.Column
-              className="demo-column"
+              className="columns-block-column"
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
             >
-              <div className="column-bocks-wrapper"
-                   style={getStyle(column.settings || {})}>
+              <div
+                className="column-blocks-wrapper"
+                style={getStyle(column.settings || {})}
+              >
                 {/* <h4>{`Column ${index}`}</h4> */}
                 <RenderBlocks {...props} content={column} />
               </div>

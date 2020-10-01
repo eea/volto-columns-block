@@ -5,6 +5,7 @@
     //   padding: 4px !important;
     // }
   }
+
   .block-column {
     padding: 0.3em;
 
@@ -16,7 +17,7 @@
     // }
 
     .blocks-form {
-      padding: 0.8rem!important;
+      padding: 0.8rem !important;
     }
 
     .block {
@@ -29,7 +30,7 @@
   .ui.cards a.card,
   .ui.link.cards .card,
   a.ui.card,
-  .ui.link.card{
+  .ui.link.card {
     box-shadow: none;
     border: 1px solid #edf2f3;
     &:hover {
@@ -40,15 +41,18 @@
   }
 
   .ui.card .content {
-    text-align: center;
     font-size: 10px !important;
+    text-align: center;
+
     padding-top: 1.5em !important;
     padding-bottom: 1.5em !important;
 
-    p {color:#717171}
+    p {
+      color: #717171;
+    }
 
     svg {
-      fill: #68778D!important;
+      fill: #68778d !important;
     }
   }
 
@@ -57,7 +61,7 @@
   }
 }
 
-.column-bocks-wrapper {
+.column-blocks-wrapper {
   padding: 1rem;
 }
 
@@ -65,11 +69,20 @@
   .ui.grid.column-block-grid {
     display: initial !important;
   }
+  .column-blocks-wrapper {
+    padding: 0rem;
+  }
+
+  .columns-block-column {
+    overflow: auto;
+  }
 }
 
 .ui.grid.column-grid {
   margin-left: -0.5rem;
   margin-right: -0.5rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
 
   .column:not(.row),
   > .row > .column {
