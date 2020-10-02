@@ -17,6 +17,7 @@ import EditBlockWrapper from './EditBlockWrapper';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
+import { settings } from '~/config';
 
 import tuneSVG from '@plone/volto/icons/tune.svg';
 import upSVG from '@plone/volto/icons/up.svg';
@@ -124,7 +125,7 @@ class ColumnsBlockEdit extends React.Component {
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
     const { gridCols = [] } = data;
-    console.log('gridcols', gridCols);
+    // console.log('gridcols', gridCols);
     const available_variants = variants.filter(
       ({ defaultData }) => defaultData?.gridCols?.length === gridCols.length,
     );
@@ -135,7 +136,14 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   render() {
-    const { block, data, onChangeBlock, pathname, selected } = this.props;
+    const {
+      block,
+      data,
+      onChangeBlock,
+      pathname,
+      selected,
+      index,
+    } = this.props;
 
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
@@ -145,8 +153,15 @@ class ColumnsBlockEdit extends React.Component {
     ];
     const ColumnSchema = makeStyleSchema({ available_colors });
 
+    // TODO: we have blockHasOwnFocusManagement, so we need to implement this:
+    // onKeyDown={(e) => {
+    //   if (e.key === 'Enter') {
+    //     this.onAddBlock(settings.defaultBlockType, index + 1);
+    //     e.preventDefault();
+    //   }
+    // }}
     return (
-      <div className="columns-block">
+      <div role="presentation" className="columns-block">
         {Object.keys(data).length === 1 ? (
           <ColumnVariations
             variants={variants}
@@ -166,9 +181,10 @@ class ColumnsBlockEdit extends React.Component {
                 key={colId}
                 {...(gridSizes[gridCols[index]] || gridCols[index])}
               >
-                <div style={getStyle(
-                  data?.coldata?.columns?.[colId]?.settings || {},
-                )}
+                <div
+                  style={getStyle(
+                    data?.coldata?.columns?.[colId]?.settings || {},
+                  )}
                 >
                   <div className="column-header"></div>
                   <BlocksForm
@@ -201,34 +217,34 @@ class ColumnsBlockEdit extends React.Component {
                       this.onChangeColumnData(id, value, colId)
                     }
                     pathname={pathname}
-                    >
+                  >
                     {({ draginfo }, editBlock, blockProps) => (
                       <EditBlockWrapper
                         draginfo={draginfo}
                         blockProps={blockProps}
                         extraControls={
                           <>
-                          <Button
-                            icon
-                            basic
-                            onClick={() => {
-                              this.setState({
-                                showSidebar: true,
-                                activeColumn: colId,
-                                colSelections: {},
-                              });
-                              this.props.setSidebarTab(1);
-                            }}
+                            <Button
+                              icon
+                              basic
+                              onClick={() => {
+                                this.setState({
+                                  showSidebar: true,
+                                  activeColumn: colId,
+                                  colSelections: {},
+                                });
+                                this.props.setSidebarTab(1);
+                              }}
                             >
-                            <Icon name={tuneSVG} className="" size="18px" />
-                          </Button>
+                              <Icon name={tuneSVG} className="" size="18px" />
+                            </Button>
                           </>
-                      }
+                        }
                       >
-                      {editBlock}
-                    </EditBlockWrapper>
-                  )}
-                </BlocksForm>
+                        {editBlock}
+                      </EditBlockWrapper>
+                    )}
+                  </BlocksForm>
                 </div>
               </Grid.Column>
             ))}
