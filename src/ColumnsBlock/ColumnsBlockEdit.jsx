@@ -180,72 +180,70 @@ class ColumnsBlockEdit extends React.Component {
                 className="block-column"
                 key={colId}
                 {...(gridSizes[gridCols[index]] || gridCols[index])}
+                style={getStyle(
+                  data?.coldata?.columns?.[colId]?.settings || {},
+                )}
               >
-                <div
-                  style={getStyle(
-                    data?.coldata?.columns?.[colId]?.settings || {},
-                  )}
+                <div className="column-header"></div>
+                <BlocksForm
+                  key={colId}
+                  properties={isEmpty(column) ? emptyBlocksForm() : column}
+                  selectedBlock={
+                    selected ? this.state.colSelections[colId] : null
+                  }
+                  onSelectBlock={(id) =>
+                    this.setState({
+                      colSelections: {
+                        // this invalidates selection in all other columns
+                        [colId]: id,
+                      },
+                    })
+                  }
+                  onChangeFormData={(newFormData) => {
+                    onChangeBlock(block, {
+                      ...data,
+                      coldata: {
+                        ...coldata,
+                        columns: {
+                          ...coldata.columns,
+                          [colId]: newFormData,
+                        },
+                      },
+                    });
+                  }}
+                  onChangeField={(id, value) =>
+                    this.onChangeColumnData(id, value, colId)
+                  }
+                  pathname={pathname}
                 >
-                  <div className="column-header"></div>
-                  <BlocksForm
-                    key={colId}
-                    properties={isEmpty(column) ? emptyBlocksForm() : column}
-                    selectedBlock={
-                      selected ? this.state.colSelections[colId] : null
-                    }
-                    onSelectBlock={(id) =>
-                      this.setState({
-                        colSelections: {
-                          // this invalidates selection in all other columns
-                          [colId]: id,
-                        },
-                      })
-                    }
-                    onChangeFormData={(newFormData) => {
-                      onChangeBlock(block, {
-                        ...data,
-                        coldata: {
-                          ...coldata,
-                          columns: {
-                            ...coldata.columns,
-                            [colId]: newFormData,
-                          },
-                        },
-                      });
-                    }}
-                    onChangeField={(id, value) =>
-                      this.onChangeColumnData(id, value, colId)
-                    }
-                    pathname={pathname}
-                  >
-                    {({ draginfo }, editBlock, blockProps) => (
-                      <EditBlockWrapper
-                        draginfo={draginfo}
-                        blockProps={blockProps}
-                        extraControls={
-                          <>
-                            <Button
-                              icon
-                              basic
-                              onClick={() => {
-                                this.setState({
-                                  showSidebar: true,
-                                  activeColumn: colId,
-                                  colSelections: {},
-                                });
-                                this.props.setSidebarTab(1);
-                              }}
-                            >
-                              <Icon name={tuneSVG} className="" size="18px" />
-                            </Button>
-                          </>
-                        }
-                      >
-                        {editBlock}
-                      </EditBlockWrapper>
-                    )}
-                  </BlocksForm>
-                </div>
+                  {({ draginfo }, editBlock, blockProps) => (
+                    <EditBlockWrapper
+                      draginfo={draginfo}
+                      blockProps={blockProps}
+                      extraControls={
+                        <>
+                          <Button
+                            icon
+                            basic
+                            title="Edit column"
+                            onClick={() => {
+                              this.setState({
+                                showSidebar: true,
+                                activeColumn: colId,
+                                colSelections: {},
+                              });
+                              this.props.setSidebarTab(1);
+                            }}
+                          >
+                            <Icon name={tuneSVG} className="" size="19px" />
+                          </Button>
+                        </>
+                      }
+                    >
+                      {editBlock}
+                    </EditBlockWrapper>
+                  )}
+                </BlocksForm>
               </Grid.Column>
             ))}
           </Grid>

@@ -26,14 +26,11 @@ const ColumnsBlockView = (props) => {
               className="columns-block-column"
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
+              className="column-blocks-wrapper"
+              style={getStyle(column.settings || {})}
             >
-              <div
-                className="column-blocks-wrapper"
-                style={getStyle(column.settings || {})}
-              >
-                {/* <h4>{`Column ${index}`}</h4> */}
-                <RenderBlocks {...props} content={column} />
-              </div>
+              {/* <h4>{`Column ${index}`}</h4> */}
+              <RenderBlocks {...props} content={column} />
             </Grid.Column>
           );
         })}

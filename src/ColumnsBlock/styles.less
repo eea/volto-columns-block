@@ -6,8 +6,19 @@
     // }
   }
 
+  .column-grid {
+    margin-left: -0.2rem!important;
+    margin-right: -0.2rem!important;
+    .column:first-child {
+      padding-left: 0.2rem!important;
+    }
+    .column:last-child {
+      padding-right: 0.2rem!important;
+    }
+  }
+
   .block-column {
-    padding: 0.3em;
+    padding: 0.3em !important;
 
     // .column-header {
     //   width: 100%;
@@ -21,15 +32,29 @@
     }
 
     .block {
+      margin-bottom: 1.5em;
+      .block.selected::before,
+      .block.selected:hover::before {
+        z-index: 9;
+      }
+    }
+
+    // .block.selected {
+    //   border: 1px solid #826A6A;
+    //   padding: 0.3em 0.5em;
+    //   border-radius: 2px;
+    // }
+
+    .block {
       .block-add-button {
         display: none;
       }
     }
   }
 
+  a.ui.card,
   .ui.cards a.card,
   .ui.link.cards .card,
-  a.ui.card,
   .ui.link.card {
     box-shadow: none;
     border: 1px solid #edf2f3;
@@ -61,52 +86,51 @@
   }
 }
 
-.column-blocks-wrapper {
-  padding: 1rem;
-}
-
 .columns-view {
   .ui.grid.column-block-grid {
-    display: initial !important;
+    display: initial!important;
   }
   .column-blocks-wrapper {
-    padding: 0rem;
-  }
-
-  .columns-block-column {
-    // overflow: auto;
+    padding-top: 0.5em!important;
+    padding-bottom: 0.5em!important;
   }
 }
 
 .ui.grid.column-grid {
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-  margin-top: 0px;
-  margin-bottom: 0px;
-
-  .column:not(.row),
-  > .row > .column {
-    padding: 0.5rem;
-  }
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
 .block-toolbar {
-  background-color: #d9edf4;
+  display: flex;
   padding: 3px;
-  // margin-top: -10px;
-  display: inline-block;
-  margin-bottom: 8px;
-  position: absolute;
-  margin-top: -36px;
-  z-index: 10;
+  border: none;
+  background-color: #8dd7ef;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  margin-bottom: 8px;
+  position: absolute;
+  margin-top: -34px;
+  z-index: 10;
   right: 0px;
+
+  .ui.basic.button {
+    &:hover {
+      background-color: transparent!important;
+    }
+    svg {
+      color: #134448;
+    }
+  }
 
   .drag.handle.wrapper-column-block {
     position: initial;
     left: initial;
-    margin-left: initial !important;
+    margin-left: initial!important;
+    font-size: 1rem;
+    min-height: 1em;
+    vertical-align: baseline;
+    line-height: 1em;
   }
 }
 

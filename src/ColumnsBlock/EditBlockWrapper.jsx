@@ -103,8 +103,8 @@ class EditBlockWrapper extends React.Component {
                 {...draginfo.dragHandleProps}
                 className="drag handle wrapper-column-block"
               >
-                <Button icon basic>
-                  <Icon name={dragSVG} size="18px" />
+                <Button icon basic title="Drag and drop">
+                  <Icon name={dragSVG} size="19px" />
                 </Button>
               </div>
 
@@ -114,6 +114,7 @@ class EditBlockWrapper extends React.Component {
                 <Button
                   icon
                   basic
+                  title="Add block"
                   onClick={() => {
                     this.setState({
                       addNewBlockOpened: !this.state.addNewBlockOpened,
@@ -121,18 +122,19 @@ class EditBlockWrapper extends React.Component {
                   }}
                   className="column-block-add-button"
                 >
-                  <Icon name={addSVG} className="" size="18px" />
+                  <Icon name={addSVG} className="" size="19px" />
                 </Button>
               )}
               {!required && (
                 <Button
                   icon
                   basic
+                  title="Remove block"
                   onClick={() => onDeleteBlock(block)}
                   className="delete-button-column-block"
                   aria-label={intl.formatMessage(messages.delete)}
                 >
-                  <Icon name={trashSVG} size="18px" />
+                  <Icon name={trashSVG} size="19px" />
                 </Button>
               )}
               {this.state.addNewBlockOpened && (

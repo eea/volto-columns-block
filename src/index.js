@@ -33,6 +33,7 @@ export default function install(config) {
       // '#1273DE',
       // '#004DCF',
       // '#5300EB',
+      '#EFEFEF',
       '#EB9694',
       '#FAD0C3',
       '#FEF3BD',
