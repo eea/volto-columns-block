@@ -23,7 +23,6 @@ const ColumnsBlockView = (props) => {
         {columnList.map(([id, column], index) => {
           return (
             <Grid.Column
-              className="columns-block-column"
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
               className="column-blocks-wrapper"
