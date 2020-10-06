@@ -32,7 +32,7 @@ class EditBlockWrapper extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount editblockwrapper', this.props.blockProps.block);
+    // console.log('mount editblockwrapper', this.props.blockProps.block);
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
