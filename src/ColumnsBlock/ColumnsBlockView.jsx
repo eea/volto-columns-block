@@ -15,6 +15,7 @@ const ColumnsBlockView = (props) => {
     gridCols = [],
     block_title,
   } = props.data;
+  const metadata = props.metadata || props.properties;
   const columnList = getColumns(coldata);
   return (
     <div className="columns-view">
@@ -29,7 +30,7 @@ const ColumnsBlockView = (props) => {
               style={getStyle(column.settings || {})}
             >
               {/* <h4>{`Column ${index}`}</h4> */}
-              <RenderBlocks {...props} content={column} />
+              <RenderBlocks {...props} metadata={metadata} content={column} />
             </Grid.Column>
           );
         })}

@@ -146,6 +146,7 @@ class ColumnsBlockEdit extends React.Component {
       index,
     } = this.props;
 
+    const metadata = this.props.metadata || this.props.properties;
     const { coldata, gridCols, gridSize } = data;
     const columnList = getColumns(coldata);
 
@@ -188,6 +189,7 @@ class ColumnsBlockEdit extends React.Component {
                 <div className="column-header"></div>
                 <BlocksForm
                   key={colId}
+                  metadata={metadata}
                   properties={isEmpty(column) ? emptyBlocksForm() : column}
                   selectedBlock={
                     selected ? this.state.colSelections[colId] : null
