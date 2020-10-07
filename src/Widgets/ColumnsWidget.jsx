@@ -13,8 +13,8 @@ import plusSVG from '@plone/volto/icons/circle-plus.svg';
 export function moveColumn(formData, source, destination) {
   return {
     ...formData,
-    columns_layout: {
-      items: move(formData.columns_layout?.items, source, destination),
+    blocks_layout: {
+      items: move(formData.blocks_layout?.items, source, destination),
     },
   };
 }
@@ -26,12 +26,12 @@ const empty = () => {
 const ColumnsWidget = (props) => {
   const { value = {}, id, onChange, maxSize = 4 } = props;
   const { columns = {} } = value;
-  const columnsList = (value.columns_layout?.items || []).map((id) => [
+  const columnsList = (value.blocks_layout?.items || []).map((id) => [
     id,
     columns[id],
   ]);
 
-  const showAdd = value.columns_layout?.items?.length < maxSize;
+  const showAdd = value.blocks_layout?.items?.length < maxSize;
   return (
     <FormFieldWrapper
       {...props}
@@ -72,16 +72,16 @@ const ColumnsWidget = (props) => {
                   </div>
                   <div className="column-area">
                     <div className="label">Column {index}</div>
-                    {value.columns_layout?.items?.length > 1 ? (
+                    {value.blocks_layout?.items?.length > 1 ? (
                       <button
                         onClick={() => {
                           const newFormData = {
                             ...value,
                             columns: omit({ ...value.columns }, [childId]),
-                            columns_layout: {
-                              ...value.columns_layout,
+                            blocks_layout: {
+                              ...value.blocks_layout,
                               items: without(
-                                [...value.columns_layout?.items],
+                                [...value.blocks_layout?.items],
                                 childId,
                               ),
                             },
@@ -110,9 +110,9 @@ const ColumnsWidget = (props) => {
                   ...value.columns,
                   [newId]: newData,
                 },
-                columns_layout: {
-                  ...value.columns_layout,
-                  items: [...value.columns_layout?.items, newId],
+                blocks_layout: {
+                  ...value.blocks_layout,
+                  items: [...value.blocks_layout?.items, newId],
                 },
               });
             }}

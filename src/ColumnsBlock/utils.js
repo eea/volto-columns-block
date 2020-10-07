@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
 
 export const getColumns = (coldata) => {
-  return (coldata?.columns_layout?.items || []).map((id) => [
+  return (coldata?.blocks_layout?.items || []).map((id) => [
     id,
     coldata.columns?.[id],
   ]);
@@ -19,7 +19,7 @@ export const empty = (count) => {
 
   return {
     columns,
-    columns_layout: {
+    blocks_layout: {
       items,
     },
   };
