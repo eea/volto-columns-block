@@ -20,13 +20,25 @@ Before starting make sure your development environment is properly set. See [Vol
 1. Update `package.json` with the following information:
 
         {
+            "private": true,
+
+            "workspaces": [
+                "src/addons/volto-columns-block"
+            ],
+
             "scripts": {
                 "develop": "missdev --config=jsconfig.json --output=addons"
             },
 
             "addons": [
+                "@eeacms/volto-blocks-form",
                 "@eeacms/volto-columns-block"
             ],
+
+            "dependencies": {
+                "@plone/volto": "8.2.0",
+                "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0"
+            },
         }
 
 1. Add the following to `mrs.developer.json`:
@@ -35,7 +47,7 @@ Before starting make sure your development environment is properly set. See [Vol
             "volto-columns-block": {
                 "url": "https://github.com/eea/volto-columns-block.git",
                 "package": "@eeacms/volto-columns-block",
-                "branch": "develop",
+                "branch": "master",
                 "path": "src"
             }
         }
@@ -47,7 +59,7 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1. Start backend
 
-        $ docker run -d --name plone -p 8080:8080 -e SITE=Plone -e VERSIONS="plone.restapi=7.0.0a5" -e ADDONS="kitconcept.volto" plone:5
+        $ docker run -d --name plone -p 8080:8080 -e SITE=Plone plone:5
 
     ...wait for backend to setup and start - `Ready to handle requests`:
 

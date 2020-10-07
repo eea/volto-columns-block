@@ -8,13 +8,10 @@
 This package gives you a block with columns. Each column is its own separate
 blocks container.
 
-Note: for the moment this relies on the https://github.com/plone/volto/pull/1826 PR.
-
-Note: this is a work in progress, UX will be improved.
-
 ###
 
-![first alpha screenshot](screenshot-a0.png)
+![Columns Layout](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/layout.png)
+![Columns Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/columns.png)
 
 ## Getting started
 
@@ -28,11 +25,13 @@ Note: this is a work in progress, UX will be improved.
 1. Update `package.json`:
     ``` JSON
     "addons": [
+        "@eeacms/volto-blocks-form",
         "@eeacms/volto-columns-block"
     ],
 
     "dependencies": {
-        "@eeacms/volto-columns-block": "github:eea/volto-columns-block#0.1.0"
+        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0",
+        "@eeacms/volto-columns-block": "github:eea/volto-columns-block#0.2.0"
     }
     ```
 
@@ -48,14 +47,14 @@ Note: this is a work in progress, UX will be improved.
 
 ## How to contribute
 
-See [DEVELOP.md](DEVELOP.md).
+See [DEVELOP.md](https://github.com/eea/volto-columns-block/blob/master/DEVELOP.md).
 
 ## Copyright and license
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
 
-See [LICENSE.md](LICENSE.md) for details.
+See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
 
 ## Funding
 
