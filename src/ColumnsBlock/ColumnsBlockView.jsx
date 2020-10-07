@@ -10,13 +10,13 @@ import { getStyle } from '@eeacms/volto-columns-block/Styles';
 const ColumnsBlockView = (props) => {
   const { gridSizes } = blocks.blocksConfig[COLUMNSBLOCK];
   const {
-    coldata = {},
+    data = {},
     gridSize = 12,
     gridCols = [],
     block_title,
   } = props.data;
   const metadata = props.metadata || props.properties;
-  const columnList = getColumns(coldata);
+  const columnList = getColumns(data);
   return (
     <div className="columns-view">
       {block_title ? <h3>{block_title}</h3> : ''}
