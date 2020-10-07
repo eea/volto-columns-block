@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import { RenderBlocks } from '@plone/volto/components';
+import { RenderBlocks } from '@eeacms/volto-blocks-form/components';
 import { blocks } from '~/config';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 

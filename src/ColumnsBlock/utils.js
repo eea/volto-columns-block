@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
 
 export const getColumns = (coldata) => {
   return (coldata?.columns_layout?.items || []).map((id) => [

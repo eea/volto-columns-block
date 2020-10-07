@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
-import { SidebarPortal, Icon, InlineForm } from '@plone/volto/components'; // BlocksForm, Icon,
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import { SidebarPortal, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
+import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
+import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
 import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
 import { BlocksForm } from '@eeacms/volto-blocks-form/components';
