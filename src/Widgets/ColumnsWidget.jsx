@@ -25,10 +25,10 @@ const empty = () => {
 
 const ColumnsWidget = (props) => {
   const { value = {}, id, onChange, maxSize = 4 } = props;
-  const { columns = {} } = value;
+  const { blocks = {} } = value;
   const columnsList = (value.blocks_layout?.items || []).map((id) => [
     id,
-    columns[id],
+    blocks[id],
   ]);
 
   const showAdd = value.blocks_layout?.items?.length < maxSize;
@@ -77,7 +77,7 @@ const ColumnsWidget = (props) => {
                         onClick={() => {
                           const newFormData = {
                             ...value,
-                            columns: omit({ ...value.columns }, [childId]),
+                            blocks: omit({ ...value.blocks }, [childId]),
                             blocks_layout: {
                               ...value.blocks_layout,
                               items: without(
@@ -106,8 +106,8 @@ const ColumnsWidget = (props) => {
               const [newId, newData] = empty();
               onChange(id, {
                 ...value,
-                columns: {
-                  ...value.columns,
+                blocks: {
+                  ...value.blocks,
                   [newId]: newData,
                 },
                 blocks_layout: {

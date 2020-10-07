@@ -18,7 +18,6 @@ import EditBlockWrapper from './EditBlockWrapper';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
-import { settings } from '~/config';
 
 import tuneSVG from '@plone/volto/icons/tune.svg';
 import upSVG from '@plone/volto/icons/up.svg';
@@ -70,7 +69,7 @@ class ColumnsBlockEdit extends React.Component {
   createFrom = (initialData) => {
     const { gridCols, gridSize } = initialData;
     return {
-      coldata: empty(gridCols.length),
+      data: empty(gridCols.length),
       gridSize,
       gridCols,
     };
@@ -78,17 +77,17 @@ class ColumnsBlockEdit extends React.Component {
 
   onChangeColumnSettings = (id, value) => {
     const { data, onChangeBlock, block } = this.props;
-    const { coldata } = data;
+    const coldata = data.data;
     const formData = {
       ...data,
-      coldata: {
+      data: {
         ...coldata,
-        columns: {
-          ...coldata.columns,
+        blocks: {
+          ...coldata.blocks,
           [this.state.activeColumn]: {
-            ...coldata.columns?.[this.state.activeColumn],
+            ...coldata.blocks?.[this.state.activeColumn],
             settings: {
-              ...coldata.columns?.[this.state.activeColumn]?.settings,
+              ...coldata.blocks?.[this.state.activeColumn]?.settings,
               [id]: value,
             },
           },
@@ -100,18 +99,18 @@ class ColumnsBlockEdit extends React.Component {
 
   onChangeColumnData = (id, value, colId) => {
     const { data, onChangeBlock, block, onChangeField } = this.props;
-    const { coldata } = data;
+    const coldata = data.data;
     // special handling of blocks and blocks_layout
     if (['blocks', 'blocks_layout'].indexOf(id) > -1) {
       this.blocksState[id] = value;
       onChangeBlock(block, {
         ...data,
-        coldata: {
+        data: {
           ...coldata,
-          columns: {
-            ...coldata.columns,
+          blocks: {
+            ...coldata.blocks,
             [colId]: {
-              ...coldata.columns?.[colId],
+              ...coldata.blocks?.[colId],
               ...this.blocksState,
             },
           },
@@ -137,16 +136,11 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   render() {
-    const {
-      block,
-      data,
-      onChangeBlock,
-      pathname,
-      selected,
-      index,
-    } = this.props;
+    const { block, data, onChangeBlock, pathname, selected } = this.props;
 
-    const { coldata, gridCols, gridSize } = data;
+    const metadata = this.props.metadata || this.props.properties;
+    const { gridCols, gridSize } = data;
+    const coldata = data.data;
     const columnList = getColumns(coldata);
 
     const { gridSizes, variants, available_colors } = blocks.blocksConfig[
@@ -181,13 +175,12 @@ class ColumnsBlockEdit extends React.Component {
                 className="block-column"
                 key={colId}
                 {...(gridSizes[gridCols[index]] || gridCols[index])}
-                style={getStyle(
-                  data?.coldata?.columns?.[colId]?.settings || {},
-                )}
+                style={getStyle(data?.data?.blocks?.[colId]?.settings || {})}
               >
                 <div className="column-header"></div>
                 <BlocksForm
                   key={colId}
+                  metadata={metadata}
                   properties={isEmpty(column) ? emptyBlocksForm() : column}
                   selectedBlock={
                     selected ? this.state.colSelections[colId] : null
@@ -203,10 +196,10 @@ class ColumnsBlockEdit extends React.Component {
                   onChangeFormData={(newFormData) => {
                     onChangeBlock(block, {
                       ...data,
-                      coldata: {
+                      data: {
                         ...coldata,
-                        columns: {
-                          ...coldata.columns,
+                        blocks: {
+                          ...coldata.blocks,
                           [colId]: newFormData,
                         },
                       },
@@ -269,8 +262,8 @@ class ColumnsBlockEdit extends React.Component {
                   }`}
                   onChangeField={this.onChangeColumnSettings}
                   formData={
-                    data?.coldata?.columns?.[this.state.activeColumn]
-                      ?.settings || {}
+                    data?.data?.blocks?.[this.state.activeColumn]?.settings ||
+                    {}
                   }
                 />
               </>
