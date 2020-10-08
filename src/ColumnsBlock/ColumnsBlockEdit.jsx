@@ -77,6 +77,7 @@ class ColumnsBlockEdit extends React.Component {
 
   onChangeColumnSettings = (id, value) => {
     const { data, onChangeBlock, block } = this.props;
+    console.log('ok', { id, value });
     const coldata = data.data;
     const formData = {
       ...data,
@@ -124,16 +125,45 @@ class ColumnsBlockEdit extends React.Component {
   getColumnsBlockSchema = () => {
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
-    const { gridCols = [] } = data;
+    // const { gridCols = [] } = data;
     // console.log('gridcols', gridCols);
+
+    if (typeof data.data === 'undefined') {
+      return schema;
+    }
+
+    const cols = getColumns(data.data);
+
     const available_variants = variants.filter(
-      ({ defaultData }) => defaultData?.gridCols?.length === gridCols.length,
+      ({ defaultData }) => defaultData?.gridCols?.length === cols.length,
     );
     schema.properties.gridCols.choices = available_variants.map(
       ({ defaultData, title }) => [defaultData?.gridCols, title],
     );
+
+    console.log('av', available_variants);
+
+    // TODO: for the following statement to work please copy SelectWidget.jsx
+    // from Volto and rename it ColumnsLayoutChooser.jsx , make it work
+    // with the below statement and in future maybe add design improvements
+    // (displaying graphically the layout in the Select)
+    data.gridCols.value = {
+      label: schema.properties.gridCols.choices[0][1],
+      value: schema.properties.gridCols.choices[0][0],
+    };
+    // schema.properties.gridCols.defaultValue = available_variants[0];
+
+    console.log('val', data.gridCols.value);
+    // schema.properties.gridCols.value = data.gridCols.value;
+
     return schema;
   };
+
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (this.props.data.gridCols.choices !== prevProps.data.gridCols.choices) {
+
+  //   }
+  // }
 
   render() {
     const { block, data, onChangeBlock, pathname, selected } = this.props;
@@ -272,6 +302,7 @@ class ColumnsBlockEdit extends React.Component {
                 schema={this.getColumnsBlockSchema()}
                 title="Columns block"
                 onChangeField={(id, value) => {
+                  console.log('new data', { id, value });
                   onChangeBlock(block, {
                     ...data,
                     [id]: value,
