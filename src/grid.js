@@ -6,6 +6,11 @@ import iconE from './ColumnsBlock/icons/three-columns.svg';
 import iconF from './ColumnsBlock/icons/four-quarter-columns.svg';
 
 export const gridSizes = {
+  full: {
+    mobile: 12,
+    tablet: 12,
+    computer: 12,
+  },
   halfWidth: {
     mobile: 12,
     tablet: 6,
@@ -86,5 +91,13 @@ export const variants = [
       gridCols: ['oneQuarter', 'oneQuarter', 'oneQuarter', 'oneQuarter'],
     },
     title: '25 / 25 / 25 / 25',
+  },
+  {
+    icon: iconF,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['full'],
+    },
+    title: '100',
   },
 ];

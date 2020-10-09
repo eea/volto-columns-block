@@ -124,10 +124,11 @@ class ColumnsBlockEdit extends React.Component {
   getColumnsBlockSchema = () => {
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
-    const { gridCols = [] } = data;
+    const { blocks_layout = {} } = data.data || {};
+    const nrOfColumns = (blocks_layout?.items || []).length;
     // console.log('gridcols', gridCols);
     const available_variants = variants.filter(
-      ({ defaultData }) => defaultData?.gridCols?.length === gridCols.length,
+      ({ defaultData }) => defaultData?.gridCols?.length === nrOfColumns,
     );
     schema.properties.gridCols.choices = available_variants.map(
       ({ defaultData, title }) => [defaultData?.gridCols, title],
