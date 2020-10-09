@@ -11,7 +11,14 @@ import { Button } from 'semantic-ui-react';
 import { blocks } from '~/config';
 
 import { ColumnsBlockSchema } from './schema';
-import { getColumns, empty, defaultNewColumn } from './utils';
+import {
+  getColumns,
+  empty,
+  defaultNewColumn,
+  hasColumns,
+  forEachColumn,
+  columnIsEmpty,
+} from './utils';
 import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
@@ -152,20 +159,17 @@ class ColumnsBlockEdit extends React.Component {
     }
 
     // fill empty columns
-    if (this.props.data.data?.blocks) {
-      for (const colId in this.props.data.data?.blocks) {
-        if (
-          this.props.data.data?.blocks[colId].blocks_layout.items.length === 0
-        ) {
+    if (hasColumns(this.props.data.data)) {
+      forEachColumn(this.props.data.data, ([colId, colData]) => {
+        if (columnIsEmpty(colData)) {
           const newCol = defaultNewColumn();
-
           const fd = clone(this.props.properties);
           fd.blocks[this.props.block].data.blocks[colId] = newCol;
 
           this.props.onChangeField('blocks', fd.blocks);
           this.props.onChangeField('blocks_layout', fd.blocks_layout);
         }
-      }
+      });
     }
   }
 

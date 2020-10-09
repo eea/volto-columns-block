@@ -9,6 +9,20 @@ export const getColumns = (data) => {
   ]);
 };
 
+export const hasColumns = (data) => {
+  return typeof data !== 'undefined'
+    ? data.blocks_layout.items.length > 0
+    : false;
+};
+
+export const forEachColumn = (data, callback) => {
+  getColumns(data).forEach(callback);
+};
+
+export const columnIsEmpty = (colData) => {
+  return colData.blocks_layout.items.length === 0;
+};
+
 export const empty = (count) => {
   const blocks = {};
   const items = [];
