@@ -154,9 +154,9 @@ class ColumnsBlockEdit extends React.Component {
     // fill empty columns
     if (this.props.data.data?.blocks) {
       for (const colId in this.props.data.data?.blocks) {
-        const col = clone(this.props.data.data?.blocks[colId]);
-
-        if (col.blocks_layout.items.length === 0) {
+        if (
+          this.props.data.data?.blocks[colId].blocks_layout.items.length === 0
+        ) {
           const newCol = defaultNewColumn();
 
           const fd = clone(this.props.properties);
