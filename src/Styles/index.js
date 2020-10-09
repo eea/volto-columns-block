@@ -8,6 +8,9 @@ export function makeStyleSchema({ available_colors }) {
 
 export function getStyle(props) {
   return {
-    backgroundColor: props.backgroundColor,
+    verticalAlign: props.grid_vertical_align,
+    style: {
+      backgroundColor: props.backgroundColor,
+    },
   };
 }

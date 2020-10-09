@@ -192,7 +192,7 @@ class ColumnsBlockEdit extends React.Component {
                 className="block-column"
                 key={colId}
                 {...(gridSizes[gridCols[index]] || gridCols[index])}
-                style={getStyle(data?.data?.blocks?.[colId]?.settings || {})}
+                {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
               >
                 <div className="column-header"></div>
                 <BlocksForm

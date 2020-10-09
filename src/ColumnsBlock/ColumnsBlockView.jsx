@@ -9,12 +9,7 @@ import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
 const ColumnsBlockView = (props) => {
   const { gridSizes } = blocks.blocksConfig[COLUMNSBLOCK];
-  const {
-    data = {},
-    gridSize = 12,
-    gridCols = [],
-    block_title,
-  } = props.data;
+  const { data = {}, gridSize = 12, gridCols = [], block_title } = props.data;
   const metadata = props.metadata || props.properties;
   const columnList = getColumns(data);
   return (
@@ -27,7 +22,7 @@ const ColumnsBlockView = (props) => {
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
               className="column-blocks-wrapper"
-              style={getStyle(column.settings || {})}
+              {...getStyle(column.settings || {})}
             >
               {/* <h4>{`Column ${index}`}</h4> */}
               <RenderBlocks {...props} metadata={metadata} content={column} />
