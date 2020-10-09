@@ -4,7 +4,7 @@ export const StyleSchema = () => ({
     {
       id: 'default',
       title: 'Style',
-      fields: ['backgroundColor'],
+      fields: ['backgroundColor', 'grid_vertical_align'],
     },
   ],
   properties: {
@@ -12,6 +12,14 @@ export const StyleSchema = () => ({
       title: 'Background color',
       type: 'color',
       widget: 'simple_color_picker',
+    },
+    grid_vertical_align: {
+      title: 'Vertical align',
+      choices: [
+        ['bottom', 'Bottom'],
+        ['middle', 'Middle'],
+        ['top', 'Top'],
+      ],
     },
   },
   required: [],
