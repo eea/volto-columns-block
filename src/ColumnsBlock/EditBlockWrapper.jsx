@@ -12,8 +12,6 @@ import dragSVG from '@plone/volto/icons/drag.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
 
-import { getColumns } from './utils';
-
 const messages = defineMessages({
   unknownBlock: {
     id: 'Unknown Block',
@@ -76,8 +74,6 @@ class EditBlockWrapper extends React.Component {
     // const visible = selected && blockHasValue(block) && !block.fixed;
     // visibility: visible ? 'visible' : 'hidden',
 
-    const showDeleteButton = getColumns(blockProps.properties).length > 1;
-
     const required = isBoolean(data.required)
       ? data.required
       : includes(blocks.requiredBlocks, type);
@@ -129,7 +125,7 @@ class EditBlockWrapper extends React.Component {
                   <Icon name={addSVG} className="" size="19px" />
                 </Button>
               )}
-              {!required && showDeleteButton && (
+              {!required && (
                 <Button
                   icon
                   basic
