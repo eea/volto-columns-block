@@ -138,7 +138,13 @@ class ColumnsBlockEdit extends React.Component {
   componentDidUpdate(prevProps) {
     const cols = this.props.data.data?.blocks_layout?.items || [];
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
-    if (cols.length !== prevCols.length) {
+
+    console.log('val', this.props.data.gridCols);
+    if (
+      cols.length !==
+      prevCols.length /* ||
+      this.props.data.gridCols?.length === 0 */
+    ) {
       const available_variants = variants.filter(
         ({ defaultData }) => defaultData?.gridCols?.length === cols.length,
       );
@@ -146,6 +152,7 @@ class ColumnsBlockEdit extends React.Component {
       if (variant) {
         this.props.onChangeBlock(this.props.block, {
           ...this.props.data,
+          gridSize: variant.defaultData.gridSize,
           gridCols: variant.defaultData.gridCols,
         });
       }
