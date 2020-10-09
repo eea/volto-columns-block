@@ -126,7 +126,6 @@ class ColumnsBlockEdit extends React.Component {
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
     const nrOfColumns = (blocks_layout?.items || []).length;
-    // console.log('gridcols', gridCols);
     const available_variants = variants.filter(
       ({ defaultData }) => defaultData?.gridCols?.length === nrOfColumns,
     );
@@ -135,6 +134,23 @@ class ColumnsBlockEdit extends React.Component {
     );
     return schema;
   };
+
+  componentDidUpdate(prevProps) {
+    const cols = this.props.data.data?.blocks_layout?.items || [];
+    const prevCols = prevProps.data.data?.blocks_layout?.items || [];
+    if (cols.length !== prevCols.length) {
+      const available_variants = variants.filter(
+        ({ defaultData }) => defaultData?.gridCols?.length === cols.length,
+      );
+      const variant = available_variants?.[0];
+      if (variant) {
+        this.props.onChangeBlock(this.props.block, {
+          ...this.props.data,
+          gridCols: variant.defaultData.gridCols,
+        });
+      }
+    }
+  }
 
   render() {
     const { block, data, onChangeBlock, pathname, selected } = this.props;
