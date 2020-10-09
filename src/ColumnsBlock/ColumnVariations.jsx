@@ -6,11 +6,11 @@ export default ({ data, onChange, children, variants }) => {
   return (
     <Segment>
       <h4>Select layout:</h4>
-      <Card.Group centered itemsPerRow={6}>
+      <Card.Group centered itemsPerRow={7}>
         {variants.map(({ icon, defaultData, title }, index) => (
           <Card key={index} onClick={() => onChange(defaultData)}>
             <Card.Content>
-              <Icon name={icon} size="45" />
+              <Icon name={icon} size="55" />
               {title ? <p>{title}</p> : ''}
             </Card.Content>
           </Card>

@@ -4,6 +4,7 @@ import iconC from './ColumnsBlock/icons/one-third-right.svg';
 import iconD from './ColumnsBlock/icons/three-third-columns.svg';
 import iconE from './ColumnsBlock/icons/three-columns.svg';
 import iconF from './ColumnsBlock/icons/four-quarter-columns.svg';
+import iconG from './ColumnsBlock/icons/full-column.svg';
 
 export const gridSizes = {
   full: {
@@ -93,7 +94,7 @@ export const variants = [
     title: '25 / 25 / 25 / 25',
   },
   {
-    icon: iconF,
+    icon: iconG,
     defaultData: {
       gridSize: 12,
       gridCols: ['full'],
