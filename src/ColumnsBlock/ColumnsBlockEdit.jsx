@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
-import { isEmpty, clone } from 'lodash';
+import { isEmpty } from 'lodash';
 import { SidebarPortal, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
@@ -151,23 +151,30 @@ class ColumnsBlockEdit extends React.Component {
       );
       const variant = available_variants?.[0];
       if (variant) {
-        this.props.onChangeBlock(this.props.block, {
+        return this.props.onChangeBlock(this.props.block, {
           ...this.props.data,
           gridCols: variant.defaultData.gridCols,
         });
       }
     }
 
-    // fill empty columns
-    if (hasColumns(this.props.data.data)) {
-      forEachColumn(this.props.data.data, ([colId, colData]) => {
-        if (columnIsEmpty(colData)) {
-          const newCol = defaultNewColumn();
-          const fd = clone(this.props.properties);
-          fd.blocks[this.props.block].data.blocks[colId] = newCol;
+    const { block, onChangeBlock, data } = this.props;
 
-          this.props.onChangeField('blocks', fd.blocks);
-          this.props.onChangeField('blocks_layout', fd.blocks_layout);
+    // fill empty columns
+    if (hasColumns(data.data)) {
+      forEachColumn(data.data, ([colId, colData]) => {
+        if (columnIsEmpty(colData)) {
+          const newData = {
+            ...data,
+            data: {
+              ...data.data,
+              blocks: {
+                ...data.data.blocks,
+                [colId]: defaultNewColumn(),
+              },
+            },
+          };
+          onChangeBlock(block, newData);
         }
       });
     }
