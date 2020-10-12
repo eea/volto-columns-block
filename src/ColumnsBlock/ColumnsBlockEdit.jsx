@@ -139,12 +139,11 @@ class ColumnsBlockEdit extends React.Component {
     const cols = this.props.data.data?.blocks_layout?.items || [];
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
 
-    console.log('val', this.props.data.gridCols);
-    if (
-      cols.length !==
-      prevCols.length /* ||
-      this.props.data.gridCols?.length === 0 */
-    ) {
+    const colNumChanged = cols.length !== prevCols.length;
+    const notInitialLayoutSelection = prevCols.length !== 0;
+    const shouldUpdateLayout = colNumChanged && notInitialLayoutSelection;
+
+    if (shouldUpdateLayout) {
       const available_variants = variants.filter(
         ({ defaultData }) => defaultData?.gridCols?.length === cols.length,
       );
