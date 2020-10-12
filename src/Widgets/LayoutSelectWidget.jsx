@@ -45,6 +45,39 @@ export const Option = (props) => {
   );
 };
 
+const SingleValue = (props) => {
+  const { children, className, cx, getStyles, isDisabled, innerProps } = props;
+
+  const variant = variants.find((v) =>
+    gridColsAreEqual(variantToGridCols(v), props.data.value),
+  );
+
+  const icon = variant?.icon;
+
+  return (
+    <div
+      style={getStyles('singleValue', props)}
+      className={cx(
+        {
+          'single-value': true,
+          'single-value--is-disabled': isDisabled,
+        },
+        className,
+      )}
+      {...innerProps}
+    >
+      {icon && (
+        <Icon
+          name={icon}
+          size="24px"
+          className="layout-select-widget-selection-icon"
+        />
+      )}
+      {children}
+    </div>
+  );
+};
+
 /**
  * LayoutSelectWidget component class.
  * @function LayoutSelectWidget
@@ -83,8 +116,6 @@ export class LayoutSelectWidget extends Component {
   render() {
     const { id, choices, value, onChange } = this.props;
 
-    console.log('value', value);
-
     return (
       <FormFieldWrapper {...this.props}>
         <Select
@@ -100,7 +131,7 @@ export class LayoutSelectWidget extends Component {
           })}
           styles={customSelectStyles}
           theme={selectTheme}
-          components={{ DropdownIndicator, Option }}
+          components={{ DropdownIndicator, Option, SingleValue }}
           onChange={(data) => {
             this.setState({ selectedOption: data });
             return onChange?.(id, data.value);
