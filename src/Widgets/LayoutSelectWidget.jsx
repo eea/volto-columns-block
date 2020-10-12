@@ -6,22 +6,48 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { defineMessages, injectIntl } from 'react-intl';
-import loadable from '@loadable/component';
-
-import { FormFieldWrapper } from '@plone/volto/components';
-
+import Select, { components } from 'react-select';
+import { isEqual } from 'lodash';
+import { variants } from '../grid';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import {
-  Option,
   DropdownIndicator,
   selectTheme,
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+import checkSVG from '@plone/volto/icons/check.svg';
 
-const Select = loadable(() => import('react-select'));
+const gridColsAreEqual = (gridCols1, gridCols2) => {
+  return isEqual(gridCols1, gridCols2);
+};
+
+const variantToGridCols = (v) => {
+  return v.defaultData.gridCols;
+};
+
+export const Option = (props) => {
+  return (
+    <components.Option {...props}>
+      <Icon
+        name={
+          variants.find((v) =>
+            gridColsAreEqual(variantToGridCols(v), props.value),
+          ).icon
+        }
+        size="24px"
+      />
+      <div>{props.label}</div>
+      {props.isFocused && !props.isSelected && (
+        <Icon name={checkSVG} size="24px" color="#b8c6c8" />
+      )}
+      {props.isSelected && <Icon name={checkSVG} size="24px" color="#007bc1" />}
+    </components.Option>
+  );
+};
 
 /**
- * SelectWidget component class.
- * @function SelectWidget
+ * LayoutSelectWidget component class.
+ * @function LayoutSelectWidget
  * @returns {string} Markup of the component.
  */
 export class LayoutSelectWidget extends Component {
