@@ -1,7 +1,7 @@
 import columnSVG from './ColumnsBlock/icons/three-columns.svg';
 
 import { ColumnsBlockView, ColumnsBlockEdit } from './ColumnsBlock';
-import ColumnsWidget from './Widgets/ColumnsWidget';
+import { ColumnsWidget, LayoutSelectWidget } from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
@@ -47,6 +47,7 @@ export default function install(config) {
 
   config.widgets.type.columns = ColumnsWidget;
   config.widgets.widget.simple_color_picker = ColorPickerWidget;
+  config.widgets.widget.layout_select = LayoutSelectWidget;
 
   return config;
 }

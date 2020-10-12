@@ -71,7 +71,7 @@ const ColumnsWidget = (props) => {
                     <Icon name={dragSVG} size="18px" />
                   </div>
                   <div className="column-area">
-                    <div className="label">Column {index}</div>
+                    <div className="label">Column {index + 1}</div>
                     {value.blocks_layout?.items?.length > 1 ? (
                       <button
                         onClick={() => {

@@ -1,2 +1,2 @@
-import ColumnsWidget from './ColumnsWidget';
-export default ColumnsWidget;
+export ColumnsWidget from './ColumnsWidget';
+export LayoutSelectWidget from './LayoutSelectWidget';

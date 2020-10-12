@@ -36,6 +36,7 @@ export const ColumnsBlockSchema = () => ({
     },
     gridCols: {
       title: 'Layout',
+      widget: 'layout_select',
       choices: [],
     },
   },
