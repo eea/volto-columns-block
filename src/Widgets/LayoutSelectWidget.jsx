@@ -88,7 +88,7 @@ export class LayoutSelectWidget extends Component {
     selectedOption: null,
   };
 
-  componentDidMount() {
+  updateSelectedOption = () => {
     this.setState({
       selectedOption: {
         value: this.props.value,
@@ -97,18 +97,15 @@ export class LayoutSelectWidget extends Component {
         )?.[1],
       },
     });
+  };
+
+  componentDidMount() {
+    this.updateSelectedOption();
   }
 
   componentDidUpdate(prevProps) {
     if (!isEqual(prevProps.value, this.props.value)) {
-      this.setState({
-        selectedOption: {
-          value: this.props.value,
-          label: this.props.choices.find((x) =>
-            isEqual(x[0], this.props.value),
-          )?.[1],
-        },
-      });
+      this.updateSelectedOption();
     }
   }
 
