@@ -92,17 +92,21 @@ export class LayoutSelectWidget extends Component {
     this.setState({
       selectedOption: {
         value: this.props.value,
-        label: this.props.choices.find((x) => x[0] === this.props.value)?.[1],
+        label: this.props.choices.find((x) =>
+          isEqual(x[0], this.props.value),
+        )?.[1],
       },
     });
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
+    if (!isEqual(prevProps.value, this.props.value)) {
       this.setState({
         selectedOption: {
           value: this.props.value,
-          label: this.props.choices.find((x) => x[0] === this.props.value)?.[1],
+          label: this.props.choices.find((x) =>
+            isEqual(x[0], this.props.value),
+          )?.[1],
         },
       });
     }
@@ -114,7 +118,7 @@ export class LayoutSelectWidget extends Component {
    * @returns {string} Markup for the component.
    */
   render() {
-    const { id, choices, value, onChange } = this.props;
+    const { id, choices, onChange } = this.props;
 
     return (
       <FormFieldWrapper {...this.props}>

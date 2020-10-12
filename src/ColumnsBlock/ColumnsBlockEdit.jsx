@@ -140,8 +140,8 @@ class ColumnsBlockEdit extends React.Component {
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
 
     const colNumChanged = cols.length !== prevCols.length;
-    const notInitialLayoutSelection = prevCols.length !== 0;
-    const shouldUpdateLayout = colNumChanged && notInitialLayoutSelection;
+    const initialLayoutSelection = Object.keys(prevProps.data).length === 1;
+    const shouldUpdateLayout = colNumChanged && !initialLayoutSelection;
 
     if (shouldUpdateLayout) {
       const available_variants = variants.filter(
