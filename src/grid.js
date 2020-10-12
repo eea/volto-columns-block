@@ -42,6 +42,16 @@ export const gridSizes = {
     tablet: 6,
     computer: 3,
   },
+  oneFifth: {
+    mobile: 12,
+    tablet: 2,
+    computer: 3,
+  },
+  fourFifths: {
+    mobile: 12,
+    tablet: 10,
+    computer: 9,
+  },
 };
 
 export const variants = [
@@ -52,6 +62,14 @@ export const variants = [
       gridCols: ['halfWidth', 'halfWidth'],
     },
     title: '50 / 50',
+  },
+  {
+    icon: iconB,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['oneFifth', 'fourFifths'],
+    },
+    title: '20 / 80',
   },
   {
     icon: iconB,
@@ -68,6 +86,14 @@ export const variants = [
       gridCols: ['twoThirds', 'oneThird'],
     },
     title: '70 / 30',
+  },
+  {
+    icon: iconC,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['fourFifths', 'oneFifth'],
+    },
+    title: '80 / 20',
   },
   {
     icon: iconD,
