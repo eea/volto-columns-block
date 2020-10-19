@@ -5,6 +5,7 @@ import { ColumnsWidget, LayoutSelectWidget } from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
+import { cloneColumnsBlockData } from './utils';
 
 export default function install(config) {
   config.blocks.blocksConfig[COLUMNSBLOCK] = {
@@ -43,6 +44,7 @@ export default function install(config) {
       '#BED3F3',
       '#D4C4FB',
     ],
+    cloneData: cloneColumnsBlockData,
   };
 
   config.widgets.type.columns = ColumnsWidget;
