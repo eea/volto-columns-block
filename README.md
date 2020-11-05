@@ -14,7 +14,11 @@ Note: this is a work in progress, UX will be improved.
 
 ###
 
-![first alpha screenshot](screenshot-a0.png)
+![Initializing Columns Layout](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/initialize.png)
+![Columns Edit Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/edit.png)
+![Columns Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/columns-sidebar.png)
+![Single Column Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/single-column-sidebar.png)
+![Columns View Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/view.png)
 
 ## Getting started
 
