@@ -1,6 +1,6 @@
 import columnSVG from './ColumnsBlock/icons/three-columns.svg';
 
-import { ColumnsBlockView, ColumnsBlockChooser } from './ColumnsBlock';
+import { ColumnBlockViewRender, ColumnsBlockChooser } from './ColumnsBlock';
 import { ColumnsWidget, LayoutSelectWidget } from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
@@ -13,7 +13,7 @@ export default function install(config) {
     title: 'Columns',
     icon: columnSVG,
     group: 'common',
-    view: ColumnsBlockView,
+    view: ColumnBlockViewRender,
     edit: ColumnsBlockChooser,
     restricted: false,
     mostUsed: true,

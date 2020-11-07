@@ -1,20 +1,28 @@
 import React from 'react';
 
-import ColumnsBlockEdit from '@eeacms/volto-columns-block/ColumnsBlock';
+import ColumnsBlockEdit from './ColumnsBlockEdit';
 import AccordionBlockEdit from '@eeacms/volto-accordion-block/components';
 import Chooser from './Chooser';
 import { options } from './options';
-const ColumnsBlockChooser = (props) => {
-  const { data } = props;
-  const [display, setDisplay] = React.useState('');
 
-  if (display === '' && Object.keys(data).length === 1) {
+const ColumnsBlockChooser = (props) => {
+  const {
+    data,
+    onChangeBlock,
+    block,
+    data: { display = 'Columns' },
+  } = props;
+
+  if (Object.keys(data).length === 1) {
     return (
       <div role="presentation" className="columns-block">
         <Chooser
           variants={options}
           onChange={(initialData) => {
-            setDisplay(initialData);
+            onChangeBlock(block, {
+              ...data,
+              display: initialData,
+            });
           }}
         />
       </div>
