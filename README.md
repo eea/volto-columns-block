@@ -1,4 +1,5 @@
 # volto-columns-block
+
 [![Releases](https://img.shields.io/github/v/release/eea/volto-columns-block)](https://github.com/eea/volto-columns-block/releases)
 
 [Volto](https://github.com/plone/volto) add-on
@@ -19,30 +20,33 @@ blocks container.
 ## Getting started
 
 1. Create new volto project if you don't already have one:
-    ```
-    $ npm install -g @plone/create-volto-app
-    $ create-volto-app my-volto-project
-    $ cd my-volto-project
-    ```
+
+   ```
+   $ npm install -g @plone/create-volto-app
+   $ create-volto-app my-volto-project
+   $ cd my-volto-project
+   ```
 
 1. Update `package.json`:
-    ``` JSON
-    "addons": [
-        "@eeacms/volto-blocks-form",
-        "@eeacms/volto-columns-block"
-    ],
 
-    "dependencies": {
-        "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0",
-        "@eeacms/volto-columns-block": "github:eea/volto-columns-block#0.2.0"
-    }
-    ```
+   ```JSON
+   "addons": [
+       "@eeacms/volto-blocks-form",
+       "@eeacms/volto-columns-block"
+   ],
+
+   "dependencies": {
+       "@eeacms/volto-blocks-form": "github:eea/volto-blocks-form#0.5.0",
+       "@eeacms/volto-columns-block": "github:eea/volto-columns-block#0.2.0"
+   }
+   ```
 
 1. Install new add-ons and restart Volto:
-    ```
-    $ yarn
-    $ yarn start
-    ```
+
+   ```
+   $ yarn
+   $ yarn start
+   ```
 
 1. Go to http://localhost:3000
 

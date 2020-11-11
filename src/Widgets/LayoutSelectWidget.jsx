@@ -47,7 +47,9 @@ export const Option = (props) => {
             {props.isFocused && !props.isSelected && (
               <Icon name={checkSVG} size="24px" color="#b8c6c8" />
             )}
-            {props.isSelected && <Icon name={checkSVG} size="24px" color="#007bc1" />}
+            {props.isSelected && (
+              <Icon name={checkSVG} size="24px" color="#007bc1" />
+            )}
           </components.Option>
         );
       }}

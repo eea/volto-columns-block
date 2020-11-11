@@ -39,19 +39,24 @@ export default (props) => {
         {showPicker ? (
           <ReactColor>
             {({ GithubPicker }) => {
-              return <GithubPicker
-                width="220px"
-                triangle="top"
-                className="color-picker"
-                colors={available_colors}
-                color={value || '#000'}
-                onChangeComplete={(value) => {
-                  setShowPicker(false);
-                  onChange(id, value.hex);
-                }}></GithubPicker>;
-              }}
+              return (
+                <GithubPicker
+                  width="220px"
+                  triangle="top"
+                  className="color-picker"
+                  colors={available_colors}
+                  color={value || '#000'}
+                  onChangeComplete={(value) => {
+                    setShowPicker(false);
+                    onChange(id, value.hex);
+                  }}
+                ></GithubPicker>
+              );
+            }}
           </ReactColor>
-        ) : ''}
+        ) : (
+          ''
+        )}
       </div>
     </FormFieldWrapper>
   );
