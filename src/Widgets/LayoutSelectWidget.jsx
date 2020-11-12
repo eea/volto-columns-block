@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { compose } from 'redux';
-import { defineMessages, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import loadable from '@loadable/component';
 

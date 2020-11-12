@@ -13,13 +13,15 @@
   }
 
   .column-grid {
-    margin-left: -0.2rem!important;
-    margin-right: -0.2rem!important;
+    margin-right: -0.2rem !important;
+    margin-left: -0.2rem !important;
+
     .column:first-child {
-      padding-left: 0.2rem!important;
+      padding-left: 0.2rem !important;
     }
+
     .column:last-child {
-      padding-right: 0.2rem!important;
+      padding-right: 0.2rem !important;
     }
   }
 
@@ -58,21 +60,21 @@
   .ui.cards a.card,
   .ui.link.cards .card,
   .ui.link.card {
-    box-shadow: none;
     border: 1px solid #edf2f3;
+    box-shadow: none;
+
     &:hover {
       border: 1px solid #edf2f3;
-      box-shadow: none;
       background-color: #edf2f3;
+      box-shadow: none;
     }
   }
 
   .ui.card .content {
-    font-size: 10px !important;
-    text-align: center;
-
     padding-top: 1.5em !important;
     padding-bottom: 1.5em !important;
+    font-size: 10px !important;
+    text-align: center;
 
     p {
       color: #717171;
@@ -90,11 +92,12 @@
 
 .columns-view {
   .ui.grid.column-block-grid {
-    display: initial!important;
+    display: initial !important;
   }
+
   .column-blocks-wrapper {
-    padding-top: 0.5em!important;
-    padding-bottom: 0.5em!important;
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
   }
 }
 
@@ -104,29 +107,30 @@
 }
 
 .block-toolbar {
+  position: absolute;
+  left: 0px;
   display: flex;
   padding: 3px;
   border: none;
+  margin-top: -34px;
+  margin-bottom: 8px;
   background-color: #8dd7ef;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  margin-bottom: 8px;
-  position: absolute;
-  margin-top: -34px;
-  left: 0px;
 
   .wrapper-column-block {
     > .ui.basic.button {
       &:hover {
-        background-color: transparent!important;
+        background-color: transparent !important;
       }
     }
   }
 
-  >.ui.basic.button {
+  > .ui.basic.button {
     &:hover {
-      background-color: transparent!important;
+      background-color: transparent !important;
     }
+
     svg {
       color: #134448;
     }
@@ -135,11 +139,11 @@
   .drag.handle.wrapper-column-block {
     position: initial;
     left: initial;
-    margin-left: initial!important;
-    font-size: 1rem;
     min-height: 1em;
-    vertical-align: baseline;
+    margin-left: initial !important;
+    font-size: 1rem;
     line-height: 1em;
+    vertical-align: baseline;
   }
 }
 
@@ -171,6 +175,6 @@
 }
 
 .layout-select-widget-selection-icon {
-  vertical-align: middle;
   margin-right: 1.5rem;
+  vertical-align: middle;
 }
