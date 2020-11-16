@@ -3,18 +3,34 @@
   "version": "0.3.7",
   "description": "volto-columns-block: Volto add-on",
   "main": "src/index.js",
-  "repository": "https://github.com/eea/volto-columns-block",
   "author": "European Environment Agency: IDM2 A-Team",
   "license": "MIT",
-  "devDependencies": {
-    "release-it": "*"
-  },
-  "scripts": {
-    "release": "release-it",
-    "bootstrap": "node bootstrap"
-  },
+  "homepage": "https://github.com/eea/volto-columns-block",
+  "keywords": [
+    "volto-addon",
+    "volto-block",
+    "volto-columns",
+    "volto",
+    "plone",
+    "react"
+  ],
   "dependencies": {
     "@eeacms/volto-blocks-form": "^1.0.0",
     "react-color": "~2.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eea/volto-columns-block.git"
+  },
+  "scripts": {
+    "release": "release-it",
+    "bootstrap": "node bootstrap",
+    "stylelint": "../../../node_modules/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}'",
+    "stylelint:overrides": "../../../node_modules/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'",
+    "stylelint:fix": "yarn stylelint --fix && yarn stylelint:overrides --fix",
+    "prettier": "../../../node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,json,css,less,md}'",
+    "prettier:fix": "../../../node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,json,css,less,md}'",
+    "lint": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx}'",
+    "lint:fix": "../../../node_modules/eslint/bin/eslint.js --fix 'src/**/*.{js,jsx}'"
   }
 }

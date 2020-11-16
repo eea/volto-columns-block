@@ -23,7 +23,7 @@ fs.readdir(".", { withFileTypes: true }, (err, dirents) => {
         .filter(dirent => dirent.isFile())
         .map(dirent => dirent.name);
     files.forEach(function (file) {
-        if (file != 'bootstrap.js') {
+        if (file != 'bootstrap') {
             bootstrap(file);
         }
     });
