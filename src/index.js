@@ -16,7 +16,7 @@ export default function install(config) {
     view: ColumnsBlockView,
     edit: ColumnsBlockEdit,
     restricted: false,
-    mostUsed: true,
+    mostUsed: false,
     blockHasOwnFocusManagement: true,
     sidebarTab: 1,
     security: {
