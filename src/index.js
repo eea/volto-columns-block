@@ -39,7 +39,6 @@ const extendedSchema = (config) => {
   };
 };
 
-
 export default function install(config) {
   config.blocks.blocksConfig[COLUMNSBLOCK] = {
     id: 'columnsBlock',
