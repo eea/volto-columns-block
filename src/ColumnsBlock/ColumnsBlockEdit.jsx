@@ -187,7 +187,14 @@ class ColumnsBlockEdit extends React.Component {
   }
 
   render() {
-    const { block, data, onChangeBlock, pathname, selected } = this.props;
+    const {
+      block,
+      data,
+      onChangeBlock,
+      pathname,
+      selected,
+      manage,
+    } = this.props;
 
     const metadata = this.props.metadata || this.props.properties;
     const { gridCols, gridSize } = data;
@@ -232,6 +239,10 @@ class ColumnsBlockEdit extends React.Component {
                 <div className="column-header"></div>
                 <BlocksForm
                   key={colId}
+                  title={data?.placeholder}
+                  description={data?.instructions?.data}
+                  manage={manage}
+                  allowedBlocks={data?.allowedBlocks}
                   metadata={metadata}
                   properties={isEmpty(column) ? emptyBlocksForm() : column}
                   selectedBlock={
@@ -268,21 +279,23 @@ class ColumnsBlockEdit extends React.Component {
                       blockProps={blockProps}
                       extraControls={
                         <>
-                          <Button
-                            icon
-                            basic
-                            title="Edit column"
-                            onClick={() => {
-                              this.setState({
-                                showSidebar: true,
-                                activeColumn: colId,
-                                colSelections: {},
-                              });
-                              this.props.setSidebarTab(1);
-                            }}
-                          >
-                            <Icon name={tuneSVG} className="" size="19px" />
-                          </Button>
+                          {!data?.readOnlySettings && (
+                            <Button
+                              icon
+                              basic
+                              title="Edit column"
+                              onClick={() => {
+                                this.setState({
+                                  showSidebar: true,
+                                  activeColumn: colId,
+                                  colSelections: {},
+                                });
+                                this.props.setSidebarTab(1);
+                              }}
+                            >
+                              <Icon name={tuneSVG} className="" size="19px" />
+                            </Button>
+                          )}
                         </>
                       }
                     >
@@ -295,7 +308,8 @@ class ColumnsBlockEdit extends React.Component {
           </Grid>
         )}
 
-        {Object.keys(this.state.colSelections).length === 0 ? (
+        {Object.keys(this.state.colSelections).length === 0 &&
+        !data?.readOnlySettings ? (
           <SidebarPortal selected={true}>
             {this.state.activeColumn ? (
               <>

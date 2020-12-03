@@ -1,11 +1,44 @@
 import columnSVG from './ColumnsBlock/icons/three-columns.svg';
 
-import { ColumnsBlockView, ColumnsBlockEdit } from './ColumnsBlock';
+import {
+  ColumnsBlockView,
+  ColumnsBlockEdit,
+  ColumnsLayoutSchema,
+} from './ColumnsBlock';
 import { ColumnsWidget, LayoutSelectWidget } from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
 import { cloneColumnsBlockData } from './utils';
+
+const extendedSchema = (config) => {
+  const choices = Object.keys(config.blocks.blocksConfig)
+    .map((key) => {
+      if (config.blocks.blocksConfig[key]?.restricted) {
+        return false;
+      } else {
+        const title = config.blocks.blocksConfig[key]?.title || key;
+        return [key, title];
+      }
+    })
+    .filter((val) => !!val);
+
+  choices.push(['accordion', 'Accordion']);
+
+  return {
+    ...ColumnsLayoutSchema,
+    properties: {
+      ...ColumnsLayoutSchema.properties,
+      allowedBlocks: {
+        ...ColumnsLayoutSchema.properties.allowedBlocks,
+        items: {
+          choices: choices,
+        },
+      },
+    },
+  };
+};
+
 
 export default function install(config) {
   config.blocks.blocksConfig[COLUMNSBLOCK] = {
@@ -18,6 +51,7 @@ export default function install(config) {
     restricted: false,
     mostUsed: false,
     blockHasOwnFocusManagement: true,
+    schema: extendedSchema(config),
     sidebarTab: 1,
     security: {
       addPermission: [],

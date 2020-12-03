@@ -70,9 +70,7 @@ class EditBlockWrapper extends React.Component {
     } = blockProps;
     const type = data['@type'];
     const { disableNewBlocks } = data;
-
-    // const visible = selected && blockHasValue(block) && !block.fixed;
-    // visibility: visible ? 'visible' : 'hidden',
+    const visible = !data.fixed;
 
     const required = isBoolean(data.required)
       ? data.required
@@ -98,7 +96,7 @@ class EditBlockWrapper extends React.Component {
             <div className="block-toolbar">
               <div
                 style={{
-                  display: 'inline-block',
+                  display: visible ? 'inline-block' : 'none',
                 }}
                 {...draginfo.dragHandleProps}
                 className="drag handle wrapper-column-block"
