@@ -24,7 +24,12 @@ blocks container.
 
    ```
    $ npm install -g yo @plone/generator-volto
-   $ yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block
+   $ yo @plone/volto \
+        my-volto-project \
+        --addon @eeacms/volto-blocks-form \
+        --addon @eeacms/volto-columns-block \
+        --no-interactive \
+        --skip-install
 
    $ cd my-volto-project
    $ yarn add -W @eeacms/volto-columns-block
@@ -34,7 +39,8 @@ blocks container.
 
    ```JSON
    "addons": [
-       "@eeacms/volto-columns-block"
+      "@eeacms/volto-blocks-form",
+      "@eeacms/volto-columns-block"
    ],
 
    "dependencies": {

@@ -12,8 +12,14 @@ Before starting make sure your development environment is properly set. See [Vol
 
 1.  Create new volto app
 
-        $ yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block
-        $ cd my-volto-project
+        $ yo @plone/volto \
+             my-dev-project \
+             --addon @eeacms/volto-blocks-form \
+             --addon @eeacms/volto-columns-block \
+             --workspace src/addons/volto-columns-block \
+             --no-interactive \
+             --skip-install
+        $ cd my-dev-project
 
 1.  Add the following to `mrs.developer.json`:
 
