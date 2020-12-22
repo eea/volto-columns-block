@@ -1,10 +1,10 @@
-import iconA from './ColumnsBlock/icons/two-half-columns.svg';
-import iconB from './ColumnsBlock/icons/one-third-left.svg';
-import iconC from './ColumnsBlock/icons/one-third-right.svg';
-import iconD from './ColumnsBlock/icons/three-third-columns.svg';
-import iconE from './ColumnsBlock/icons/three-columns.svg';
-import iconF from './ColumnsBlock/icons/four-quarter-columns.svg';
-import iconG from './ColumnsBlock/icons/full-column.svg';
+import iconA from "./ColumnsBlock/icons/two-half-columns.svg";
+import iconB from "./ColumnsBlock/icons/one-third-left.svg";
+import iconC from "./ColumnsBlock/icons/one-third-right.svg";
+import iconD from "./ColumnsBlock/icons/three-third-columns.svg";
+import iconE from "./ColumnsBlock/icons/three-columns.svg";
+import iconF from "./ColumnsBlock/icons/four-quarter-columns.svg";
+import iconG from "./ColumnsBlock/icons/full-column.svg";
 
 export const gridSizes = {
   full: {
@@ -52,6 +52,16 @@ export const gridSizes = {
     tablet: 10,
     computer: 9,
   },
+  twoFifths: {
+    mobile: 12,
+    tablet: 10,
+    computer: 7,
+  },
+  threeFifths: {
+    mobile: 12,
+    tablet: 10,
+    computer: 5,
+  },
 };
 
 export const variants = [
@@ -59,72 +69,82 @@ export const variants = [
     icon: iconA,
     defaultData: {
       gridSize: 12,
-      gridCols: ['halfWidth', 'halfWidth'],
+      gridCols: ["halfWidth", "halfWidth"],
     },
-    title: '50 / 50',
+    title: "50 / 50",
   },
   {
     icon: iconB,
     defaultData: {
       gridSize: 12,
-      gridCols: ['oneFifth', 'fourFifths'],
+      gridCols: ["oneFifth", "fourFifths"],
     },
-    title: '20 / 80',
+    title: "20 / 80",
   },
   {
     icon: iconB,
     defaultData: {
       gridSize: 12,
-      gridCols: ['oneThird', 'twoThirds'],
+      gridCols: ["oneThird", "twoThirds"],
     },
-    title: '30 / 70',
+    title: "30 / 70",
   },
   {
     icon: iconC,
     defaultData: {
       gridSize: 12,
-      gridCols: ['twoThirds', 'oneThird'],
+      gridCols: ["twoThirds", "oneThird"],
     },
-    title: '70 / 30',
+    title: "70 / 30",
   },
   {
     icon: iconC,
     defaultData: {
       gridSize: 12,
-      gridCols: ['fourFifths', 'oneFifth'],
+      gridCols: ["fourFifths", "oneFifth"],
     },
-    title: '80 / 20',
+    title: "80 / 20",
   },
   {
     icon: iconD,
     defaultData: {
       gridSize: 12,
-      gridCols: ['oneThird', 'oneThird', 'oneThird'],
+      gridCols: ["oneThird", "oneThird", "oneThird"],
     },
-    title: '33 / 33 / 33',
+    title: "33 / 33 / 33",
   },
   {
     icon: iconE,
     defaultData: {
       gridSize: 12,
-      gridCols: ['oneThirdSmall', 'halfWidthBig', 'oneThirdSmall'],
+      gridCols: ["oneThirdSmall", "halfWidthBig", "oneThirdSmall"],
     },
-    title: '25 / 50 / 25',
+    title: "25 / 50 / 25",
   },
   {
     icon: iconF,
     defaultData: {
       gridSize: 12,
-      gridCols: ['oneQuarter', 'oneQuarter', 'oneQuarter', 'oneQuarter'],
+      gridCols: ["oneQuarter", "oneQuarter", "oneQuarter", "oneQuarter"],
     },
-    title: '25 / 25 / 25 / 25',
+    title: "25 / 25 / 25 / 25",
   },
   {
     icon: iconG,
     defaultData: {
       gridSize: 12,
-      gridCols: ['full'],
+      gridCols: ["full"],
     },
-    title: '100',
+    title: "100",
+  },
+  {
+    icon: iconC,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ["threeFifths", "twoFifths"],
+    },
+    title: "60 / 40",
   },
 ];
+
+iconB;
