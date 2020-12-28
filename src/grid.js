@@ -52,6 +52,16 @@ export const gridSizes = {
     tablet: 10,
     computer: 9,
   },
+  twoFifths: {
+    mobile: 12,
+    tablet: 10,
+    computer: 5,
+  },
+  threeFifths: {
+    mobile: 12,
+    tablet: 10,
+    computer: 7,
+  },
 };
 
 export const variants = [
@@ -126,5 +136,13 @@ export const variants = [
       gridCols: ['full'],
     },
     title: '100',
+  },
+  {
+    icon: iconC,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['threeFifths', 'twoFifths'],
+    },
+    title: '60 / 40',
   },
 ];
