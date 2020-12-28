@@ -55,12 +55,12 @@ export const gridSizes = {
   twoFifths: {
     mobile: 12,
     tablet: 10,
-    computer: 7,
+    computer: 5,
   },
   threeFifths: {
     mobile: 12,
     tablet: 10,
-    computer: 5,
+    computer: 7,
   },
 };
 
