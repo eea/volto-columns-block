@@ -216,7 +216,7 @@ class ColumnsBlockEdit extends React.Component {
     return (
       <div role="presentation" className="columns-block">
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
-        {Object.keys(data).length === 1 ? (
+        {!data?.data ? (
           <ColumnVariations
             variants={variants}
             data={data}
