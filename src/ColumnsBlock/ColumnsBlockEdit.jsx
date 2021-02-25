@@ -8,7 +8,7 @@ import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
 import { BlocksForm } from '@eeacms/volto-blocks-form/components';
 import { Button } from 'semantic-ui-react';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 
 import { ColumnsBlockSchema } from './schema';
 import {
@@ -201,9 +201,11 @@ class ColumnsBlockEdit extends React.Component {
     const coldata = data.data;
     const columnList = getColumns(coldata);
 
-    const { gridSizes, variants, available_colors } = blocks.blocksConfig[
-      COLUMNSBLOCK
-    ];
+    const {
+      gridSizes,
+      variants,
+      available_colors,
+    } = config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors });
 
     // TODO: we have blockHasOwnFocusManagement, so we need to implement this:
