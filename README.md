@@ -44,7 +44,7 @@ blocks container.
    ],
 
    "dependencies": {
-       "@eeacms/volto-columns-block": "^1.0.0"
+       "@eeacms/volto-columns-block": "^2.0.0"
    }
    ```
 

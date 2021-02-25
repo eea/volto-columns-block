@@ -15,7 +15,7 @@
     "react"
   ],
   "dependencies": {
-    "@eeacms/volto-blocks-form": "^1.0.0",
+    "@eeacms/volto-blocks-form": "^2.0.0",
     "react-color": "~2.18.1"
   },
   "repository": {

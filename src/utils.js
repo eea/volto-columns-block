@@ -4,7 +4,7 @@ import {
   getBlocksLayoutFieldname,
   getBlocks,
 } from '@plone/volto/helpers';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 
 const columnConfig = {
   cloneData(blockData) {
@@ -22,7 +22,7 @@ function cloneFormData(formData) {
     })
     .map(([id, blockData]) => {
       const blockConfig =
-        blocks.blocksConfig[blockData['@type']] || columnConfig;
+        config.blocks.blocksConfig[blockData['@type']] || columnConfig;
       return blockConfig.cloneData
         ? blockConfig.cloneData(blockData)
         : [uuid(), blockData];

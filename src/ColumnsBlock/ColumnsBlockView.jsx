@@ -1,14 +1,14 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import { RenderBlocks } from '@eeacms/volto-blocks-form/components';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
 import { getColumns } from './utils';
 import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
 const ColumnsBlockView = (props) => {
-  const { gridSizes } = blocks.blocksConfig[COLUMNSBLOCK];
+  const { gridSizes } = config.blocks.blocksConfig[COLUMNSBLOCK];
   const { data = {}, gridSize = 12, gridCols = [], block_title } = props.data;
   const metadata = props.metadata || props.properties;
   const columnList = getColumns(data);
