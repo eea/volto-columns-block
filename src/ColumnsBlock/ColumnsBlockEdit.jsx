@@ -3,10 +3,10 @@ import { Grid, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 import { SidebarPortal, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
+import { emptyBlocksForm } from '@plone/volto/helpers';
 import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
-import { BlocksForm } from '@eeacms/volto-blocks-form/components';
+import { BlocksForm } from '@plone/volto/components';
 import { Button } from 'semantic-ui-react';
 import config from '@plone/volto/registry';
 

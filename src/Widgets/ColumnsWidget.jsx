@@ -3,8 +3,8 @@ import { v4 as uuid } from 'uuid';
 import { omit, without } from 'lodash';
 import move from 'lodash-move';
 import { Icon, FormFieldWrapper } from '@plone/volto/components';
-import { DragDropList } from '@eeacms/volto-blocks-form/components';
-import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
+import { DragDropList } from '@plone/volto/components';
+import { emptyBlocksForm } from '@plone/volto/helpers';
 
 import dragSVG from '@plone/volto/icons/drag.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';

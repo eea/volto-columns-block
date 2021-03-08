@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
+import { emptyBlocksForm } from '@plone/volto/helpers';
 import config from '@plone/volto/registry';
 
 export const getColumns = (data) => {
