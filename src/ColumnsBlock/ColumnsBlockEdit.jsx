@@ -286,7 +286,7 @@ class ColumnsBlockEdit extends React.Component {
       Object.keys(this.state.colSelections).length > 0
         ? Object.keys(this.state.colSelections)[0]
         : null;
-    const selectedColData = coldata.blocks[selectedCol] || null;
+    const selectedColData = coldata?.blocks?.[selectedCol] || null;
     const selectedBlock = this.state.colSelections[selectedCol];
 
     const {
