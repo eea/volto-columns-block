@@ -41,6 +41,14 @@
 
     .block {
       margin-bottom: 1.5em;
+
+      .block.selected::before {
+        border-top-right-radius: 0;
+      }
+
+      .block-add-button {
+        display: none;
+      }
     }
 
     // .block.selected {
@@ -48,12 +56,6 @@
     //   padding: 0.3em 0.5em;
     //   border-radius: 2px;
     // }
-
-    .block {
-      .block-add-button {
-        display: none;
-      }
-    }
   }
 
   a.ui.card,
@@ -98,6 +100,12 @@
 
   .delete-button {
     display: none !important;
+  }
+
+  .blocks-chooser {
+    left: unset;
+    right: 0;
+    margin-top: 50px;
   }
 }
 
