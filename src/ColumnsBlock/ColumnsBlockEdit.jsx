@@ -82,6 +82,32 @@ class ColumnsBlockEdit extends React.Component {
     };
   };
 
+  handleKeyDown = (
+    e,
+    index,
+    block,
+    node,
+    {
+      disableEnter = false,
+      disableArrowUp = false,
+      disableArrowDown = false,
+    } = {},
+  ) => {
+    const hasblockActive = Object.keys(this.state.colSelections).length > 0;
+    if (e.key === 'ArrowUp' && !disableArrowUp && !hasblockActive) {
+      this.props.onFocusPreviousBlock(block, node);
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowDown' && !disableArrowDown && !hasblockActive) {
+      this.props.onFocusNextBlock(block, node);
+      e.preventDefault();
+    }
+    if (e.key === 'Enter' && !disableEnter && !hasblockActive) {
+      this.props.onAddBlock(config.settings.defaultBlockType, index + 1);
+      e.preventDefault();
+    }
+  };
+
   onChangeColumnSettings = (id, value) => {
     const { data, onChangeBlock, block } = this.props;
     const coldata = data.data;
@@ -208,15 +234,23 @@ class ColumnsBlockEdit extends React.Component {
     } = config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors });
 
-    // TODO: we have blockHasOwnFocusManagement, so we need to implement this:
-    // onKeyDown={(e) => {
-    //   if (e.key === 'Enter') {
-    //     this.onAddBlock(settings.defaultBlockType, index + 1);
-    //     e.preventDefault();
-    //   }
-    // }}
     return (
-      <div role="presentation" className="columns-block">
+      <div
+        role="presentation"
+        className="columns-block"
+        onClick={() => this.props.onSelectBlock(this.props.id)}
+        onKeyDown={(e) => {
+          this.handleKeyDown(
+            e,
+            this.props.index,
+            this.props.block,
+            this.props.blockNode.current,
+          );
+        }}
+        // The tabIndex is required for the keyboard navigation
+        /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+        tabIndex={-1}
+      >
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
         {!data?.data ? (
           <ColumnVariations
@@ -312,7 +346,7 @@ class ColumnsBlockEdit extends React.Component {
 
         {Object.keys(this.state.colSelections).length === 0 &&
         !data?.readOnlySettings ? (
-          <SidebarPortal selected={true}>
+          <SidebarPortal selected={selected}>
             {this.state.activeColumn ? (
               <>
                 <Segment>
