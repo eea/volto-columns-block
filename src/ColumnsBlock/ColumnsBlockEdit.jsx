@@ -29,7 +29,7 @@ import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
-import tuneSVG from '@plone/volto/icons/tune.svg';
+import tuneSVG from '@plone/volto/icons/configuration.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
 import './styles.less';
