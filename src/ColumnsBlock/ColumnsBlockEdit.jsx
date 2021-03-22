@@ -1,9 +1,12 @@
 import React from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
-import { SidebarPortal, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
+import { isEmpty, without } from 'lodash';
+import { SidebarPortal, BlocksToolbar, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import {
+  emptyBlocksForm,
+  getBlocksLayoutFieldname,
+} from '@plone/volto/helpers';
 import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
 import { BlocksForm } from '@plone/volto/components';
@@ -44,6 +47,7 @@ class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      multiSelected: [],
       colSelections: {}, // selected block for each column
       showSidebar: false,
       activeColumn: null,
@@ -154,6 +158,58 @@ class ColumnsBlockEdit extends React.Component {
     }
   };
 
+  onSelectBlock = (
+    id,
+    colId,
+    colData,
+    activeBlock,
+    isMultipleSelection,
+    event,
+  ) => {
+    let newMultiSelected = [];
+    let selected = id;
+
+    if (isMultipleSelection) {
+      selected = null;
+      const blocksLayoutFieldname = getBlocksLayoutFieldname(colData);
+
+      const blocks_layout = colData[blocksLayoutFieldname].items;
+
+      if (event.shiftKey) {
+        const anchor =
+          this.state.multiSelected.length > 0
+            ? blocks_layout.indexOf(this.state.multiSelected[0])
+            : blocks_layout.indexOf(activeBlock);
+        const focus = blocks_layout.indexOf(id);
+
+        if (anchor === focus) {
+          newMultiSelected = [id];
+        } else if (focus > anchor) {
+          newMultiSelected = [...blocks_layout.slice(anchor, focus + 1)];
+        } else {
+          newMultiSelected = [...blocks_layout.slice(focus, anchor + 1)];
+        }
+      }
+
+      if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
+        if (this.state.multiSelected.includes(id)) {
+          selected = null;
+          newMultiSelected = without(this.state.multiSelected, id);
+        } else {
+          newMultiSelected = [...(this.state.multiSelected || []), id];
+        }
+      }
+    }
+
+    this.setState({
+      multiSelected: newMultiSelected,
+      colSelections: {
+        // this invalidates selection in all other columns
+        [colId]: selected,
+      },
+    });
+  };
+
   getColumnsBlockSchema = () => {
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
@@ -226,6 +282,12 @@ class ColumnsBlockEdit extends React.Component {
     const { gridCols, gridSize } = data;
     const coldata = data.data;
     const columnList = getColumns(coldata);
+    const selectedCol =
+      Object.keys(this.state.colSelections).length > 0
+        ? Object.keys(this.state.colSelections)[0]
+        : null;
+    const selectedColData = coldata.blocks[selectedCol] || null;
+    const selectedBlock = this.state.colSelections[selectedCol];
 
     const {
       gridSizes,
@@ -284,14 +346,21 @@ class ColumnsBlockEdit extends React.Component {
                   selectedBlock={
                     selected ? this.state.colSelections[colId] : null
                   }
-                  onSelectBlock={(id) =>
-                    this.setState({
-                      colSelections: {
-                        // this invalidates selection in all other columns
-                        [colId]: id,
-                      },
-                    })
-                  }
+                  onSelectBlock={(id, selected, e) => {
+                    const isMultipleSelection = e
+                      ? e.shiftKey || e.ctrlKey || e.metaKey
+                      : false;
+                    this.onSelectBlock(
+                      id,
+                      colId,
+                      selectedColData,
+                      selectedBlock,
+                      selectedCol !== colId || selectedBlock === id
+                        ? false
+                        : isMultipleSelection,
+                      e,
+                    );
+                  }}
                   onChangeFormData={(newFormData) => {
                     onChangeBlock(block, {
                       ...data,
@@ -334,6 +403,9 @@ class ColumnsBlockEdit extends React.Component {
                           )}
                         </>
                       }
+                      multiSelected={this.state.multiSelected.includes(
+                        blockProps.block,
+                      )}
                     >
                       {editBlock}
                     </EditBlockWrapper>
@@ -342,6 +414,32 @@ class ColumnsBlockEdit extends React.Component {
               </Grid.Column>
             ))}
           </Grid>
+        )}
+
+        {selected && selectedColData ? (
+          <BlocksToolbar
+            formData={selectedColData}
+            selectedBlock={selectedBlock}
+            selectedBlocks={this.state.multiSelected}
+            onChangeBlocks={(newBlockData) => {
+              onChangeBlock(block, {
+                ...data,
+                data: {
+                  ...coldata,
+                  blocks: {
+                    ...coldata.blocks,
+                    [selectedCol]: { ...selectedColData, ...newBlockData },
+                  },
+                },
+              });
+            }}
+            onSetSelectedBlocks={(blockIds) => {
+              this.setState({ multiSelected: blockIds });
+            }}
+            onSelectBlock={this.onSelectBlock}
+          />
+        ) : (
+          ''
         )}
 
         {Object.keys(this.state.colSelections).length === 0 &&

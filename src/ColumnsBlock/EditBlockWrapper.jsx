@@ -7,6 +7,7 @@ import includes from 'lodash/includes';
 import isBoolean from 'lodash/isBoolean';
 import { defineMessages, injectIntl } from 'react-intl';
 import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
+import cx from 'classnames';
 
 import dragSVG from '@plone/volto/icons/drag.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
@@ -148,7 +149,13 @@ class EditBlockWrapper extends React.Component {
             </div>
           )}
 
-          <div className={`ui drag block inner ${type}`}>{children}</div>
+          <div
+            className={cx('ui drag block wrapper inner', type, {
+              multiSelected: this.props.multiSelected,
+            })}
+          >
+            {children}
+          </div>
         </div>
       </div>
     );
