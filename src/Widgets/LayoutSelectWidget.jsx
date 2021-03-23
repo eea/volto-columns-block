@@ -6,17 +6,20 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
-
 import loadable from '@loadable/component';
-
 import { isEqual } from 'lodash';
-import { variants } from '../grid';
+
 import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import {
   DropdownIndicator,
   selectTheme,
   customSelectStyles,
 } from '@plone/volto/components/manage/Widgets/SelectStyling';
+import config from '@plone/volto/registry';
+
+import { variants as defaultVariants } from '../grid';
+import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+
 import checkSVG from '@plone/volto/icons/check.svg';
 
 const ReactSelectLib = loadable.lib(() => import('react-select'));
@@ -30,6 +33,8 @@ const variantToGridCols = (v) => {
 };
 
 export const Option = (props) => {
+  const variants =
+    config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
   return (
     <ReactSelectLib>
       {({ components }) => {
@@ -59,6 +64,8 @@ export const Option = (props) => {
 
 const SingleValue = (props) => {
   const { children, className, cx, getStyles, isDisabled, innerProps } = props;
+  const variants =
+    config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
 
   const variant = variants.find((v) =>
     gridColsAreEqual(variantToGridCols(v), props.data.value),

@@ -26,7 +26,7 @@ import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
-import { variants } from '@eeacms/volto-columns-block/grid';
+import { variants as defaultVariants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
@@ -211,6 +211,8 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   getColumnsBlockSchema = () => {
+    const variants =
+      config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
@@ -218,6 +220,7 @@ class ColumnsBlockEdit extends React.Component {
     const available_variants = variants.filter(
       ({ defaultData }) => defaultData?.gridCols?.length === nrOfColumns,
     );
+
     schema.properties.gridCols.choices = available_variants.map(
       ({ defaultData, title }) => [defaultData?.gridCols, title],
     );
@@ -225,6 +228,8 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
+    const variants =
+      config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
     const cols = this.props.data.data?.blocks_layout?.items || [];
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
 
