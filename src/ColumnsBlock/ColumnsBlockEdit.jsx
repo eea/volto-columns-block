@@ -1,9 +1,12 @@
 import React from 'react';
 import { Grid, Segment } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
-import { SidebarPortal, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
+import { isEmpty, without } from 'lodash';
+import { SidebarPortal, BlocksToolbar, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import {
+  emptyBlocksForm,
+  getBlocksLayoutFieldname,
+} from '@plone/volto/helpers';
 import { setSidebarTab } from '@plone/volto/actions';
 import { connect } from 'react-redux';
 import { BlocksForm } from '@plone/volto/components';
@@ -26,7 +29,7 @@ import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
-import tuneSVG from '@plone/volto/icons/tune.svg';
+import tuneSVG from '@plone/volto/icons/configuration.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
 import './styles.less';
@@ -44,6 +47,7 @@ class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      multiSelected: [],
       colSelections: {}, // selected block for each column
       showSidebar: false,
       activeColumn: null,
@@ -80,6 +84,32 @@ class ColumnsBlockEdit extends React.Component {
       gridSize,
       gridCols,
     };
+  };
+
+  handleKeyDown = (
+    e,
+    index,
+    block,
+    node,
+    {
+      disableEnter = false,
+      disableArrowUp = false,
+      disableArrowDown = false,
+    } = {},
+  ) => {
+    const hasblockActive = Object.keys(this.state.colSelections).length > 0;
+    if (e.key === 'ArrowUp' && !disableArrowUp && !hasblockActive) {
+      this.props.onFocusPreviousBlock(block, node);
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowDown' && !disableArrowDown && !hasblockActive) {
+      this.props.onFocusNextBlock(block, node);
+      e.preventDefault();
+    }
+    if (e.key === 'Enter' && !disableEnter && !hasblockActive) {
+      this.props.onAddBlock(config.settings.defaultBlockType, index + 1);
+      e.preventDefault();
+    }
   };
 
   onChangeColumnSettings = (id, value) => {
@@ -126,6 +156,58 @@ class ColumnsBlockEdit extends React.Component {
     } else {
       onChangeField(id, value);
     }
+  };
+
+  onSelectBlock = (
+    id,
+    colId,
+    colData,
+    activeBlock,
+    isMultipleSelection,
+    event,
+  ) => {
+    let newMultiSelected = [];
+    let selected = id;
+
+    if (isMultipleSelection) {
+      selected = null;
+      const blocksLayoutFieldname = getBlocksLayoutFieldname(colData);
+
+      const blocks_layout = colData[blocksLayoutFieldname].items;
+
+      if (event.shiftKey) {
+        const anchor =
+          this.state.multiSelected.length > 0
+            ? blocks_layout.indexOf(this.state.multiSelected[0])
+            : blocks_layout.indexOf(activeBlock);
+        const focus = blocks_layout.indexOf(id);
+
+        if (anchor === focus) {
+          newMultiSelected = [id];
+        } else if (focus > anchor) {
+          newMultiSelected = [...blocks_layout.slice(anchor, focus + 1)];
+        } else {
+          newMultiSelected = [...blocks_layout.slice(focus, anchor + 1)];
+        }
+      }
+
+      if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
+        if (this.state.multiSelected.includes(id)) {
+          selected = null;
+          newMultiSelected = without(this.state.multiSelected, id);
+        } else {
+          newMultiSelected = [...(this.state.multiSelected || []), id];
+        }
+      }
+    }
+
+    this.setState({
+      multiSelected: newMultiSelected,
+      colSelections: {
+        // this invalidates selection in all other columns
+        [colId]: selected,
+      },
+    });
   };
 
   getColumnsBlockSchema = () => {
@@ -200,6 +282,12 @@ class ColumnsBlockEdit extends React.Component {
     const { gridCols, gridSize } = data;
     const coldata = data.data;
     const columnList = getColumns(coldata);
+    const selectedCol =
+      Object.keys(this.state.colSelections).length > 0
+        ? Object.keys(this.state.colSelections)[0]
+        : null;
+    const selectedColData = coldata?.blocks?.[selectedCol] || null;
+    const selectedBlock = this.state.colSelections[selectedCol];
 
     const {
       gridSizes,
@@ -208,15 +296,23 @@ class ColumnsBlockEdit extends React.Component {
     } = config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors });
 
-    // TODO: we have blockHasOwnFocusManagement, so we need to implement this:
-    // onKeyDown={(e) => {
-    //   if (e.key === 'Enter') {
-    //     this.onAddBlock(settings.defaultBlockType, index + 1);
-    //     e.preventDefault();
-    //   }
-    // }}
     return (
-      <div role="presentation" className="columns-block">
+      <div
+        role="presentation"
+        className="columns-block"
+        onClick={() => this.props.onSelectBlock(this.props.id)}
+        onKeyDown={(e) => {
+          this.handleKeyDown(
+            e,
+            this.props.index,
+            this.props.block,
+            this.props.blockNode.current,
+          );
+        }}
+        // The tabIndex is required for the keyboard navigation
+        /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+        tabIndex={-1}
+      >
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
         {!data?.data ? (
           <ColumnVariations
@@ -250,14 +346,21 @@ class ColumnsBlockEdit extends React.Component {
                   selectedBlock={
                     selected ? this.state.colSelections[colId] : null
                   }
-                  onSelectBlock={(id) =>
-                    this.setState({
-                      colSelections: {
-                        // this invalidates selection in all other columns
-                        [colId]: id,
-                      },
-                    })
-                  }
+                  onSelectBlock={(id, selected, e) => {
+                    const isMultipleSelection = e
+                      ? e.shiftKey || e.ctrlKey || e.metaKey
+                      : false;
+                    this.onSelectBlock(
+                      id,
+                      colId,
+                      selectedColData,
+                      selectedBlock,
+                      selectedCol !== colId || selectedBlock === id
+                        ? false
+                        : isMultipleSelection,
+                      e,
+                    );
+                  }}
                   onChangeFormData={(newFormData) => {
                     onChangeBlock(block, {
                       ...data,
@@ -300,6 +403,9 @@ class ColumnsBlockEdit extends React.Component {
                           )}
                         </>
                       }
+                      multiSelected={this.state.multiSelected.includes(
+                        blockProps.block,
+                      )}
                     >
                       {editBlock}
                     </EditBlockWrapper>
@@ -310,9 +416,35 @@ class ColumnsBlockEdit extends React.Component {
           </Grid>
         )}
 
+        {selected && selectedColData ? (
+          <BlocksToolbar
+            formData={selectedColData}
+            selectedBlock={selectedBlock}
+            selectedBlocks={this.state.multiSelected}
+            onChangeBlocks={(newBlockData) => {
+              onChangeBlock(block, {
+                ...data,
+                data: {
+                  ...coldata,
+                  blocks: {
+                    ...coldata.blocks,
+                    [selectedCol]: { ...selectedColData, ...newBlockData },
+                  },
+                },
+              });
+            }}
+            onSetSelectedBlocks={(blockIds) => {
+              this.setState({ multiSelected: blockIds });
+            }}
+            onSelectBlock={this.onSelectBlock}
+          />
+        ) : (
+          ''
+        )}
+
         {Object.keys(this.state.colSelections).length === 0 &&
         !data?.readOnlySettings ? (
-          <SidebarPortal selected={true}>
+          <SidebarPortal selected={selected}>
             {this.state.activeColumn ? (
               <>
                 <Segment>

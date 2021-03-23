@@ -41,6 +41,14 @@
 
     .block {
       margin-bottom: 1.5em;
+
+      .block.selected::before {
+        border-top-left-radius: 0;
+      }
+
+      .block-add-button {
+        display: none;
+      }
     }
 
     // .block.selected {
@@ -48,12 +56,6 @@
     //   padding: 0.3em 0.5em;
     //   border-radius: 2px;
     // }
-
-    .block {
-      .block-add-button {
-        display: none;
-      }
-    }
   }
 
   a.ui.card,
@@ -88,6 +90,22 @@
   [data-rbd-draggable-context-id] {
     margin-bottom: 0.3em;
   }
+
+  .block.wrapper.multiSelected {
+    .block .block::before {
+      z-index: 1;
+      background-color: rgba(120, 192, 215, 0.375);
+    }
+  }
+
+  .delete-button {
+    display: none !important;
+  }
+
+  .blocks-chooser {
+    left: 0;
+    margin-top: 50px;
+  }
 }
 
 .columns-view {
@@ -108,15 +126,15 @@
 
 .block-toolbar {
   position: absolute;
-  z-index: 2;
-  left: 0px;
+  z-index: 3;
+  left: -9px;
   display: flex;
+  padding: 5px;
   border: none;
-  margin-top: -34px;
-  margin-bottom: 8px;
-  background-color: #8dd7ef;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border: 1px solid #78c0d7bf;
+  border-bottom: 1px solid #fff;
+  margin-top: -45px;
+  background-color: #fff;
 
   .ui.basic.button {
     padding: 3px;
