@@ -29,7 +29,7 @@ import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
-import tuneSVG from '@plone/volto/icons/configuration.svg';
+import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
 import './styles.less';
@@ -388,7 +388,7 @@ class ColumnsBlockEdit extends React.Component {
                             <Button
                               icon
                               basic
-                              title="Edit column"
+                              title="Go to Column settings"
                               onClick={() => {
                                 this.setState({
                                   showSidebar: true,

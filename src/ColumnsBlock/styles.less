@@ -103,8 +103,57 @@
   }
 
   .blocks-chooser {
-    left: 0;
+    right: 0;
+    left: auto;
     margin-top: 50px;
+  }
+
+  .block-toolbar {
+    position: absolute;
+    z-index: 3;
+    right: -9px;
+    display: flex;
+    padding: 5px;
+    border: none;
+    border: 1px solid #78c0d7bf;
+    border-bottom: 1px solid #fff;
+    margin-top: -45px;
+    background-color: #fff;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    .ui.basic.button {
+      padding: 3px;
+      padding-right: 0;
+    }
+
+    .wrapper-column-block {
+      > .ui.basic.button {
+        &:hover {
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    > .ui.basic.button {
+      &:hover {
+        background-color: transparent !important;
+      }
+
+      svg {
+        color: #134448;
+      }
+    }
+
+    .drag.handle.wrapper-column-block {
+      position: initial;
+      left: initial;
+      min-height: 1em;
+      margin-left: initial !important;
+      font-size: 1rem;
+      line-height: 1em;
+      vertical-align: baseline;
+    }
   }
 }
 
@@ -122,52 +171,6 @@
 .ui.grid.column-grid {
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
-}
-
-.block-toolbar {
-  position: absolute;
-  z-index: 3;
-  left: -9px;
-  display: flex;
-  padding: 5px;
-  border: none;
-  border: 1px solid #78c0d7bf;
-  border-bottom: 1px solid #fff;
-  margin-top: -45px;
-  background-color: #fff;
-
-  .ui.basic.button {
-    padding: 3px;
-    padding-right: 0;
-  }
-
-  .wrapper-column-block {
-    > .ui.basic.button {
-      &:hover {
-        background-color: transparent !important;
-      }
-    }
-  }
-
-  > .ui.basic.button {
-    &:hover {
-      background-color: transparent !important;
-    }
-
-    svg {
-      color: #134448;
-    }
-  }
-
-  .drag.handle.wrapper-column-block {
-    position: initial;
-    left: initial;
-    min-height: 1em;
-    margin-left: initial !important;
-    font-size: 1rem;
-    line-height: 1em;
-    vertical-align: baseline;
-  }
 }
 
 .drag-drop-list-widget {
