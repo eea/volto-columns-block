@@ -26,7 +26,6 @@ import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
-import { variants as defaultVariants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
@@ -211,8 +210,7 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   getColumnsBlockSchema = () => {
-    const variants =
-      config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
+    const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
@@ -228,8 +226,7 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const variants =
-      config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || defaultVariants;
+    const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
     const cols = this.props.data.data?.blocks_layout?.items || [];
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
 
@@ -321,7 +318,7 @@ class ColumnsBlockEdit extends React.Component {
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
         {!data?.data ? (
           <ColumnVariations
-            variants={variants}
+            variants={variants.filter((variant) => variant.common)}
             data={data}
             onChange={(initialData) => {
               onChangeBlock(block, {
