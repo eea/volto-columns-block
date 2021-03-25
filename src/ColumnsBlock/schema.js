@@ -21,13 +21,14 @@ export const ColumnsBlockSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['data', 'gridCols'], //  'nrColumns', 'block_title'
+      fields: ['title', 'data', 'gridCols'],
     },
   ],
   properties: {
-    block_title: {
-      title: 'Block title',
-      default: 'Columns',
+    title: {
+      title: 'Title',
+      description: 'Columns block friendly name',
+      type: 'string',
     },
     data: {
       title: 'Columns',
@@ -40,5 +41,5 @@ export const ColumnsBlockSchema = () => ({
       choices: [],
     },
   },
-  required: ['title'],
+  required: [],
 });
