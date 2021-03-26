@@ -26,7 +26,6 @@ import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
-import { variants } from '@eeacms/volto-columns-block/grid';
 import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
@@ -211,6 +210,7 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   getColumnsBlockSchema = () => {
+    const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
     const schema = ColumnsBlockSchema();
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
@@ -218,6 +218,7 @@ class ColumnsBlockEdit extends React.Component {
     const available_variants = variants.filter(
       ({ defaultData }) => defaultData?.gridCols?.length === nrOfColumns,
     );
+
     schema.properties.gridCols.choices = available_variants.map(
       ({ defaultData, title }) => [defaultData?.gridCols, title],
     );
@@ -225,6 +226,7 @@ class ColumnsBlockEdit extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
+    const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
     const cols = this.props.data.data?.blocks_layout?.items || [];
     const prevCols = prevProps.data.data?.blocks_layout?.items || [];
 
@@ -316,7 +318,7 @@ class ColumnsBlockEdit extends React.Component {
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
         {!data?.data ? (
           <ColumnVariations
-            variants={variants}
+            variants={variants.filter((variant) => variant.common)}
             data={data}
             onChange={(initialData) => {
               onChangeBlock(block, {
@@ -326,94 +328,108 @@ class ColumnsBlockEdit extends React.Component {
             }}
           />
         ) : (
-          <Grid columns={gridSize} className="column-grid" stackable>
-            {columnList.map(([colId, column], index) => (
-              <Grid.Column
-                className="block-column"
-                key={colId}
-                {...(gridSizes[gridCols[index]] || gridCols[index])}
-                {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
-              >
-                <div className="column-header"></div>
-                <BlocksForm
+          <>
+            <div
+              className="columns-header"
+              onClick={() => {
+                this.setState({
+                  showSidebar: true,
+                  colSelections: {},
+                });
+                this.props.setSidebarTab(1);
+              }}
+              aria-hidden="true"
+            >
+              {data.title || 'Columns'}
+            </div>
+            <Grid columns={gridSize} className="column-grid" stackable>
+              {columnList.map(([colId, column], index) => (
+                <Grid.Column
+                  className="block-column"
                   key={colId}
-                  title={data?.placeholder}
-                  description={data?.instructions?.data}
-                  manage={manage}
-                  allowedBlocks={data?.allowedBlocks}
-                  metadata={metadata}
-                  properties={isEmpty(column) ? emptyBlocksForm() : column}
-                  selectedBlock={
-                    selected ? this.state.colSelections[colId] : null
-                  }
-                  onSelectBlock={(id, selected, e) => {
-                    const isMultipleSelection = e
-                      ? e.shiftKey || e.ctrlKey || e.metaKey
-                      : false;
-                    this.onSelectBlock(
-                      id,
-                      colId,
-                      selectedColData,
-                      selectedBlock,
-                      selectedCol !== colId || selectedBlock === id
-                        ? false
-                        : isMultipleSelection,
-                      e,
-                    );
-                  }}
-                  onChangeFormData={(newFormData) => {
-                    onChangeBlock(block, {
-                      ...data,
-                      data: {
-                        ...coldata,
-                        blocks: {
-                          ...coldata.blocks,
-                          [colId]: newFormData,
-                        },
-                      },
-                    });
-                  }}
-                  onChangeField={(id, value) =>
-                    this.onChangeColumnData(id, value, colId)
-                  }
-                  pathname={pathname}
+                  {...(gridSizes[gridCols[index]] || gridCols[index])}
+                  {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
                 >
-                  {({ draginfo }, editBlock, blockProps) => (
-                    <EditBlockWrapper
-                      draginfo={draginfo}
-                      blockProps={blockProps}
-                      extraControls={
-                        <>
-                          {!data?.readOnlySettings && (
-                            <Button
-                              icon
-                              basic
-                              title="Go to Column settings"
-                              onClick={() => {
-                                this.setState({
-                                  showSidebar: true,
-                                  activeColumn: colId,
-                                  colSelections: {},
-                                });
-                                this.props.setSidebarTab(1);
-                              }}
-                            >
-                              <Icon name={tuneSVG} className="" size="19px" />
-                            </Button>
-                          )}
-                        </>
-                      }
-                      multiSelected={this.state.multiSelected.includes(
-                        blockProps.block,
-                      )}
-                    >
-                      {editBlock}
-                    </EditBlockWrapper>
-                  )}
-                </BlocksForm>
-              </Grid.Column>
-            ))}
-          </Grid>
+                  <BlocksForm
+                    key={colId}
+                    title={data?.placeholder}
+                    description={data?.instructions?.data}
+                    manage={manage}
+                    allowedBlocks={data?.allowedBlocks}
+                    metadata={metadata}
+                    properties={isEmpty(column) ? emptyBlocksForm() : column}
+                    selectedBlock={
+                      selected ? this.state.colSelections[colId] : null
+                    }
+                    onSelectBlock={(id, selected, e) => {
+                      const isMultipleSelection = e
+                        ? e.shiftKey || e.ctrlKey || e.metaKey
+                        : false;
+                      this.onSelectBlock(
+                        id,
+                        colId,
+                        selectedColData,
+                        selectedBlock,
+                        selectedCol !== colId || selectedBlock === id
+                          ? false
+                          : isMultipleSelection,
+                        e,
+                      );
+                    }}
+                    onChangeFormData={(newFormData) => {
+                      onChangeBlock(block, {
+                        ...data,
+                        data: {
+                          ...coldata,
+                          blocks: {
+                            ...coldata.blocks,
+                            [colId]: newFormData,
+                          },
+                        },
+                      });
+                    }}
+                    onChangeField={(id, value) =>
+                      this.onChangeColumnData(id, value, colId)
+                    }
+                    pathname={pathname}
+                  >
+                    {({ draginfo }, editBlock, blockProps) => (
+                      <EditBlockWrapper
+                        draginfo={draginfo}
+                        blockProps={blockProps}
+                        extraControls={
+                          <>
+                            {!data?.readOnlySettings && (
+                              <Button
+                                icon
+                                basic
+                                title="Go to Column settings"
+                                onClick={() => {
+                                  this.setState({
+                                    showSidebar: true,
+                                    activeColumn: colId,
+                                    colSelections: {},
+                                  });
+                                  this.props.setSidebarTab(1);
+                                }}
+                              >
+                                <Icon name={tuneSVG} className="" size="19px" />
+                              </Button>
+                            )}
+                          </>
+                        }
+                        multiSelected={this.state.multiSelected.includes(
+                          blockProps.block,
+                        )}
+                      >
+                        {editBlock}
+                      </EditBlockWrapper>
+                    )}
+                  </BlocksForm>
+                </Grid.Column>
+              ))}
+            </Grid>
+          </>
         )}
 
         {selected && selectedColData ? (

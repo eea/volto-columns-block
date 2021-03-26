@@ -71,6 +71,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['halfWidth', 'halfWidth'],
     },
+    common: true,
     title: '50 / 50',
   },
   {
@@ -79,6 +80,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['oneFifth', 'fourFifths'],
     },
+    common: true,
     title: '20 / 80',
   },
   {
@@ -87,6 +89,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['oneThird', 'twoThirds'],
     },
+    common: true,
     title: '30 / 70',
   },
   {
@@ -95,6 +98,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['twoThirds', 'oneThird'],
     },
+    common: true,
     title: '70 / 30',
   },
   {
@@ -103,6 +107,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['fourFifths', 'oneFifth'],
     },
+    common: true,
     title: '80 / 20',
   },
   {
@@ -111,6 +116,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['oneThird', 'oneThird', 'oneThird'],
     },
+    common: true,
     title: '33 / 33 / 33',
   },
   {
@@ -119,6 +125,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['oneThirdSmall', 'halfWidthBig', 'oneThirdSmall'],
     },
+    common: true,
     title: '25 / 50 / 25',
   },
   {
@@ -127,6 +134,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['oneQuarter', 'oneQuarter', 'oneQuarter', 'oneQuarter'],
     },
+    common: true,
     title: '25 / 25 / 25 / 25',
   },
   {
@@ -135,6 +143,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['full'],
     },
+    common: true,
     title: '100',
   },
   {
@@ -143,6 +152,7 @@ export const variants = [
       gridSize: 12,
       gridCols: ['threeFifths', 'twoFifths'],
     },
+    common: true,
     title: '60 / 40',
   },
 ];

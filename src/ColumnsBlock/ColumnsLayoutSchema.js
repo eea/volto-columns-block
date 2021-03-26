@@ -5,6 +5,7 @@ const Schema = {
       id: 'default',
       title: 'Default',
       fields: [
+        'title',
         'placeholder',
         'instructions',
         'allowedBlocks',
@@ -17,6 +18,11 @@ const Schema = {
     },
   ],
   properties: {
+    title: {
+      title: 'Title',
+      description: 'Columns block friendly name',
+      type: 'string',
+    },
     allowedBlocks: {
       title: 'Allowed blocks',
       description: 'Allow only the following blocks types',
