@@ -5,11 +5,16 @@
 
 @borderColor: rgba(120, 192, 215, 0.75);
 
-.columns-block {
+.block-editor-columnsBlock {
   .block-column .ui.block.inner {
     .block {
       margin-bottom: 0;
     }
+  }
+
+  .block.columnsBlock.selected::before,
+  .block.columnsBlock:hover::before {
+    border-style: dashed;
   }
 
   .column-grid {
