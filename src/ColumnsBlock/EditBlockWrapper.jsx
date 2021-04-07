@@ -66,7 +66,9 @@ class EditBlockWrapper extends React.Component {
       block,
       data,
       onDeleteBlock,
+      onInsertBlock,
       onMutateBlock,
+      onSelectBlock,
       selected,
     } = blockProps;
     const type = data['@type'];
@@ -139,8 +141,12 @@ class EditBlockWrapper extends React.Component {
               {this.state.addNewBlockOpened && (
                 <BlockChooser
                   onMutateBlock={(id, value) => {
-                    this.setState({ addNewBlockOpened: false });
                     onMutateBlock(id, value);
+                    this.setState({ addNewBlockOpened: false });
+                  }}
+                  onInsertBlock={(id, value) => {
+                    onSelectBlock(onInsertBlock(id, value));
+                    this.setState({ addNewBlockOpened: false });
                   }}
                   currentBlock={block}
                   allowedBlocks={allowedBlocks}
