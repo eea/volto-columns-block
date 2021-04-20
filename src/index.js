@@ -11,6 +11,8 @@ import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
 import { cloneColumnsBlockData } from './utils';
 
+import { getBlocks } from '@plone/volto/helpers';
+
 const extendedSchema = (config) => {
   const choices = Object.keys(config.blocks.blocksConfig)
     .map((key) => {
@@ -77,6 +79,24 @@ export default function install(config) {
       '#BED3F3',
       '#D4C4FB',
     ],
+    tocEntry: (block = {}, tocData) => {
+      // integration with volto-block-toc
+      const headlines = tocData.levels || ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+      const column_blocks = block?.data?.blocks || {};
+      let entries = [];
+      const sorted_column_blocks = getBlocks(block?.data || {});
+      sorted_column_blocks.forEach((column_block) => {
+        const sorted_blocks = getBlocks(column_block[1]);
+        sorted_blocks.forEach((block) => {
+          const { value, plaintext } = block[1];
+          const type = value?.[0]?.type;
+          if (headlines.includes(type)) {
+            entries.push([parseInt(type.slice(1)), plaintext, block[0]]);
+          }
+        });
+      });
+      return entries;
+    },
     cloneData: cloneColumnsBlockData,
   };
 
