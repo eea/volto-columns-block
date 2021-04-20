@@ -20,7 +20,7 @@ export const forEachColumn = (data, callback) => {
 };
 
 export const columnIsEmpty = (colData) => {
-  return colData.blocks_layout.items.length === 0;
+  return !(colData?.blocks_layout?.items?.length > 0);
 };
 
 export const empty = (count) => {
