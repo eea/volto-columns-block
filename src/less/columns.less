@@ -1,3 +1,11 @@
+@import './globals.less';
+
+@addon: 'volto-addons';
+@addontype: 'columnsBlock';
+@addonelement: 'columns';
+
+.loadAddonVariables();
+
 @type: 'extra';
 @element: 'custom';
 
@@ -5,11 +13,16 @@
 
 @borderColor: rgba(120, 192, 215, 0.75);
 
-.columns-block {
+.block-editor-columnsBlock {
   .block-column .ui.block.inner {
     .block {
       margin-bottom: 0;
     }
+  }
+
+  .block.columnsBlock.selected::before,
+  .block.columnsBlock:hover::before {
+    border-style: dashed;
   }
 
   .column-grid {
@@ -104,10 +117,6 @@
     }
   }
 
-  .delete-button {
-    display: none !important;
-  }
-
   .blocks-chooser {
     right: 0;
     left: auto;
@@ -173,7 +182,7 @@
 }
 
 .ui.grid.column-grid {
-  padding: 1rem;
+  padding: @columnGridPadding;
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
 }
@@ -213,3 +222,5 @@
   margin-right: 1.5rem;
   vertical-align: middle;
 }
+
+.loadAddonOverrides();

@@ -31,7 +31,7 @@ import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
-import './styles.less';
+import '@eeacms/volto-columns-block/less/columns.less';
 
 /*
  * not pretty, there's a lot of render props passing, to please React

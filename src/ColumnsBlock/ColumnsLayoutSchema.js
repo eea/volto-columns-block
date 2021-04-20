@@ -11,9 +11,10 @@ const Schema = {
         'allowedBlocks',
         'required',
         'fixed',
+        'fixedLayout',
         'disableNewBlocks',
-        'readOnly',
         'readOnlySettings',
+        'readOnly',
       ],
     },
   ],
@@ -51,6 +52,12 @@ const Schema = {
     fixed: {
       title: 'Fixed position',
       description: 'Disable drag & drop on this block',
+      type: 'boolean',
+    },
+    fixedLayout: {
+      title: 'Fixed layout',
+      description:
+        'Fixed layout, New columns created by Editor within this block will be ignored',
       type: 'boolean',
     },
     disableNewBlocks: {

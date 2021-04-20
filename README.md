@@ -10,8 +10,6 @@
 This package gives you a block with columns. Each column is its own separate
 blocks container.
 
-###
-
 ![Initializing Columns Layout](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/initialize.png)
 ![Columns Edit Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/edit.png)
 ![Columns Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/columns-sidebar.png)
@@ -20,37 +18,59 @@ blocks container.
 
 ## Getting started
 
-1. Create new volto project if you don't already have one:
+### Try volto-columns-block with Docker
+
+1. Get the latest Docker images
 
    ```
-   $ npm install -g yo @plone/generator-volto
-   $ yo @plone/volto \
-        my-volto-project \
-        --addon @eeacms/volto-columns-block \
-        --no-interactive \
-        --skip-install
-
-   $ cd my-volto-project
-   $ yarn add -W @eeacms/volto-columns-block
+   docker pull plone
+   docker pull plone/volto
    ```
 
-1. If you already have a volto project, just update `package.json`:
+1. Start Plone backend
+   ```
+   docker run -d --name plone -p 8080:8080 -e SITE=Plone -e PROFILES="profile-plone.restapi:blocks" plone
+   ```
+
+1. Start Volto frontend
+
+   ```
+   docker run -it --rm -p 3000:3000 --link plone -e ADDONS="@eeacms/volto-columns-block" plone/volto
+   ```
+
+1. Go to http://localhost:3000
+
+### Add volto-columns-block to your Volto project
+
+1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
+
+1. Start Volto frontend
+
+* If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
-      "@eeacms/volto-columns-block"
+       "@eeacms/volto-columns-block"
    ],
 
    "dependencies": {
-       "@eeacms/volto-columns-block": "^2.0.0"
+       "@eeacms/volto-columns-block": "^4.0.0"
    }
+   ```
+
+* If not, create one:
+
+   ```
+   npm install -g yo @plone/generator-volto
+   yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block
+   cd my-volto-project
    ```
 
 1. Install new add-ons and restart Volto:
 
    ```
-   $ yarn
-   $ yarn start
+   yarn
+   yarn start
    ```
 
 1. Go to http://localhost:3000
@@ -65,6 +85,13 @@ See [DEVELOP.md](https://github.com/eea/volto-columns-block/blob/master/DEVELOP.
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
+
+See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
+
+## Funding
+
+[European Environment Agency (EU)](http://eea.europa.eu)
+rved.
 
 See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
 
