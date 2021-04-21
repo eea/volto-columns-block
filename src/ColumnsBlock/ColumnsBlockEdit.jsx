@@ -358,6 +358,7 @@ class ColumnsBlockEdit extends React.Component {
                     allowedBlocks={data?.allowedBlocks}
                     metadata={metadata}
                     properties={isEmpty(column) ? emptyBlocksForm() : column}
+                    disableEvents={true}
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
                     }
