@@ -10,7 +10,7 @@ export default ({ data, onChange, children, variants }) => {
         {variants.map(({ icon, defaultData, title }, index) => (
           <Card key={index} onClick={() => onChange(defaultData)}>
             <Card.Content>
-              <Icon name={icon} size="55" />
+              <Icon name={icon} size="55px" />
               {title ? <p>{title}</p> : ''}
             </Card.Content>
           </Card>
