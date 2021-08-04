@@ -10,6 +10,12 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
+# HAS_YO=$(shell command yo)
+# if [[ ${HAS_YO} -ne 0 ]]; then
+# 	echo "Installing yo"
+# 	npm install -g yo
+# fi;
+
 make-frontend:		## Builds just the Volto project
 	npm install -g yo
 	npm install -g @plone/generator-volto
@@ -17,7 +23,10 @@ make-frontend:		## Builds just the Volto project
 	yo @plone/volto project --addon ${ADDON} --workspace "src/addons/${DIR}" --no-interactive
 	ln -sf $$(pwd) project/src/addons/
 	cp .project.eslintrc.js .eslintrc.js
-	cd project && yarn
+	cd project && \
+		rm -rf node_modules && \
+		yalc add @plone/volto --no-pure && \
+		pnpm i
 	@echo "-------------------"
 	@echo "Project is ready!"
 	@echo "Now run: cd project && yarn start"

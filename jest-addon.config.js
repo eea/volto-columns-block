@@ -33,4 +33,8 @@ module.exports = {
       statements: 5,
     },
   },
+  haste: {
+    enableSymlinks: true,
+  },
+    "watchman": false,
 };

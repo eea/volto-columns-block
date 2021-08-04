@@ -38,5 +38,9 @@
     "lint:fix": "../../../node_modules/eslint/bin/eslint.js --max-warnings=0 --fix 'src/**/*.{js,jsx}'",
     "cypress:run": "../../../node_modules/cypress/bin/cypress run",
     "cypress:open": "../../../node_modules/cypress/bin/cypress open"
+  },
+  "jest": {
+    "enableSymlinks": true
   }
+
 }
