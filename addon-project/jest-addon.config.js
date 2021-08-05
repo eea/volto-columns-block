@@ -40,6 +40,9 @@ module.exports = {
       statements: 5,
     },
   },
+  "testPathIgnorePatterns": [
+    '\/volto\/'
+  ],
 };
 
 //

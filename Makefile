@@ -28,7 +28,7 @@ make-frontend:		## Builds just the Volto project
 	yo @plone/volto project --addon ${ADDON} --no-interactive
 	cp -r addon-project/* project/
 	# cd project && pnpm i -W "plone/volto#add_dependencies"
-	git clone volto && cd volto && git checkout add_dependencies
+	git clone git@github.com:plone/volto.git && cd volto && git checkout add_dependencies
 	cd project && pnpm add -W "${ADDON}@workspace:*" && pnpm i
 	cd project && pnpm link ../volto && rm -rf ../volto/node_modules
 	# --workspace "src/addons/${DIR}"
