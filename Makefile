@@ -26,7 +26,7 @@ make-frontend:		## Builds just the Volto project
 	npm install -g @plone/generator-volto
 	npm install -g mrs-developer
 	yo @plone/volto project --addon ${ADDON} --no-interactive
-	cp addon-project/* project/
+	cp -r addon-project/* project/
 	# cd project && pnpm i -W "plone/volto#add_dependencies"
 	git clone volto && cd volto && git checkout add_dependencies
 	cd project && pnpm add -W "${ADDON}@workspace:*" && pnpm i
