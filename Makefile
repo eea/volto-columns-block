@@ -16,11 +16,18 @@ YELLOW=`tput setaf 3`
 # 	npm install -g yo
 # fi;
 
+# packages:
+#   - '../'
+# link-workspace-packages: true
+# prefer-workspace-packages: true
+
 make-frontend:		## Builds just the Volto project
 	npm install -g yo
 	npm install -g @plone/generator-volto
 	npm install -g mrs-developer
-	yo @plone/volto project --addon ${ADDON} --workspace "src/addons/${DIR}" --no-interactive
+	pnpm add "${ADDON}@workspace:*"
+	# --workspace "src/addons/${DIR}"
+	yo @plone/volto project --addon ${ADDON} --no-interactive
 	ln -sf $$(pwd) project/src/addons/
 	cp .project.eslintrc.js .eslintrc.js
 	cd project && \
