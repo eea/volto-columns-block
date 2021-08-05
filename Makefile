@@ -25,15 +25,18 @@ make-frontend:		## Builds just the Volto project
 	npm install -g yo
 	npm install -g @plone/generator-volto
 	npm install -g mrs-developer
-	pnpm add "${ADDON}@workspace:*"
-	# --workspace "src/addons/${DIR}"
 	yo @plone/volto project --addon ${ADDON} --no-interactive
-	ln -sf $$(pwd) project/src/addons/
-	cp .project.eslintrc.js .eslintrc.js
-	cd project && \
-		rm -rf node_modules && \
-		yalc add @plone/volto --no-pure && \
-		pnpm i
+	cp addon-project/* project/
+	cd project
+	pnpm add "${ADDON}@workspace:*"
+	pnpm i
+	# --workspace "src/addons/${DIR}"
+	# ln -sf $$(pwd) project/src/addons/
+	# cp .project.eslintrc.js .eslintrc.js
+	# cd project && \
+	# 	rm -rf node_modules && \
+	# 	yalc add @plone/volto --no-pure && \
+	# 	pnpm i
 	@echo "-------------------"
 	@echo "Project is ready!"
 	@echo "Now run: cd project && yarn start"
