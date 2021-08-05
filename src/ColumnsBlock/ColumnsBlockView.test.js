@@ -10,8 +10,6 @@ import ColumnsBlockView from './ColumnsBlockView';
 
 const mockStore = configureStore();
 
-const blockId = '1234';
-
 const blocks = {
   "1234": {
     "@type": "columnsBlock",
@@ -99,7 +97,7 @@ test('renders 2 columns', async () => {
   const { container } = render(
     <Provider store={store}>
       <ColumnsBlockView data={blocks['1234']} metadata={{blocks}}/>
-    </Provider>,
+    </Provider>
   );
   await waitFor(() => screen.getByText('left marker'));
   expect(container).toMatchSnapshot();
