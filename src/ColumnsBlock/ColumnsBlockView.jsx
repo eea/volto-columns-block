@@ -1,7 +1,7 @@
 import React from 'react';
+import config from '@plone/volto/registry';
 import { Grid } from 'semantic-ui-react';
 import { RenderBlocks } from '@plone/volto/components';
-import config from '@plone/volto/registry';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
 import { getColumns } from './utils';
