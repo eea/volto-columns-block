@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-columns-block",
-  "version": "4.4.4",
+  "version": "4.4.5",
   "description": "volto-columns-block: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -42,5 +42,4 @@
   "jest": {
     "enableSymlinks": true
   }
-
 }
