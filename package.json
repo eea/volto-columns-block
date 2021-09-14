@@ -15,7 +15,8 @@
     "react"
   ],
   "dependencies": {
-    "react-color": "~2.18.1"
+    "react-color": "~2.18.1",
+    "@eeacms/volto-block-style": "*"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
@@ -41,5 +42,8 @@
   },
   "jest": {
     "enableSymlinks": true
-  }
+  },
+  "addons": [
+    "@eeacms/volto-block-style"
+  ]
 }

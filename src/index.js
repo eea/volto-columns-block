@@ -10,6 +10,7 @@ import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
 import { cloneColumnsBlockData } from './utils';
+import { applyStyleWrapperToBlock } from '@eeacms/volto-block-style';
 
 import { getBlocks } from '@plone/volto/helpers';
 
@@ -99,6 +100,10 @@ export default function install(config) {
     },
     cloneData: cloneColumnsBlockData,
   };
+
+  config.blocks.blocksConfig[COLUMNSBLOCK] = applyStyleWrapperToBlock(
+    config.blocks.blocksConfig[COLUMNSBLOCK],
+  );
 
   config.widgets.type.columns = ColumnsWidget;
   config.widgets.widget.simple_color_picker = ColorPickerWidget;
