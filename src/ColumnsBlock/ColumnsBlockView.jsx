@@ -3,6 +3,7 @@ import config from '@plone/volto/registry';
 import { Grid } from 'semantic-ui-react';
 import { RenderBlocks } from '@plone/volto/components';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+import cx from 'classnames';
 
 import { getColumns } from './utils';
 import { getStyle } from '@eeacms/volto-columns-block/Styles';
@@ -17,6 +18,7 @@ const ColumnsBlockView = (props) => {
     ?.replace(/[^a-zA-Z-\s]/gi, '')
     ?.trim()
     ?.replace(/\s+/gi, '-');
+
   return (
     <div className="columns-view" id={customId}>
       <Grid columns={gridSize} className="column-grid">
@@ -25,7 +27,10 @@ const ColumnsBlockView = (props) => {
             <Grid.Column
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
-              className="column-blocks-wrapper"
+              className={cx(
+                'column-blocks-wrapper',
+                column.settings?.column_class,
+              )}
               {...getStyle(column.settings || {})}
             >
               <RenderBlocks {...props} metadata={metadata} content={column} />

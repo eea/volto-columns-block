@@ -4,7 +4,7 @@ export const StyleSchema = () => ({
     {
       id: 'default',
       title: 'Style',
-      fields: ['backgroundColor', 'grid_vertical_align'],
+      fields: ['backgroundColor', 'grid_vertical_align', 'column_class'],
     },
   ],
   properties: {
@@ -20,6 +20,10 @@ export const StyleSchema = () => ({
         ['middle', 'Middle'],
         ['top', 'Top'],
       ],
+    },
+    column_class: {
+      title: 'Custom CSS Class',
+      description: 'A custom CSS class, aplicable to this column',
     },
   },
   required: [],
