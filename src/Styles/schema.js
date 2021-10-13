@@ -4,7 +4,17 @@ export const StyleSchema = () => ({
     {
       id: 'default',
       title: 'Style',
-      fields: ['backgroundColor', 'grid_vertical_align', 'column_class'],
+      fields: ['grid_vertical_align'],
+    },
+    {
+      id: 'styling',
+      title: 'Styling',
+      fields: ['backgroundColor', 'padding'],
+    },
+    {
+      id: 'advanced',
+      title: 'Advanced',
+      fields: ['column_class'],
     },
   ],
   properties: {
@@ -20,6 +30,10 @@ export const StyleSchema = () => ({
         ['middle', 'Middle'],
         ['top', 'Top'],
       ],
+    },
+    padding: {
+      title: 'Padding',
+      widget: 'quad_size',
     },
     column_class: {
       title: 'Custom CSS Class',

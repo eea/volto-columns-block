@@ -1,0 +1,85 @@
+.slider-widget-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stretch {
+  position: relative;
+  right: 50%;
+  left: 50%;
+  width: 100vw !important;
+  margin-right: -50vw !important;
+  margin-left: -50vw !important;
+}
+
+/* detect if is authenticated or anon */
+body:not(.is-authenticated) .stretch {
+  padding: 0 2rem;
+}
+
+/* detect if is logged in but in view with toolbar open */
+body:not(.view-editview):not(.is-anonymous):not(.has-toolbar-collapsed)
+  .stretch {
+  padding: 0 4.5rem;
+}
+
+/* detect if its in edit mode */
+
+/* detect if both sidebars open */
+body:not(.view-viewview):not(.has-sidebar-collapsed):not(.has-toolbar-collapsed)
+  .stretch {
+  padding: 0 16.2rem;
+}
+/* detect if both sidebars closed */
+body:not(.view-viewview):not(.has-sidebar):not(.has-toolbar) .stretch {
+  padding: 0 3.2rem;
+}
+
+/* detect if left sidebar open right sidebar closed */
+body:not(.view-viewview):not(.has-sidebar):not(.has-toolbar-collapsed)
+  .stretch {
+  padding: 0 5.2rem;
+}
+/* detect if left sidebar closed right sidebar open */
+body:not(.view-viewview):not(.has-sidebar-collapsed):not(.has-toolbar)
+  .stretch {
+  padding: 0 14.3rem;
+}
+
+body:not(.is-anonymous):not(.has-toolbar) .stretch {
+  padding: 0 2.6rem;
+}
+@media (min-width: 1700px) {
+  .stretch {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    transform: translate(-50%, 0%);
+  }
+
+  body:not(.view-viewview) .stretch {
+    width: auto !important;
+    max-width: 1790px !important;
+    padding: 0 !important;
+    margin-right: -7.2rem !important;
+    transform: translate(-50%, 0%);
+  }
+
+  body:not(.is-anonymous):not(.has-toolbar) .stretch {
+    max-width: 1720px;
+  }
+
+  body:not(.is-anonymous):not(.has-toolbar-collapsed) .stretch {
+    max-width: 1778px;
+  }
+
+  body:not(.is-authenticated) .stretch {
+    max-width: 1700px;
+  }
+}
+
+@media (max-width: 786px) {
+  .stretch {
+    padding: 0 !important;
+  }
+}

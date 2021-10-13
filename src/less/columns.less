@@ -26,16 +26,16 @@
     border-style: dashed;
   }
 
-  .column-grid {
-    margin-right: -0.2rem !important;
-    margin-left: -0.2rem !important;
+  .ui.grid.column-grid {
+    margin-right: -0.2rem;
+    margin-left: -0.2rem;
 
     .column:first-child {
-      padding-left: 0.2rem !important;
+      padding-left: 0.2rem;
     }
 
     .column:last-child {
-      padding-right: 0.2rem !important;
+      padding-right: 0.2rem;
     }
 
     &:focus {
@@ -58,8 +58,8 @@
     text-align: center;
   }
 
-  .block-column {
-    padding: 0.3em !important;
+  .ui.grid.block-column {
+    padding: 0.3em;
 
     .blocks-form {
       padding: 1rem !important;
@@ -183,9 +183,10 @@
     display: initial !important;
   }
 
-  .column-blocks-wrapper {
-    padding-top: 0.5em !important;
-    padding-bottom: 0.5em !important;
+  .ui.grid > .column-blocks-wrapper,
+  .ui.grid > .column-blocks-wrapper:not(.row) {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
 }
 

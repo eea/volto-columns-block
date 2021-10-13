@@ -5,7 +5,12 @@ import {
   ColumnsBlockEdit,
   ColumnsLayoutSchema,
 } from './ColumnsBlock';
-import { ColumnsWidget, LayoutSelectWidget } from './Widgets';
+import {
+  ColumnsWidget,
+  LayoutSelectWidget,
+  SliderWidget,
+  QuadSizeWidget,
+} from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
@@ -103,6 +108,8 @@ export default function install(config) {
   config.widgets.type.columns = ColumnsWidget;
   config.widgets.widget.simple_color_picker = ColorPickerWidget;
   config.widgets.widget.layout_select = LayoutSelectWidget;
+  config.widgets.widget.slider = SliderWidget;
+  config.widgets.widget.quad_size = QuadSizeWidget;
 
   return config;
 }
