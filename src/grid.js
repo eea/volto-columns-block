@@ -155,4 +155,13 @@ export const variants = [
     common: true,
     title: '60 / 40',
   },
+  {
+    icon: iconB,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['twoFifths', 'threeFifths'],
+    },
+    common: true,
+    title: '40 / 60',
+  },
 ];

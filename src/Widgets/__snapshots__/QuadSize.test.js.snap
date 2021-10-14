@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a quad size widget component 1`] = `
+<div
+  className="inline field field-wrapper-quadsize-widget"
+>
+  <div
+    className="ui grid"
+  >
+    <div
+      className="stretched row"
+    >
+      <div
+        className="four wide column"
+      >
+        <div
+          className="wrapper"
+        >
+          <label
+            htmlFor="field-quadsize-widget"
+            id="fieldset-default-field-label-quadsize-widget"
+          >
+            QuadSize Widget
+          </label>
+        </div>
+      </div>
+      <div
+        className="eight wide column"
+      >
+        <div
+          className="mocked-choices-widget"
+          id="mocked-field-quadsize-widget-unit"
+        >
+          Unit
+           - 
+          No description
+        </div>
+        <div
+          className="mocked-default-widget"
+          id="mocked-field-quadsize-widget-slider"
+        >
+          Size
+           - 
+          No description
+        </div>
+        <div
+          className="mocked-boolean-widget"
+          id="mocked-field-quadsize-widget-lockSize"
+        >
+          Customize
+           - 
+          No description
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

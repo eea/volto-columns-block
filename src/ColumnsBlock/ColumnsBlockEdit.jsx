@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { BlocksForm } from '@plone/volto/components';
 import { Button } from 'semantic-ui-react';
 import config from '@plone/volto/registry';
+import cx from 'classnames';
 
 import { ColumnsBlockSchema } from './schema';
 import {
@@ -345,7 +346,10 @@ class ColumnsBlockEdit extends React.Component {
             <Grid columns={gridSize} className="column-grid" stackable>
               {columnList.map(([colId, column], index) => (
                 <Grid.Column
-                  className="block-column"
+                  className={cx(
+                    'block-column',
+                    data?.data?.blocks?.[colId]?.settings?.column_class,
+                  )}
                   key={colId}
                   {...(gridSizes[gridCols[index]] || gridCols[index])}
                   {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
