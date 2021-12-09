@@ -44,7 +44,7 @@ export const setupBeforeEach = () => {
   cy.waitForResourceToLoad('@types');
   cy.waitForResourceToLoad('my-page');
   cy.navigate('/cypress/my-page/edit');
-  cy.get(`.block.title [data-contents]`);
+  cy.get(`.block.title h1`);
 };
 
 export const tearDownAfterEach = () => {
