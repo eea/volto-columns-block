@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-columns-block",
-  "version": "4.4.7",
+  "version": "4.4.8",
   "description": "volto-columns-block: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -27,6 +27,8 @@
   },
   "scripts": {
     "release": "release-it",
+    "release-major-beta": "release-it major --preRelease=beta",
+    "release-beta": "release-it --preRelease=beta",
     "bootstrap": "npm install -g ejs; npm link ejs; node bootstrap",
     "pre-commit": "yarn stylelint:fix && yarn prettier:fix && yarn lint:fix",
     "stylelint": "../../../node_modules/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}'",
