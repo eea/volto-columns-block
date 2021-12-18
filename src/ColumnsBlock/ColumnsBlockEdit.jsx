@@ -361,7 +361,10 @@ class ColumnsBlockEdit extends React.Component {
                     manage={manage}
                     allowedBlocks={data?.allowedBlocks}
                     metadata={metadata}
-                    properties={isEmpty(column) ? emptyBlocksForm() : column}
+                    properties={{
+                      ...metadata,
+                      ...(isEmpty(column) ? emptyBlocksForm() : column),
+                    }}
                     disableEvents={true}
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
@@ -388,7 +391,10 @@ class ColumnsBlockEdit extends React.Component {
                           ...coldata,
                           blocks: {
                             ...coldata.blocks,
-                            [colId]: newFormData,
+                            [colId]: {
+                              blocks: newFormData.blocks,
+                              blocks_layout: newFormData.blocks_layout,
+                            },
                           },
                         },
                       });
