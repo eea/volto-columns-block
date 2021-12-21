@@ -52,7 +52,6 @@ describe('Blocks Tests', () => {
 
     // then the page view should contain our changes
     cy.contains('My Add-on Page');
-    cy.contains('.columns-block');
     cy.contains('First');
     cy.contains('Second');
     cy.contains('Third');
