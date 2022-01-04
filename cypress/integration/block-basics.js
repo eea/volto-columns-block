@@ -33,18 +33,16 @@ describe('Blocks Tests', () => {
     cy.get('.field-wrapper-gridCols  #field-gridCols').click();
     cy.get('.react-select__menu').contains('25').click();
 
-
-    cy.get('.columns-block .block-editor-text [contenteditable=true]').eq(0).click().type("First");
-    cy.get('.columns-block .block-editor-text [contenteditable=true]').eq(1).click().type("Second");
-    cy.get('.columns-block .block-editor-text [contenteditable=true]').eq(2).click().type("Third");
+    cy.get('[contenteditable=true]').first().focus().click();
+    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type("First");
+    cy.get('.columns-block [contenteditable=true]').eq(1).focus().click().type("Second");
+    cy.get('.columns-block [contenteditable=true]').eq(2).focus().click().type("Third");
     cy.get('.block-toolbar button').eq(1).click();
 
     cy.get('.field-wrapper-grid_vertical_align  #field-grid_vertical_align').click();
     cy.get('.react-select__menu').contains('Middle').click();
     cy.get('.field-wrapper-backgroundColor .ui.huge.button').click();
     cy.get('.github-picker.color-picker span').eq(3).click();
-
-
 
     // Save
     cy.get('#toolbar-save').click();
