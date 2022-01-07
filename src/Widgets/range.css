@@ -14,9 +14,9 @@
 }
 
 /* detect if is authenticated or anon */
-body:not(.is-authenticated) .stretch {
+/* body:not(.is-authenticated) .stretch {
   padding: 0 2rem;
-}
+} */
 
 /* detect if is logged in but in view with toolbar open */
 body:not(.view-editview):not(.is-anonymous):not(.has-toolbar-collapsed)
@@ -78,8 +78,8 @@ body:not(.is-anonymous):not(.has-toolbar) .stretch {
   }
 }
 
-@media (max-width: 786px) {
+/* @media (max-width: 786px) {
   .stretch {
     padding: 0 !important;
   }
-}
+} */
