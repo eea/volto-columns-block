@@ -303,7 +303,6 @@ class ColumnsBlockEdit extends React.Component {
       <div
         role="presentation"
         className="columns-block"
-        onClick={() => this.props.onSelectBlock(this.props.id)}
         onKeyDown={(e) => {
           this.handleKeyDown(
             e,
