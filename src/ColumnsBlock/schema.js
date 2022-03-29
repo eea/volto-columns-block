@@ -21,7 +21,7 @@ export const ColumnsBlockSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: ['title', 'data', 'gridCols'],
+      fields: ['title', 'data', 'gridCols', 'reverseWrap'],
     },
   ],
   properties: {
@@ -39,6 +39,10 @@ export const ColumnsBlockSchema = () => ({
       title: 'Layout',
       widget: 'layout_select',
       choices: [],
+    },
+    reverseWrap: {
+      title: 'Reverse wrap',
+      type: 'boolean',
     },
   },
   required: [],
