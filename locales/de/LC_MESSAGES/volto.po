@@ -1,0 +1,123 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: Styles/schema
+msgid "A custom CSS class, aplicable to this column"
+msgstr "Eine eigene CSS-Klasse, die der Spalte zugewiesen wird"
+
+#: Styles/schema
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: Styles/schema
+msgid "Background color"
+msgstr "Hintergrundfarbe"
+
+#: Styles/schema
+msgid "Bottom"
+msgstr "Unten"
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+#: Widgets/ColumnsWidget
+msgid "Column"
+msgstr "Spalte"
+
+#: ColumnsBlock/schema
+msgid "Column title"
+msgstr "Titel der Spalte"
+
+#: ColumnsBlock/schema
+msgid "Columns"
+msgstr "Spalten"
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+msgid "Columns block"
+msgstr "Spalten-Block"
+
+#: ColumnsBlock/schema
+msgid "Columns block friendly name"
+msgstr "Anzeigename des Spalten-Blocks"
+
+#: Styles/schema
+msgid "Custom CSS class"
+msgstr "Eigene CSS-Klasse"
+
+#: Widgets/QuadSize
+msgid "Customize"
+msgstr "Anpassen"
+
+#: ColumnsBlock/schema
+msgid "Default"
+msgstr "Standard"
+
+#: ColumnsBlock/ColumnsBlockEdit
+msgid "Edit parent columns block"
+msgstr "Zu den Block-Einstellungen"
+
+#: ColumnsBlock/ColumnsBlockEdit
+msgid "Go to Column settings"
+msgstr "Zu den Spalten-Einstellungen"
+
+#: ColumnsBlock/schema
+msgid "Layout"
+msgstr "Layout"
+
+#: Styles/schema
+msgid "Middle"
+msgstr "Mitte"
+
+#: Styles/schema
+msgid "Padding"
+msgstr "Padding"
+
+#: Widgets/QuadSize
+msgid "Percentage"
+msgstr "Prozent"
+
+#: Widgets/QuadSize
+msgid "Size"
+msgstr "Größe"
+
+#: Styles/schema
+msgid "Style"
+msgstr "Aussehen"
+
+#: Styles/schema
+msgid "Styling"
+msgstr "Aussehen"
+
+#: ColumnsBlock/schema
+msgid "Title"
+msgstr "Titel"
+
+#: Styles/schema
+msgid "Top"
+msgstr "Oben"
+
+#: Widgets/QuadSize
+msgid "Unit"
+msgstr "Einheit"
+
+#: ColumnsBlock/EditBlockWrapper
+msgid "Unknown Block"
+msgstr "Unbekannter Block"
+
+#: Styles/schema
+msgid "Vertical align"
+msgstr "Vertikale Ausrichtung"
+
+#: ColumnsBlock/EditBlockWrapper
+msgid "delete"
+msgstr "löschen"

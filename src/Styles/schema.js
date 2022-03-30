@@ -1,43 +1,92 @@
-export const StyleSchema = () => ({
-  title: 'Styling',
+import { defineMessages } from 'react-intl';
+
+const messages = defineMessages({
+  labelStyling: {
+    id: 'Styling',
+    defaultMessage: 'Styling',
+  },
+  labelStyle: {
+    id: 'Style',
+    defaultMessage: 'Style',
+  },
+  labelAdvanced: {
+    id: 'Advanced',
+    defaultMessage: 'Advanced',
+  },
+  labelBackgroundColor: {
+    id: 'Background color',
+    defaultMessage: 'Background color',
+  },
+  labelVerticalAlign: {
+    id: 'Vertical align',
+    defaultMessage: 'Vertical align',
+  },
+  labelBottom: {
+    id: 'Bottom',
+    defaultMessage: 'Bottom',
+  },
+  labelMiddle: {
+    id: 'Middle',
+    defaultMessage: 'Middle',
+  },
+  labelTop: {
+    id: 'Top',
+    defaultMessage: 'Top',
+  },
+  labelPadding: {
+    id: 'Padding',
+    defaultMessage: 'Padding',
+  },
+  labelColumnClass: {
+    id: 'Custom CSS class',
+    defaultMessage: 'Custom CSS class',
+  },
+  descrColumnClass: {
+    id: 'A custom CSS class, aplicable to this column',
+    defaultMessage: 'A custom CSS class, aplicable to this column',
+  },
+});
+
+export const StyleSchema = (intl) => ({
+  title: intl.formatMessage(messages.labelStyling),
   fieldsets: [
     {
       id: 'default',
-      title: 'Style',
+      title: intl.formatMessage(messages.labelStyle),
       fields: ['grid_vertical_align'],
     },
     {
       id: 'styling',
-      title: 'Styling',
+      title: intl.formatMessage(messages.labelStyling),
       fields: ['backgroundColor', 'padding'],
     },
     {
       id: 'advanced',
-      title: 'Advanced',
+      title: intl.formatMessage(messages.labelAdvanced),
       fields: ['column_class'],
     },
   ],
   properties: {
     backgroundColor: {
-      title: 'Background color',
+      title: intl.formatMessage(messages.labelBackgroundColor),
       type: 'color',
       widget: 'simple_color_picker',
     },
     grid_vertical_align: {
-      title: 'Vertical align',
+      title: intl.formatMessage(messages.labelVerticalAlign),
       choices: [
-        ['bottom', 'Bottom'],
-        ['middle', 'Middle'],
-        ['top', 'Top'],
+        ['bottom', intl.formatMessage(messages.labelBottom)],
+        ['middle', intl.formatMessage(messages.labelMiddle)],
+        ['top', intl.formatMessage(messages.labelTop)],
       ],
     },
     padding: {
-      title: 'Padding',
+      title: intl.formatMessage(messages.labelPadding),
       widget: 'quad_size',
     },
     column_class: {
-      title: 'Custom CSS Class',
-      description: 'A custom CSS class, aplicable to this column',
+      title: intl.formatMessage(messages.labelColumnClass),
+      description: intl.formatMessage(messages.descrColumnClass),
     },
   },
   required: [],
