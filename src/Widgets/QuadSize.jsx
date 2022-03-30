@@ -1,21 +1,43 @@
 import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 import { Field, FormFieldWrapper } from '@plone/volto/components';
 import { Grid } from 'semantic-ui-react';
 import { Slider } from './Slider';
 
-const fields = {
-  unitField: {
-    title: 'Unit',
-    columns: 2,
-    placeholder: 'Unit',
-    defaultValue: 'px',
-    choices: [
-      ['px', 'px'],
-      ['%', 'percentage'],
-      ['em', 'em'],
-      ['rem', 'rem'],
-    ],
+const messages = defineMessages({
+  labelUnit: {
+    id: 'Unit',
+    defaultMessage: 'Unit',
   },
+  labelPercentage: {
+    id: 'Percentage',
+    defaultMessage: 'Percentage',
+  },
+  labelSize: {
+    id: 'Size',
+    defaultMessage: 'Size',
+  },
+  labelCustomize: {
+    id: 'Customize',
+    defaultMessage: 'Customize',
+  },
+});
+
+const getFields = (intl) => {
+  return {
+    unitField: {
+      title: intl.formatMessage(messages.labelUnit),
+      columns: 2,
+      placeholder: intl.formatMessage(messages.labelUnit),
+      defaultValue: 'px',
+      choices: [
+        ['px', 'px'],
+        ['%', 'percentage'],
+        ['em', 'em'],
+        ['rem', 'rem'],
+      ],
+    },
+  };
 };
 
 const getMax = (unit) => {
@@ -34,6 +56,7 @@ const getMax = (unit) => {
 };
 
 const QuadSizeWidget = (props) => {
+  const intl = useIntl();
   const {
     value = {},
     id,
@@ -57,7 +80,7 @@ const QuadSizeWidget = (props) => {
     ...sliderSettings,
     max: getMax(unit),
   };
-  // console.log('value', value);
+  const fields = getFields(intl);
 
   return (
     <FormFieldWrapper {...props}>
@@ -130,7 +153,7 @@ const QuadSizeWidget = (props) => {
             });
           }}
           value={top}
-          title="Size"
+          title={intl.formatMessage(messages.labelSize)}
           widget="slider"
           columns={2}
         />
@@ -140,7 +163,7 @@ const QuadSizeWidget = (props) => {
         id={`${id}-lockSize`}
         onChange={(fid, val) => onChange(id, { ...value, unlock: val })}
         value={unlock}
-        title="Customize"
+        title={intl.formatMessage(messages.labelCustomize)}
         type="boolean"
         columns={1}
       />
