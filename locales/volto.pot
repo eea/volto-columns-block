@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2022-03-30T07:45:01.184Z\n"
+"POT-Creation-Date: 2022-03-30T08:08:53.197Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,11 @@ msgstr ""
 #: Widgets/QuadSize
 # defaultMessage: Percentage
 msgid "Percentage"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Reverse wrap
+msgid "Reverse wrap"
 msgstr ""
 
 #: Widgets/QuadSize

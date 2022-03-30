@@ -33,6 +33,10 @@ const messages = defineMessages({
     id: 'Layout',
     defaultMessage: 'Layout',
   },
+  labelReverseWrap: {
+    id: 'Reverse wrap',
+    defaultMessage: 'Reverse wrap',
+  },
 });
 
 export const ColumnSchema = (intl) => ({
@@ -58,7 +62,7 @@ export const ColumnsBlockSchema = (intl) => ({
     {
       id: 'default',
       title: intl.formatMessage(messages.labelDefault),
-      fields: ['title', 'data', 'gridCols'],
+      fields: ['title', 'data', 'gridCols', 'reverseWrap'],
     },
   ],
   properties: {
@@ -76,6 +80,10 @@ export const ColumnsBlockSchema = (intl) => ({
       title: intl.formatMessage(messages.labelLayout),
       widget: 'layout_select',
       choices: [],
+    },
+    reverseWrap: {
+      title: intl.formatMessage(messages.labelReverseWrap),
+      type: 'boolean',
     },
   },
   required: [],

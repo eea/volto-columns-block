@@ -86,6 +86,10 @@ msgstr "Padding"
 msgid "Percentage"
 msgstr "Prozent"
 
+#: ColumnsBlock/schema
+msgid "Reverse wrap"
+msgstr "Spalten-Reihenfolge bei Umbruch umkehren"
+
 #: Widgets/QuadSize
 msgid "Size"
 msgstr "Größe"
