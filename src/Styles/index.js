@@ -1,4 +1,5 @@
 import { StyleSchema } from './schema';
+import { getStyle } from './utils';
 
 export function makeStyleSchema({ available_colors }) {
   const schema = StyleSchema();
@@ -6,11 +7,4 @@ export function makeStyleSchema({ available_colors }) {
   return schema;
 }
 
-export function getStyle(props) {
-  return {
-    verticalAlign: props.grid_vertical_align,
-    style: {
-      backgroundColor: props.backgroundColor,
-    },
-  };
-}
+export { getStyle };
