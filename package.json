@@ -15,7 +15,7 @@
     "react"
   ],
   "dependencies": {
-    "react-color": "~2.18.1"
+    "react-color": "~2.19.3"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.5",
