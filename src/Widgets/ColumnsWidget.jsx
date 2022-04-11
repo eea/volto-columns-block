@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { v4 as uuid } from 'uuid';
 import { omit, without } from 'lodash';
 import move from 'lodash-move';
@@ -71,7 +72,10 @@ const ColumnsWidget = (props) => {
                     <Icon name={dragSVG} size="18px" />
                   </div>
                   <div className="column-area">
-                    <div className="label">Column {index + 1}</div>
+                    <div className="label">
+                      <FormattedMessage id="Column" defaultMessage="Column" />{' '}
+                      {index + 1}
+                    </div>
                     {value.blocks_layout?.items?.length > 1 ? (
                       <button
                         onClick={() => {
