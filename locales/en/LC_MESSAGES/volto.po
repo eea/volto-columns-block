@@ -14,137 +14,137 @@ msgstr ""
 #: Styles/schema
 # defaultMessage: A custom CSS class, aplicable to this column
 msgid "A custom CSS class, aplicable to this column"
-msgstr "Eine eigene CSS-Klasse, die der Spalte zugewiesen wird"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Advanced
 msgid "Advanced"
-msgstr "Erweitert"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Background color
 msgid "Background color"
-msgstr "Hintergrundfarbe"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Bottom
 msgid "Bottom"
-msgstr "Unten"
+msgstr ""
 
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
 #: Widgets/ColumnsWidget
 # defaultMessage: Column
 msgid "Column"
-msgstr "Spalte"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Column title
 msgid "Column title"
-msgstr "Titel der Spalte"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Columns
 msgid "Columns"
-msgstr "Spalten"
+msgstr ""
 
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
 # defaultMessage: Columns block
 msgid "Columns block"
-msgstr "Spalten-Block"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Columns block friendly name
 msgid "Columns block friendly name"
-msgstr "Anzeigename des Spalten-Blocks"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Custom CSS class
 msgid "Custom CSS class"
-msgstr "Eigene CSS-Klasse"
+msgstr ""
 
 #: Widgets/QuadSize
 # defaultMessage: Customize
 msgid "Customize"
-msgstr "Anpassen"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Default
 msgid "Default"
-msgstr "Standard"
+msgstr ""
 
 #: ColumnsBlock/ColumnsBlockEdit
 # defaultMessage: Edit parent columns block
 msgid "Edit parent columns block"
-msgstr "Zu den Block-Einstellungen"
+msgstr ""
 
 #: ColumnsBlock/ColumnsBlockEdit
 # defaultMessage: Go to Column settings
 msgid "Go to Column settings"
-msgstr "Zu den Spalten-Einstellungen"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Layout
 msgid "Layout"
-msgstr "Layout"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Middle
 msgid "Middle"
-msgstr "Mitte"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Padding
 msgid "Padding"
-msgstr "Padding"
+msgstr ""
 
 #: Widgets/QuadSize
 # defaultMessage: Percentage
 msgid "Percentage"
-msgstr "Prozent"
+msgstr ""
 
 #: Widgets/QuadSize
 # defaultMessage: Size
 msgid "Size"
-msgstr "Größe"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Style
 msgid "Style"
-msgstr "Aussehen"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Styling
 msgid "Styling"
-msgstr "Aussehen"
+msgstr ""
 
 #: ColumnsBlock/schema
 # defaultMessage: Title
 msgid "Title"
-msgstr "Titel"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Top
 msgid "Top"
-msgstr "Oben"
+msgstr ""
 
 #: Widgets/QuadSize
 # defaultMessage: Unit
 msgid "Unit"
-msgstr "Einheit"
+msgstr ""
 
 #: ColumnsBlock/EditBlockWrapper
 # defaultMessage: Unknown Block {block}
 msgid "Unknown Block"
-msgstr "Unbekannter Block"
+msgstr ""
 
 #: Styles/schema
 # defaultMessage: Vertical align
 msgid "Vertical align"
-msgstr "Vertikale Ausrichtung"
+msgstr ""
 
 #: ColumnsBlock/EditBlockWrapper
 # defaultMessage: delete
 msgid "delete"
-msgstr "löschen"
+msgstr ""
