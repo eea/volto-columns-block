@@ -27,7 +27,7 @@ coverage-end */
 export const setupBeforeEach = () => {
   cy.autologin();
   cy.createContent({
-    contentType: 'Folder',
+    contentType: 'Document',
     contentId: 'cypress',
     contentTitle: 'Cypress',
   });
