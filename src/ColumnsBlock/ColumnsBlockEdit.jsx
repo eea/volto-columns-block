@@ -2,7 +2,7 @@ import React from 'react';
 import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
 import { compose } from 'redux';
 import { Grid, Segment } from 'semantic-ui-react';
-import { isEmpty, without, differenceBy } from 'lodash';
+import { isEmpty, without } from 'lodash';
 import { SidebarPortal, BlocksToolbar, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
 import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
 import {
