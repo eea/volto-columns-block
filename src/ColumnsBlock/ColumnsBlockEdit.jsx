@@ -413,6 +413,7 @@ class ColumnsBlockEdit extends React.Component {
                           blocks: {
                             ...coldata.blocks,
                             [colId]: {
+                              ...coldata.blocks?.[colId],
                               blocks: newFormData.blocks,
                               blocks_layout: newFormData.blocks_layout,
                             },
