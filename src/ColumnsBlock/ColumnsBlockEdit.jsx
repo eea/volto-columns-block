@@ -34,7 +34,7 @@ import { makeStyleSchema, getStyle } from '../Styles';
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
-import '@eeacms/volto-columns-block/less/columns.less';
+import '../less/columns.less';
 
 const messages = defineMessages({
   labelColumn: {

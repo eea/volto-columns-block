@@ -22,7 +22,6 @@ const addonAliases = Object.keys(reg.packages).map(o => [
   o,
   reg.packages[o].modulePath,
 ]);
-//console.log("project", addonAliases);
 
 
 module.exports = {

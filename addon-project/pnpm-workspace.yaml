@@ -1,4 +1,0 @@
-packages:
-  - '../'
-link-workspace-packages: true
-prefer-workspace-packages: true
