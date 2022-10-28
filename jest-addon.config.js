@@ -17,14 +17,13 @@ module.exports = {
     '~/(.*)$': '<rootDir>/src/$1',
     'load-volto-addons':
       '<rootDir>/node_modules/@plone/volto/jest-addons-loader.js',
-    '\\.(css|less|scss|sass)$':
-      '<rootDir>/src/addons/volto-columns-block/__mocks__/styleMock.js',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   transform: {
     '^.+\\.js(x)?$': 'babel-jest',
+    '^.+\\.(png)$': 'jest-file',
+    '^.+\\.(jpg)$': 'jest-file',
     '^.+\\.(svg)$': './node_modules/@plone/volto/jest-svgsystem-transform.js',
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      'jest-file',
   },
   coverageThreshold: {
     global: {
