@@ -182,7 +182,7 @@ pipeline {
         node(label: 'swarm') {
           script{
             checkout scm
-            unstash "xunit-reports"
+            // unstash "xunit-reports"
             unstash "cypress-coverage"
             def scannerHome = tool 'SonarQubeScanner';
             def nodeJS = tool 'NodeJS';
