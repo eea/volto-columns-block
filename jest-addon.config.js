@@ -18,7 +18,7 @@ module.exports = {
     'load-volto-addons':
       '<rootDir>/node_modules/@plone/volto/jest-addons-loader.js',
     '\\.(css|less|scss|sass)$':
-      '<rootDir>/src/addons/$1/__mocks__/styleMock.js',
+      '<rootDir>/src/addons/volto-columns-block/__mocks__/styleMock.js',
   },
   transform: {
     '^.+\\.js(x)?$': 'babel-jest',
