@@ -1,19 +1,4 @@
 import { defineMessages } from 'react-intl';
-import { cloneDeep } from 'lodash';
-
-import config from '@plone/volto/registry';
-
-import imageFitSVG from '@eeacms/volto-columns-block/ColumnsBlock/icons/image-narrow.svg';
-import imageWideSVG from '@plone/volto/icons/image-wide.svg';
-import imageFullSVG from '@plone/volto/icons/image-full.svg';
-import { COLUMNSBLOCK } from '../constants';
-
-const ALIGN_INFO_MAP = {
-  narrow_width: [imageFitSVG, 'Narrow width'],
-  container_width: [imageFitSVG, 'Container width'],
-  wide_width: [imageWideSVG, 'Wide width'],
-  full: [imageFullSVG, 'Full width'],
-};
 
 const messages = defineMessages({
   labelColumn: {
@@ -95,43 +80,3 @@ export const ColumnsBlockSchema = (intl) => ({
   },
   required: [],
 });
-
-export const addStylingFieldsetSchemaEnhancer = ({ schema }) => {
-  const applied = schema.fieldsets[0].fields.includes('styling');
-  const enableStyling = config.blocks.blocksConfig[COLUMNSBLOCK].enableStyling;
-
-  if (!applied && enableStyling) {
-    const resSchema = cloneDeep(schema);
-
-    resSchema.fieldsets.push({
-      id: 'styling',
-      fields: ['styles'],
-      title: 'Styling',
-    });
-    resSchema.properties.styles = {
-      widget: 'object',
-      title: 'Styling',
-      schema: {
-        fieldsets: [
-          {
-            id: 'default',
-            title: 'Default',
-            fields: ['size'],
-          },
-        ],
-        properties: {
-          size: {
-            widget: 'style_align',
-            title: 'Section size',
-            actions: Object.keys(ALIGN_INFO_MAP),
-            actionsInfoMap: ALIGN_INFO_MAP,
-          },
-        },
-        required: [],
-      },
-    };
-    return resSchema;
-  }
-
-  return schema;
-};

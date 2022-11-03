@@ -59,8 +59,6 @@ export default function install(config) {
     mostUsed: false,
     blockHasOwnFocusManagement: true,
     schema: extendedSchema(config),
-    enableStyling: true,
-    schemaEnhancer: addStylingFieldsetSchemaEnhancer,
     sidebarTab: 1,
     security: {
       addPermission: [],
