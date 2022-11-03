@@ -17,6 +17,7 @@ import { COLUMNSBLOCK } from './constants';
 import { cloneColumnsBlockData } from './utils';
 
 import { getBlocks } from '@plone/volto/helpers';
+import { addStylingFieldsetSchemaEnhancer } from './ColumnsBlock/schema';
 
 const extendedSchema = (config) => {
   const choices = Object.keys(config.blocks.blocksConfig)
@@ -58,6 +59,8 @@ export default function install(config) {
     mostUsed: false,
     blockHasOwnFocusManagement: true,
     schema: extendedSchema(config),
+    enableStyling: true,
+    schemaEnhancer: addStylingFieldsetSchemaEnhancer,
     sidebarTab: 1,
     security: {
       addPermission: [],
