@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { Grid, Segment } from 'semantic-ui-react';
 import { isEmpty, without } from 'lodash';
 import { SidebarPortal, BlocksToolbar, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
-import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
+import { BlockDataForm } from '@plone/volto/components';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,
@@ -507,7 +507,7 @@ class ColumnsBlockEdit extends React.Component {
                     />
                   </Button>
                 </Segment>
-                <InlineForm
+                <BlockDataForm
                   schema={ColumnSchema}
                   title={`${this.props.intl.formatMessage(
                     messages.labelColumn,
@@ -524,7 +524,7 @@ class ColumnsBlockEdit extends React.Component {
                 />
               </>
             ) : (
-              <InlineForm
+              <BlockDataForm
                 schema={this.getColumnsBlockSchema()}
                 title={this.props.intl.formatMessage(
                   messages.labelColumnsBlock,
