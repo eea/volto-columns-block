@@ -4,7 +4,7 @@ pipeline {
   environment {
         GIT_NAME = "volto-columns-block"
         NAMESPACE = "@eeacms"
-        SONARQUBE_TAGS = "volto.eea.europa.eu,climate-energy.eea.europa.eu,forest.eea.europa.eu,biodiversity.europa.eu,www.eea.europa.eu-ims,sustainability.eionet.europa.eu,clms.land.copernicus.eu,industry.eea.europa.eu,water.europa.eu-freshwater,demo-www.eea.europa.eu,clmsdemo.devel6cph.eea.europa.eu,circularity.eea.europa.eu,prod-www.eea.europa.eu,water.europa.eu-marine"
+        SONARQUBE_TAGS = "volto.eea.europa.eu,climate-energy.eea.europa.eu,forest.eea.europa.eu,biodiversity.europa.eu,www.eea.europa.eu-ims,sustainability.eionet.europa.eu,clms.land.copernicus.eu,industry.eea.europa.eu,water.europa.eu-freshwater,demo-www.eea.europa.eu,clmsdemo.devel6cph.eea.europa.eu,circularity.eea.europa.eu,prod-www.eea.europa.eu,water.europa.eu-marine,demo-kitkat.dev2aws.eea.europa.eu"
         DEPENDENCIES = ""
         VOLTO = "alpha"
     }
