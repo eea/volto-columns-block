@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import config from '@plone/volto/registry';
 import { Grid } from 'semantic-ui-react';
 import { RenderBlocks } from '@plone/volto/components';
@@ -20,6 +21,7 @@ const getSides = (v) => {
 };
 
 const ColumnsBlockView = (props) => {
+  const location = useLocation();
   const { gridSizes } = config.blocks.blocksConfig[COLUMNSBLOCK];
   const { data = {}, gridSize = 12, gridCols = [] } = props.data;
   const metadata = props.metadata || props.properties;
@@ -53,7 +55,12 @@ const ColumnsBlockView = (props) => {
                     : {}
                 }
               >
-                <RenderBlocks {...props} metadata={metadata} content={column} />
+                <RenderBlocks
+                  {...props}
+                  location={location}
+                  metadata={metadata}
+                  content={column}
+                />
               </div>
             </Grid.Column>
           );
