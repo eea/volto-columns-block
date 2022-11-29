@@ -315,6 +315,7 @@ class ColumnsBlockEdit extends React.Component {
       available_colors,
     } = config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors }, this.props.intl);
+    const isInitialized = Object.keys(data?.data).length > 0;
 
     return (
       <div
@@ -333,7 +334,7 @@ class ColumnsBlockEdit extends React.Component {
         tabIndex={-1}
       >
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
-        {!data?.data ? (
+        {!isInitialized ? (
           <ColumnVariations
             variants={variants.filter((variant) => variant.common)}
             data={data}
