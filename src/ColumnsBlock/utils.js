@@ -10,9 +10,7 @@ export const getColumns = (data) => {
 };
 
 export const hasColumns = (data) => {
-  return typeof data !== 'undefined'
-    ? data.blocks_layout.items.length > 0
-    : false;
+  return data?.blocks_layout?.items?.length > 0;
 };
 
 export const forEachColumn = (data, callback) => {

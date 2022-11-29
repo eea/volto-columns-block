@@ -32,7 +32,12 @@ const ColumnsBlockView = (props) => {
 
   return (
     <div className="columns-view" id={customId}>
-      <Grid columns={gridSize} className="column-grid">
+      <Grid
+        columns={gridSize}
+        className={
+          props.data.reverseWrap ? 'column-grid reverse-wrap' : 'column-grid'
+        }
+      >
         {columnList.map(([id, column], index) => {
           return (
             <Grid.Column
