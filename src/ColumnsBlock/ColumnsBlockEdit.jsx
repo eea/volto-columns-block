@@ -315,7 +315,7 @@ class ColumnsBlockEdit extends React.Component {
       available_colors,
     } = config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors }, this.props.intl);
-    const isInitialized = Object.keys(data?.data).length > 0;
+    const isInitialized = data?.data && Object.keys(data?.data).length > 0;
 
     return (
       <div
