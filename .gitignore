@@ -1,11 +1,17 @@
 .vscode/
 .history
+.eslintrc.js
+.nyc_output
+project
+coverage
 logs
 *.log
 npm-debug.log*
 .DS_Store
 *.swp
 yarn-error.log
+yarn.lock
+package-lock.json
 
 node_modules
 build

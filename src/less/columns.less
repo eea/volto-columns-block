@@ -185,8 +185,8 @@
 
   .ui.grid > .column-blocks-wrapper,
   .ui.grid > .column-blocks-wrapper:not(.row) {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-top: @columnBlocksWrapperPaddingTop;
+    padding-bottom: @columnBlocksWrapperPaddingBottom;
   }
 
   .ui.grid.reverse-wrap {
@@ -196,8 +196,8 @@
 
 .ui.grid.column-grid {
   padding: @columnGridPadding;
-  margin-top: 0.8rem;
-  margin-bottom: 0.8rem;
+  margin-top: @columnGridMarginTop;
+  margin-bottom: @columnGridMarginBottom;
 }
 /* remove padding from column-grid when we have styled-with-bg style from volto-block-style */
 .styled-with-bg .grid.column-grid {

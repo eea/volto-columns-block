@@ -424,7 +424,7 @@ export class Slider extends Component {
                 ))
               ) : (
                 <div
-                  tabindex="-1"
+                  tabIndex="-1"
                   role="button"
                   className="slider-knob single"
                   onKeyDown={this.handleKnobKeydown}

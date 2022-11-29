@@ -1,8 +1,10 @@
 import React from 'react';
+import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
+import { compose } from 'redux';
 import { Grid, Segment } from 'semantic-ui-react';
 import { isEmpty, without } from 'lodash';
 import { SidebarPortal, BlocksToolbar, Icon } from '@plone/volto/components'; // BlocksForm, Icon,
-import InlineForm from '@plone/volto/components/manage/Form/InlineForm';
+import { BlockDataForm } from '@plone/volto/components';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,
@@ -27,12 +29,27 @@ import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
-import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
+import { makeStyleSchema, getStyle } from '../Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 
-import '@eeacms/volto-columns-block/less/columns.less';
+import '../less/columns.less';
+
+const messages = defineMessages({
+  labelColumn: {
+    id: 'Column',
+    defaultMessage: 'Column',
+  },
+  labelColumnsBlock: {
+    id: 'Columns block',
+    defaultMessage: 'Columns block',
+  },
+  labelToColSettings: {
+    id: 'Go to Column settings',
+    defaultMessage: 'Go to Column settings',
+  },
+});
 
 /*
  * not pretty, there's a lot of render props passing, to please React
@@ -212,7 +229,7 @@ class ColumnsBlockEdit extends React.Component {
 
   getColumnsBlockSchema = () => {
     const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
-    const schema = ColumnsBlockSchema();
+    const schema = ColumnsBlockSchema(this.props.intl);
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
     const nrOfColumns = (blocks_layout?.items || []).length;
@@ -297,7 +314,8 @@ class ColumnsBlockEdit extends React.Component {
       variants,
       available_colors,
     } = config.blocks.blocksConfig[COLUMNSBLOCK];
-    const ColumnSchema = makeStyleSchema({ available_colors });
+    const ColumnSchema = makeStyleSchema({ available_colors }, this.props.intl);
+    const isInitialized = data?.data && Object.keys(data?.data).length > 0;
 
     return (
       <div
@@ -316,7 +334,7 @@ class ColumnsBlockEdit extends React.Component {
         tabIndex={-1}
       >
         {data.coldata ? 'old style columns block, safe to remove it' : ''}
-        {!data?.data ? (
+        {!isInitialized ? (
           <ColumnVariations
             variants={variants.filter((variant) => variant.common)}
             data={data}
@@ -340,7 +358,12 @@ class ColumnsBlockEdit extends React.Component {
               }}
               aria-hidden="true"
             >
-              {data.title || 'Columns'}
+              {data.title || (
+                <FormattedMessage
+                  id="Columns block"
+                  defaultMessage="Columns block"
+                />
+              )}
             </div>
             <Grid columns={gridSize} className="column-grid" stackable>
               {columnList.map(([colId, column], index) => (
@@ -391,6 +414,7 @@ class ColumnsBlockEdit extends React.Component {
                           blocks: {
                             ...coldata.blocks,
                             [colId]: {
+                              ...coldata.blocks?.[colId],
                               blocks: newFormData.blocks,
                               blocks_layout: newFormData.blocks_layout,
                             },
@@ -413,7 +437,9 @@ class ColumnsBlockEdit extends React.Component {
                               <Button
                                 icon
                                 basic
-                                title="Go to Column settings"
+                                title={this.props.intl.formatMessage(
+                                  messages.labelToColSettings,
+                                )}
                                 onClick={() => {
                                   this.setState({
                                     showSidebar: true,
@@ -476,12 +502,17 @@ class ColumnsBlockEdit extends React.Component {
                 <Segment>
                   <Button onClick={() => this.setState({ activeColumn: null })}>
                     <Icon name={upSVG} size="14px" />
-                    Edit parent column block
+                    <FormattedMessage
+                      id="Edit parent columns block"
+                      defaultMessage="Edit parent columns block"
+                    />
                   </Button>
                 </Segment>
-                <InlineForm
+                <BlockDataForm
                   schema={ColumnSchema}
-                  title={`Column ${
+                  title={`${this.props.intl.formatMessage(
+                    messages.labelColumn,
+                  )} ${
                     columnList
                       .map(([colId]) => colId)
                       .indexOf(this.state.activeColumn) + 1
@@ -494,9 +525,11 @@ class ColumnsBlockEdit extends React.Component {
                 />
               </>
             ) : (
-              <InlineForm
+              <BlockDataForm
                 schema={this.getColumnsBlockSchema()}
-                title="Columns block"
+                title={this.props.intl.formatMessage(
+                  messages.labelColumnsBlock,
+                )}
                 onChangeField={(id, value) => {
                   onChangeBlock(block, {
                     ...data,
@@ -515,9 +548,12 @@ class ColumnsBlockEdit extends React.Component {
   }
 }
 
-export default connect(
-  (state, props) => {
-    return {};
-  },
-  { setSidebarTab },
+export default compose(
+  injectIntl,
+  connect(
+    (state, props) => {
+      return {};
+    },
+    { setSidebarTab },
+  ),
 )(ColumnsBlockEdit);

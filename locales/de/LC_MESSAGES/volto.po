@@ -1,0 +1,150 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: Styles/schema
+# defaultMessage: A custom CSS class, aplicable to this column
+msgid "A custom CSS class, aplicable to this column"
+msgstr "Eine eigene CSS-Klasse, die der Spalte zugewiesen wird"
+
+#: Styles/schema
+# defaultMessage: Advanced
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: Styles/schema
+# defaultMessage: Background color
+msgid "Background color"
+msgstr "Hintergrundfarbe"
+
+#: Styles/schema
+# defaultMessage: Bottom
+msgid "Bottom"
+msgstr "Unten"
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+#: Widgets/ColumnsWidget
+# defaultMessage: Column
+msgid "Column"
+msgstr "Spalte"
+
+#: ColumnsBlock/schema
+# defaultMessage: Column title
+msgid "Column title"
+msgstr "Titel der Spalte"
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns
+msgid "Columns"
+msgstr "Spalten"
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+# defaultMessage: Columns block
+msgid "Columns block"
+msgstr "Spalten-Block"
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns block friendly name
+msgid "Columns block friendly name"
+msgstr "Anzeigename des Spalten-Blocks"
+
+#: Styles/schema
+# defaultMessage: Custom CSS class
+msgid "Custom CSS class"
+msgstr "Eigene CSS-Klasse"
+
+#: Widgets/QuadSize
+# defaultMessage: Customize
+msgid "Customize"
+msgstr "Anpassen"
+
+#: ColumnsBlock/schema
+# defaultMessage: Default
+msgid "Default"
+msgstr "Standard"
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Edit parent columns block
+msgid "Edit parent columns block"
+msgstr "Zu den Block-Einstellungen"
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Go to Column settings
+msgid "Go to Column settings"
+msgstr "Zu den Spalten-Einstellungen"
+
+#: ColumnsBlock/schema
+# defaultMessage: Layout
+msgid "Layout"
+msgstr "Layout"
+
+#: Styles/schema
+# defaultMessage: Middle
+msgid "Middle"
+msgstr "Mitte"
+
+#: Styles/schema
+# defaultMessage: Padding
+msgid "Padding"
+msgstr "Padding"
+
+#: Widgets/QuadSize
+# defaultMessage: Percentage
+msgid "Percentage"
+msgstr "Prozent"
+
+#: Widgets/QuadSize
+# defaultMessage: Size
+msgid "Size"
+msgstr "Größe"
+
+#: Styles/schema
+# defaultMessage: Style
+msgid "Style"
+msgstr "Aussehen"
+
+#: Styles/schema
+# defaultMessage: Styling
+msgid "Styling"
+msgstr "Aussehen"
+
+#: ColumnsBlock/schema
+# defaultMessage: Title
+msgid "Title"
+msgstr "Titel"
+
+#: Styles/schema
+# defaultMessage: Top
+msgid "Top"
+msgstr "Oben"
+
+#: Widgets/QuadSize
+# defaultMessage: Unit
+msgid "Unit"
+msgstr "Einheit"
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: Unknown Block {block}
+msgid "Unknown Block"
+msgstr "Unbekannter Block"
+
+#: Styles/schema
+# defaultMessage: Vertical align
+msgid "Vertical align"
+msgstr "Vertikale Ausrichtung"
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: delete
+msgid "delete"
+msgstr "löschen"

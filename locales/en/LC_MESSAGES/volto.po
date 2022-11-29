@@ -1,0 +1,150 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: Styles/schema
+# defaultMessage: A custom CSS class, aplicable to this column
+msgid "A custom CSS class, aplicable to this column"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Advanced
+msgid "Advanced"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Background color
+msgid "Background color"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Bottom
+msgid "Bottom"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+#: Widgets/ColumnsWidget
+# defaultMessage: Column
+msgid "Column"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Column title
+msgid "Column title"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns
+msgid "Columns"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+# defaultMessage: Columns block
+msgid "Columns block"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns block friendly name
+msgid "Columns block friendly name"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Custom CSS class
+msgid "Custom CSS class"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Customize
+msgid "Customize"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Default
+msgid "Default"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Edit parent columns block
+msgid "Edit parent columns block"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Go to Column settings
+msgid "Go to Column settings"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Layout
+msgid "Layout"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Middle
+msgid "Middle"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Padding
+msgid "Padding"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Percentage
+msgid "Percentage"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Size
+msgid "Size"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Style
+msgid "Style"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Styling
+msgid "Styling"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Title
+msgid "Title"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Top
+msgid "Top"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Unit
+msgid "Unit"
+msgstr ""
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: Unknown Block {block}
+msgid "Unknown Block"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Vertical align
+msgid "Vertical align"
+msgstr ""
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: delete
+msgid "delete"
+msgstr ""
