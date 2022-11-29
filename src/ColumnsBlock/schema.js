@@ -58,7 +58,7 @@ export const ColumnsBlockSchema = (intl) => ({
     {
       id: 'default',
       title: intl.formatMessage(messages.labelDefault),
-      fields: ['title', 'data', 'gridCols'],
+      fields: ['title', 'data', 'gridCols', 'reverseWrap'],
     },
   ],
   properties: {
@@ -76,6 +76,10 @@ export const ColumnsBlockSchema = (intl) => ({
       title: intl.formatMessage(messages.labelLayout),
       widget: 'layout_select',
       choices: [],
+    },
+    reverseWrap: {
+      title: 'Reverse wrap',
+      type: 'boolean',
     },
   },
   required: [],
