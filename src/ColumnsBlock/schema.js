@@ -33,6 +33,10 @@ const messages = defineMessages({
     id: 'Layout',
     defaultMessage: 'Layout',
   },
+  labelReverseWrap: {
+    id: 'Reverse wrap',
+    defaultMessage: 'Reverse wrap',
+  },
 });
 
 export const ColumnSchema = (intl) => ({
@@ -78,7 +82,7 @@ export const ColumnsBlockSchema = (intl) => ({
       choices: [],
     },
     reverseWrap: {
-      title: 'Reverse wrap',
+      title: intl.formatMessage(messages.labelReverseWrap),
       type: 'boolean',
     },
   },

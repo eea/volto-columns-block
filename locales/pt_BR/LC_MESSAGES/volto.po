@@ -1,157 +1,155 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2022-12-16T16:09:46.028Z\n"
-"Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
-"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
-"Preferred-Encodings: utf-8\n"
-"Domain: volto\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #: Styles/schema
 # defaultMessage: A custom CSS class, aplicable to this column
 msgid "A custom CSS class, aplicable to this column"
-msgstr ""
+msgstr "Uma classe CSS customizada, aplicável a esta coluna"
 
 #: Styles/schema
 # defaultMessage: Advanced
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: Styles/schema
 # defaultMessage: Background color
 msgid "Background color"
-msgstr ""
+msgstr "Cor de fundo"
 
 #: Styles/schema
 # defaultMessage: Bottom
 msgid "Bottom"
-msgstr ""
+msgstr "Inferior"
 
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
 #: Widgets/ColumnsWidget
 # defaultMessage: Column
 msgid "Column"
-msgstr ""
+msgstr "Coluna"
 
 #: ColumnsBlock/schema
 # defaultMessage: Column title
 msgid "Column title"
-msgstr ""
+msgstr "Título da coluna"
 
 #: ColumnsBlock/schema
 # defaultMessage: Columns
 msgid "Columns"
-msgstr ""
+msgstr "Colunas"
 
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
 # defaultMessage: Columns block
 msgid "Columns block"
-msgstr ""
+msgstr "Bloco de colunas"
 
 #: ColumnsBlock/schema
 # defaultMessage: Columns block friendly name
 msgid "Columns block friendly name"
-msgstr ""
+msgstr "Nome amigável do bloco de colunas"
 
 #: Styles/schema
 # defaultMessage: Custom CSS class
 msgid "Custom CSS class"
-msgstr ""
+msgstr "Classe CSS customizada"
 
 #: Widgets/QuadSize
 # defaultMessage: Customize
 msgid "Customize"
-msgstr ""
+msgstr "Customizar"
 
 #: ColumnsBlock/schema
 # defaultMessage: Default
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 #: ColumnsBlock/ColumnsBlockEdit
 # defaultMessage: Edit parent columns block
 msgid "Edit parent columns block"
-msgstr ""
+msgstr "Editar bloco de colunas pai"
 
 #: ColumnsBlock/ColumnsBlockEdit
 # defaultMessage: Go to Column settings
 msgid "Go to Column settings"
-msgstr ""
+msgstr "Ir para as configurações da coluna"
 
 #: ColumnsBlock/schema
 # defaultMessage: Layout
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: Styles/schema
 # defaultMessage: Middle
 msgid "Middle"
-msgstr ""
+msgstr "Centralizado"
 
 #: Styles/schema
 # defaultMessage: Padding
 msgid "Padding"
-msgstr ""
+msgstr "Preenchimento"
 
 #: Widgets/QuadSize
 # defaultMessage: Percentage
 msgid "Percentage"
-msgstr ""
+msgstr "Percentagem"
 
 #: ColumnsBlock/schema
 # defaultMessage: Reverse wrap
 msgid "Reverse wrap"
-msgstr ""
+msgstr "Quebra reversa"
 
 #: Widgets/QuadSize
 # defaultMessage: Size
 msgid "Size"
-msgstr ""
+msgstr "Tamanho"
 
 #: Styles/schema
 # defaultMessage: Style
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 #: Styles/schema
 # defaultMessage: Styling
 msgid "Styling"
-msgstr ""
+msgstr "Estilo"
 
 #: ColumnsBlock/schema
 # defaultMessage: Title
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: Styles/schema
 # defaultMessage: Top
 msgid "Top"
-msgstr ""
+msgstr "Topo"
 
 #: Widgets/QuadSize
 # defaultMessage: Unit
 msgid "Unit"
-msgstr ""
+msgstr "Unidade"
 
 #: ColumnsBlock/EditBlockWrapper
 # defaultMessage: Unknown Block {block}
 msgid "Unknown Block"
-msgstr ""
+msgstr "Bloco desconhecido"
 
 #: Styles/schema
 # defaultMessage: Vertical align
 msgid "Vertical align"
-msgstr ""
+msgstr "Alinhamento vertical"
 
 #: ColumnsBlock/EditBlockWrapper
 # defaultMessage: delete
 msgid "delete"
-msgstr ""
+msgstr "excluir"
