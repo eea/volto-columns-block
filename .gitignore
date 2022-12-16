@@ -25,3 +25,6 @@ videos
 .env.test.local
 .env.production.local
 *~
+.*project
+.settings/
+
