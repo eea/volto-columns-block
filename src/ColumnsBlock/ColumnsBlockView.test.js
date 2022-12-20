@@ -10,8 +10,6 @@ import ColumnsBlockView from './ColumnsBlockView';
 
 const mockStore = configureStore();
 
-// const blockId = '1234';
-
 const blocks = {
   '1234': {
     '@type': 'columnsBlock',
@@ -56,6 +54,16 @@ const Nop = (props) => <div></div>;
 const TextView = ({ data }) => {
   return data.text;
 };
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "/",
+    hash: "",
+    search: "",
+    state: undefined
+  })
+}));
 
 test('renders 2 columns', async () => {
   installColumnsBlock(config);

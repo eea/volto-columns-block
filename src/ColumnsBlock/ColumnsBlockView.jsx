@@ -21,7 +21,7 @@ const getSides = (v) => {
 };
 
 const ColumnsBlockView = (props) => {
-  const location = useLocation() || {};
+  const location = useLocation();
   const { gridSizes } = config.blocks.blocksConfig[COLUMNSBLOCK];
   const { data = {}, gridSize = 12, gridCols = [] } = props.data;
   const metadata = props.metadata || props.properties;
