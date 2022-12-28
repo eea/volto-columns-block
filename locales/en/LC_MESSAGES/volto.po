@@ -104,6 +104,11 @@ msgstr ""
 msgid "Percentage"
 msgstr ""
 
+#: ColumnsBlock/schema
+# defaultMessage: Reverse wrap
+msgid "Reverse wrap"
+msgstr ""
+
 #: Widgets/QuadSize
 # defaultMessage: Size
 msgid "Size"
