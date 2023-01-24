@@ -243,29 +243,7 @@ class ColumnsBlockEdit extends React.Component {
     return schema;
   };
 
-  componentDidUpdate(prevProps) {
-    const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
-    const cols = this.props.data.data?.blocks_layout?.items || [];
-    const prevCols = prevProps.data.data?.blocks_layout?.items || [];
-
-    const colNumChanged = cols.length !== prevCols.length;
-    const initialLayoutSelection = Object.keys(prevProps.data).length === 1;
-    const shouldUpdateLayout = colNumChanged && !initialLayoutSelection;
-
-    if (shouldUpdateLayout) {
-      const available_variants = variants.filter(
-        ({ defaultData }) => defaultData?.gridCols?.length === cols.length,
-      );
-      const variant = available_variants?.[0];
-      if (variant) {
-        return this.props.onChangeBlock(this.props.block, {
-          ...this.props.data,
-          gridSize: variant.defaultData.gridSize,
-          gridCols: variant.defaultData.gridCols,
-        });
-      }
-    }
-
+  componentDidUpdate() {
     const { block, onChangeBlock, data } = this.props;
 
     // fill empty columns
