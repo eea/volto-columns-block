@@ -11,7 +11,7 @@ test('renders column variations component', () => {
   const store = mockStore({
     intl: {
       locale: 'en',
-      messages: {},
+      formatMessage: () => 'Select layout',
     },
   });
 
