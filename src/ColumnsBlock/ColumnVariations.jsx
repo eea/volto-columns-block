@@ -1,11 +1,19 @@
 import React from 'react';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Segment, Card } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 
-export default ({ data, onChange, children, variants }) => {
+const messages = defineMessages({
+  selectLayout: {
+    id: 'Select layout',
+    defaultMessage: 'Select layout',
+  },
+});
+
+const ColumnVariations = ({ onChange, variants, intl }) => {
   return (
     <Segment>
-      <h4>Select layout:</h4>
+      <h4>{intl.formatMessage(messages.selectLayout)}:</h4>
       <Card.Group centered itemsPerRow={7}>
         {variants.map(({ icon, defaultData, title }, index) => (
           <Card key={index} onClick={() => onChange(defaultData)}>
@@ -19,3 +27,5 @@ export default ({ data, onChange, children, variants }) => {
     </Segment>
   );
 };
+
+export default injectIntl(ColumnVariations);

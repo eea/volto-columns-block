@@ -5,7 +5,8 @@ exports[`renders column variations component 1`] = `
   className="ui segment"
 >
   <h4>
-    Select layout:
+    Select layout
+    :
   </h4>
   <div
     className="ui centered seven cards"

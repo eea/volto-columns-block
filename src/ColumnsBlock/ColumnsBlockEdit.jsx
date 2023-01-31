@@ -337,7 +337,6 @@ class ColumnsBlockEdit extends React.Component {
         {!isInitialized ? (
           <ColumnVariations
             variants={variants.filter((variant) => variant.common)}
-            data={data}
             onChange={(initialData) => {
               onChangeBlock(block, {
                 ...data,
