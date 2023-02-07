@@ -109,6 +109,11 @@ msgstr "Percentagem"
 msgid "Reverse wrap"
 msgstr "Quebra reversa"
 
+#: ColumnsBlock/ColumnVariations
+# defaultMessage: Select layout
+msgid "Select layout"
+msgstr "Selecione o layout"
+
 #: Widgets/QuadSize
 # defaultMessage: Size
 msgid "Size"

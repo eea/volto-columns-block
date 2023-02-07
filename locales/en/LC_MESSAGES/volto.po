@@ -109,6 +109,11 @@ msgstr ""
 msgid "Reverse wrap"
 msgstr ""
 
+#: ColumnsBlock/ColumnVariations
+# defaultMessage: Select layout
+msgid "Select layout"
+msgstr ""
+
 #: Widgets/QuadSize
 # defaultMessage: Size
 msgid "Size"
