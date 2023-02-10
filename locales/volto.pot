@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2023-01-25T20:23:49.511Z\n"
+"POT-Creation-Date: 2023-02-10T13:17:42.630Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -159,4 +159,9 @@ msgstr ""
 #: ColumnsBlock/EditBlockWrapper
 # defaultMessage: delete
 msgid "delete"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Reverse column order when opening site on mobile.
+msgid "reverseWrapDescription"
 msgstr ""

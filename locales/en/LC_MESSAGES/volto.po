@@ -158,3 +158,8 @@ msgstr ""
 # defaultMessage: delete
 msgid "delete"
 msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Reverse column order when opening site on mobile.
+msgid "reverseWrapDescription"
+msgstr ""
