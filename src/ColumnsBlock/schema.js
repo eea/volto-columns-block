@@ -38,8 +38,8 @@ const messages = defineMessages({
     defaultMessage: 'Reverse wrap',
   },
   reverseWrapDescription: {
-	id: 'reverseWrapDescription',
-	defaultMessage: 'Reverse column order when opening site on mobile.',
+    id: 'reverseWrapDescription',
+    defaultMessage: 'Reverse column order when opening site on mobile.',
   },
 });
 
