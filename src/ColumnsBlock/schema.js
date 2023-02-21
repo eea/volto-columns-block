@@ -37,6 +37,10 @@ const messages = defineMessages({
     id: 'Reverse wrap',
     defaultMessage: 'Reverse wrap',
   },
+  reverseWrapDescription: {
+    id: 'reverseWrapDescription',
+    defaultMessage: 'Reverse column order when opening site on mobile.',
+  },
 });
 
 export const ColumnSchema = (intl) => ({
@@ -83,6 +87,7 @@ export const ColumnsBlockSchema = (intl) => ({
     },
     reverseWrap: {
       title: intl.formatMessage(messages.labelReverseWrap),
+      description: intl.formatMessage(messages.reverseWrapDescription),
       type: 'boolean',
     },
   },

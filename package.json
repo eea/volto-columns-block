@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-columns-block",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "volto-columns-block: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
@@ -18,6 +18,7 @@
     "react-color": "~2.19.3"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "7.18.10",
     "@cypress/code-coverage": "^3.10.0",
     "@plone/scripts": "*",
     "babel-plugin-transform-class-properties": "^6.24.1",
