@@ -33,7 +33,7 @@ import { makeStyleSchema, getStyle } from '../Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
-
+import eraserSVG from './icons/eraser.svg';
 import '../less/columns.less';
 
 const messages = defineMessages({
@@ -173,6 +173,25 @@ class ColumnsBlockEdit extends React.Component {
     } else {
       onChangeField(id, value);
     }
+  };
+
+  deleteColumnStyle = () => {
+    const colId = this.state.activeColumn;
+    const { onChangeBlock, block, data } = this.props;
+    const coldata = data.data;
+    onChangeBlock(block, {
+      ...data,
+      data: {
+        ...coldata,
+        blocks: {
+          ...coldata.blocks,
+          [colId]: {
+            ...coldata.blocks?.[colId],
+            settings: {},
+          },
+        },
+      },
+    });
   };
 
   onSelectBlock = (
@@ -498,7 +517,12 @@ class ColumnsBlockEdit extends React.Component {
           <SidebarPortal selected={selected}>
             {this.state.activeColumn ? (
               <>
-                <Segment>
+                <Segment
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Button onClick={() => this.setState({ activeColumn: null })}>
                     <Icon name={upSVG} size="14px" />
                     <FormattedMessage
@@ -506,6 +530,16 @@ class ColumnsBlockEdit extends React.Component {
                       defaultMessage="Edit parent columns block"
                     />
                   </Button>
+                  <button
+                    onClick={this.deleteColumnStyle}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <Icon
+                      name={eraserSVG}
+                      size="24px"
+                      title="Clear column style"
+                    />
+                  </button>
                 </Segment>
                 <BlockDataForm
                   schema={ColumnSchema}
