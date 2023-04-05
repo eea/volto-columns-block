@@ -33,6 +33,7 @@ import { makeStyleSchema, getStyle } from '../Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
+import deleteSVG from '@plone/volto/icons/delete.svg';
 
 import '../less/columns.less';
 
@@ -498,7 +499,12 @@ class ColumnsBlockEdit extends React.Component {
           <SidebarPortal selected={selected}>
             {this.state.activeColumn ? (
               <>
-                <Segment>
+                <Segment
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Button onClick={() => this.setState({ activeColumn: null })}>
                     <Icon name={upSVG} size="14px" />
                     <FormattedMessage
@@ -506,6 +512,31 @@ class ColumnsBlockEdit extends React.Component {
                       defaultMessage="Edit parent columns block"
                     />
                   </Button>
+                  <button
+                    onClick={() => {
+                      const colId = this.state.activeColumn;
+                      onChangeBlock(block, {
+                        ...data,
+                        data: {
+                          ...coldata,
+                          blocks: {
+                            ...coldata.blocks,
+                            [colId]: {
+                              ...coldata.blocks?.[colId],
+                              settings: {},
+                            },
+                          },
+                        },
+                      });
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <Icon
+                      name={deleteSVG}
+                      size="24px"
+                      title="Delete column style"
+                    />
+                  </button>
                 </Segment>
                 <BlockDataForm
                   schema={ColumnSchema}
