@@ -33,8 +33,7 @@ import { makeStyleSchema, getStyle } from '../Styles';
 
 import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
-import deleteSVG from '@plone/volto/icons/delete.svg';
-
+import eraserSVG from './icons/eraser.svg';
 import '../less/columns.less';
 
 const messages = defineMessages({
@@ -174,6 +173,25 @@ class ColumnsBlockEdit extends React.Component {
     } else {
       onChangeField(id, value);
     }
+  };
+
+  deleteColumnStyle = () => {
+    const colId = this.state.activeColumn;
+    const { onChangeBlock, block, data } = this.props;
+    const coldata = data.data;
+    onChangeBlock(block, {
+      ...data,
+      data: {
+        ...coldata,
+        blocks: {
+          ...coldata.blocks,
+          [colId]: {
+            ...coldata.blocks?.[colId],
+            settings: {},
+          },
+        },
+      },
+    });
   };
 
   onSelectBlock = (
@@ -513,26 +531,11 @@ class ColumnsBlockEdit extends React.Component {
                     />
                   </Button>
                   <button
-                    onClick={() => {
-                      const colId = this.state.activeColumn;
-                      onChangeBlock(block, {
-                        ...data,
-                        data: {
-                          ...coldata,
-                          blocks: {
-                            ...coldata.blocks,
-                            [colId]: {
-                              ...coldata.blocks?.[colId],
-                              settings: {},
-                            },
-                          },
-                        },
-                      });
-                    }}
+                    onClick={this.deleteColumnStyle}
                     style={{ cursor: 'pointer' }}
                   >
                     <Icon
-                      name={deleteSVG}
+                      name={eraserSVG}
                       size="24px"
                       title="Delete column style"
                     />
