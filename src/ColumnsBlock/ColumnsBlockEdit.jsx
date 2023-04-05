@@ -537,7 +537,7 @@ class ColumnsBlockEdit extends React.Component {
                     <Icon
                       name={eraserSVG}
                       size="24px"
-                      title="Delete column style"
+                      title="Clear column style"
                     />
                   </button>
                 </Segment>
