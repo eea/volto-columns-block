@@ -5,6 +5,7 @@ module.exports = {
     '!src/**/*.d.ts',
   ],
   moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '@plone/volto/cypress': '<rootDir>/node_modules/@plone/volto/cypress',
     '@plone/volto/babel': '<rootDir>/node_modules/@plone/volto/babel',
     '@plone/volto/(.*)$': '<rootDir>/node_modules/@plone/volto/src/$1',
@@ -17,7 +18,6 @@ module.exports = {
     '~/(.*)$': '<rootDir>/src/$1',
     'load-volto-addons':
       '<rootDir>/node_modules/@plone/volto/jest-addons-loader.js',
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   transform: {
     '^.+\\.js(x)?$': 'babel-jest',
