@@ -32,6 +32,7 @@ describe('cloneColumnsBlockData', () => {
     expect(clonedBlockData.data.blocks.block1).toEqual(
       mockBlockData.data.blocks.block1,
     );
+    expect(id).not.toBeNull();
   });
 
   it('should clone the blockData with cloneData', () => {
