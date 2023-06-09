@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { cloneColumnsBlockData } from './utils';
 import { getBlocks } from '@plone/volto/helpers';
 import config from '@plone/volto/registry';
@@ -10,7 +9,7 @@ jest.mock('@plone/volto/helpers', () => ({
 }));
 
 describe('cloneColumnsBlockData', () => {
-  it('', () => {
+  it('should clone the blockData without cloneData', () => {
     const mockBlockData = {
       data: {
         '@type': 'columns',
@@ -35,7 +34,7 @@ describe('cloneColumnsBlockData', () => {
     );
   });
 
-  it('', () => {
+  it('should clone the blockData with cloneData', () => {
     const mockBlockData = {
       data: {
         '@type': 'columns',
