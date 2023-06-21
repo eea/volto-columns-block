@@ -8,7 +8,6 @@ import config from '@plone/volto/registry';
 
 const columnConfig = {
   cloneData(blockData) {
-    // console.log('column', blockData);
     return cloneFormData(blockData);
   },
 };

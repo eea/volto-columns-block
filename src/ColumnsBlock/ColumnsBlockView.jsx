@@ -10,7 +10,8 @@ import { getColumns } from './utils';
 import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
 const getSide = (side, v) => {
-  return `${v?.[side] ? `${v[side]}${v.unit ? v.unit : 'px'}` : '0'}`;
+  const v_unit = v.unit ? v.unit : 'px';
+  return `${v?.[side] ? `${v[side]}${v_unit}` : '0'}`;
 };
 
 const getSides = (v) => {
