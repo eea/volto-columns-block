@@ -23,7 +23,6 @@ describe('cloneColumnsBlockData', () => {
         },
       },
     };
-
     getBlocks.mockReturnValue([['block1', mockBlockData.data.blocks.block1]]);
     config.blocks.blocksConfig = {
       test: {},
