@@ -24,12 +24,6 @@ describe('Blocks Tests', () => {
     cy.get('.field-wrapper-title #field-title').last().type('Column test');
     cy.get('.field-wrapper-data .columns-area button').last().click();
 
-    cy.get('.columns-area .drag.handle.wrapper')
-      .first()
-      .trigger('mousedown', { which: 1 }, { force: true })
-      .trigger('mousemove', 0, 60, { force: true })
-      .trigger('mouseup');
-
     cy.get('.field-wrapper-gridCols  #field-gridCols').click();
     cy.get('.react-select__menu').contains('25').click();
 
@@ -61,15 +55,21 @@ describe('Blocks Tests', () => {
       .eq(2)
       .focus()
       .click()
-      .type('Third');
+      .type('/description{enter}Third');
+
     cy.get('.block-toolbar button').eq(1).click();
 
     cy.get(
       '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',
     ).click();
     cy.get('.react-select__menu').contains('Middle').click();
+
     cy.get('.field-wrapper-backgroundColor .ui.huge.button').click();
     cy.get('.github-picker.color-picker span').eq(3).click();
+    cy.get('.field-wrapper-backgroundColor .ui.compact.button').click();
+    cy.get('.field-wrapper-backgroundColor .ui.huge.button').click();
+    cy.get('.github-picker.color-picker span').eq(3).click();
+
     cy.get(
       '.inline.field.field-wrapper-padding-slider .slider-widget-wrapper .slider-knob.single',
     ).dblclick();
@@ -84,7 +84,40 @@ describe('Blocks Tests', () => {
     )
       .trigger('mousemove', { clientX: 500 })
       .trigger('mouseup');
-    cy.get('.block-editor-columnsBlock').click().type('{uparrow}');
+
+    cy.get(
+      '.inline.field.field-wrapper-padding-lockSize .wrapper .checkbox label[for="field-padding-lockSize"]',
+    ).click();
+
+    cy.get('.slider-widget-wrapper .slider-knob.single').dblclick();
+
+    cy.get('#field-padding-unit .react-select__control').click();
+    cy.get('.react-select__menu-list').contains('percentage').click();
+
+    cy.get('#field-padding-unit .react-select__control').click();
+    cy.get('.react-select__menu-list').contains('em').click();
+
+    cy.get('#field-padding-unit .react-select__control').click();
+    cy.get('.react-select__menu-list').contains('rem').click();
+
+    cy.get('#field-padding-unit .react-select__control').click();
+    cy.get('.react-select__menu-list').contains('No value').click();
+
+    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click();
+    cy.get('.block-toolbar button').eq(1).click();
+
+    cy.get(
+      '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',
+    ).click();
+    cy.get('.react-select__menu').contains('Middle').click();
+
+    cy.get('.field-wrapper-backgroundColor .ui.huge.button').click();
+    cy.get('.github-picker.color-picker span').eq(3).click();
+
+    cy.get('.sidebar-container #sidebar-properties .ui.segment button')
+      .eq(1)
+      .click();
+
     // Save
     cy.get('#toolbar-save').click();
     cy.url().should('eq', Cypress.config().baseUrl + '/cypress/my-page');
