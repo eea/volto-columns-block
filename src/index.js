@@ -87,7 +87,6 @@ export default function install(config) {
     tocEntry: (block = {}, tocData) => {
       // integration with volto-block-toc
       const headlines = tocData.levels || ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-      // const column_blocks = block?.data?.blocks || {};
       let entries = [];
       const sorted_column_blocks = getBlocks(block?.data || {});
       sorted_column_blocks.forEach((column_block) => {

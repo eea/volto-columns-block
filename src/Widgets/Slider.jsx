@@ -348,10 +348,8 @@ export class Slider extends Component {
               }}
               style={{
                 ...styles.inner,
-                ...(this.props.style
+                ...(this.props.style && this.props.style.inner
                   ? this.props.style.inner
-                    ? this.props.style.inner
-                    : {}
                   : {}),
               }}
             >
@@ -363,10 +361,8 @@ export class Slider extends Component {
                 style={{
                   ...styles.track,
                   ...(this.props.inverted ? styles.invertedTrack : {}),
-                  ...(this.props.style
+                  ...(this.props.style && this.props.style.track
                     ? this.props.style.track
-                      ? this.props.style.track
-                      : {}
                     : {}),
                 }}
               />
@@ -383,16 +379,12 @@ export class Slider extends Component {
                       ? 'inverted-' + this.props.color
                       : this.props.color
                   ],
-                  ...(this.props.style
+                  ...(this.props.style && this.props.style.trackFill
                     ? this.props.style.trackFill
-                      ? this.props.style.trackFill
-                      : {}
                     : {}),
                   ...(this.props.disabled ? styles.disabledTrackFill : {}),
-                  ...(this.props.style
+                  ...(this.props.style && this.props.style.disabledTrackFill
                     ? this.props.style.disabledTrackFill
-                      ? this.props.style.disabledTrackFill
-                      : {}
                     : {}),
                   ...{ width: this.state.position + this.state.offset + 'px' },
                   ...(this.props.multiple && this.state.position.length > 0
@@ -413,10 +405,8 @@ export class Slider extends Component {
                     key={i}
                     style={{
                       ...styles.knob,
-                      ...(this.props.style
+                      ...(this.props.style && this.props.style.knob
                         ? this.props.style.knob
-                          ? this.props.style.knob
-                          : {}
                         : {}),
                       ...{ left: pos + 'px' },
                     }}
@@ -431,10 +421,8 @@ export class Slider extends Component {
                   onClick={this.handleKnobClick}
                   style={{
                     ...styles.knob,
-                    ...(this.props.style
+                    ...(this.props.style && this.props.style.knob
                       ? this.props.style.knob
-                        ? this.props.style.knob
-                        : {}
                       : {}),
                     ...{ left: this.state.position + 'px' },
                   }}
@@ -487,7 +475,6 @@ const SliderWidget = (props) => {
         settings={{
           ...settings,
           onChange: (value) => {
-            // console.log('onchange', value);
             onChange(id, value);
           },
         }}
