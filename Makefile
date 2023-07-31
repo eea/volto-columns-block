@@ -1,54 +1,90 @@
-SHELL=/bin/bash
+##############################################################################
+# Run:
+#    make
+#    make start
+#
+# Go to:
+#
+#     http://localhost:3000
+#
+# Cypress:
+#
+#    make cypress-open
+#
+##############################################################################
+# SETUP MAKE
+#
+## Defensive settings for make: https://tech.davis-hansson.com/p/make/
+SHELL:=bash
+.ONESHELL:
+# for Makefile debugging purposes add -x to the .SHELLFLAGS
+.SHELLFLAGS:=-eu -o pipefail -O inherit_errexit -c
+.SILENT:
+.DELETE_ON_ERROR:
+MAKEFLAGS+=--warn-undefined-variables
+MAKEFLAGS+=--no-builtin-rules
 
-DIR=$(shell basename $$(pwd))
-ADDON ?= "@eeacms/volto-columns-block"
-
-# We like colors
-# From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
-RED=`tput setaf 1`
-GREEN=`tput setaf 2`
-RESET=`tput sgr0`
-YELLOW=`tput setaf 3`
-
-ifeq ($(wildcard ./project),)
-  NODE_MODULES = "../../../node_modules"
+# Colors
+# OK=Green, warn=yellow, error=red
+ifeq ($(TERM),)
+# no colors if not in terminal
+        MARK_COLOR=
+        OK_COLOR=
+        WARN_COLOR=
+        ERROR_COLOR=
+        NO_COLOR=
 else
-  NODE_MODULES = "./project/node_modules"
+        MARK_COLOR=`tput setaf 6`
+        OK_COLOR=`tput setaf 2`
+        WARN_COLOR=`tput setaf 3`
+        ERROR_COLOR=`tput setaf 1`
+        NO_COLOR=`tput sgr0`
 endif
 
-project:
-	npm install -g yo
-	npm install -g @plone/generator-volto
-	npm install -g mrs-developer
-	yo @plone/volto project --addon ${ADDON} --workspace "src/addons/${DIR}" --no-interactive
-	ln -sf $$(pwd) project/src/addons/
-	cp .project.eslintrc.js .eslintrc.js
-	cd project && yarn
-	@echo "-------------------"
-	@echo "$(GREEN)Volto project is ready!$(RESET)"
-	@echo "$(RED)Now run: cd project && yarn start$(RESET)"
+##############################################################################
+# SETTINGS AND VARIABLE
+DIR=$(shell basename $$(pwd))
+NODE_MODULES?="../../../node_modules"
+PLONE_VERSION?=6
+VOLTO_VERSION?=16
+ADDON_PATH="${DIR}"
+ADDON_NAME="@eeacms/${ADDON_PATH}"
+DOCKER_COMPOSE=PLONE_VERSION=${PLONE_VERSION} VOLTO_VERSION=${VOLTO_VERSION} ADDON_NAME=${ADDON_NAME} ADDON_PATH=${ADDON_PATH} docker compose
 
-all: project
+# Top-level targets
+.PHONY: all
+all: clean install
 
-.PHONY: start-test-backend
-start-test-backend: ## Start Test Plone Backend
-	@echo "$(GREEN)==> Start Test Plone Backend$(RESET)"
-	docker run -i --rm -e ZSERVER_HOST=0.0.0.0 -e ZSERVER_PORT=55001 -p 55001:55001 -e SITE=plone -e APPLY_PROFILES=plone.app.contenttypes:plone-content,plone.restapi:default,kitconcept.volto:default-homepage -e CONFIGURE_PACKAGES=plone.app.contenttypes,plone.restapi,kitconcept.volto,kitconcept.volto.cors -e ADDONS='plone.app.robotframework plone.app.contenttypes plone.restapi kitconcept.volto' plone ./bin/robot-server plone.app.robotframework.testing.PLONE_ROBOT_TESTING
+.PHONY: clean
+clean:			## Cleanup development environment
+	${DOCKER_COMPOSE} down --volumes --remove-orphans
 
-.PHONY: start-backend-docker
-start-backend-docker:		## Starts a Docker-based backend
-	@echo "$(GREEN)==> Start Docker-based Plone Backend$(RESET)"
-	docker run -it --rm --name=plone -p 8080:8080 -e SITE=Plone -e ADDONS="kitconcept.volto" -e ZCML="kitconcept.volto.cors" plone
+.PHONY: install
+install:		## Build and install development environment
+	echo "Running:	${DOCKER_COMPOSE} build"
+	${DOCKER_COMPOSE} pull
+	${DOCKER_COMPOSE} build
+
+.PHONY: start
+start:			## Start development environment
+	echo "Running:	${DOCKER_COMPOSE} up"
+	${DOCKER_COMPOSE} up
+
+.PHONY: cypress-open
+cypress-open:		## Open cypress integration tests
+	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress open
+
+.PHONY: cypress-run
+cypress-run:	## Run cypress integration tests
+	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run
 
 .PHONY: test
 test:			## Run jest tests
-	docker pull plone/volto-addon-ci:alpha
-	docker run -it --rm -e NAMESPACE="@eeacms" -e GIT_NAME="${DIR}" -e RAZZLE_JEST_CONFIG=jest-addon.config.js -v "$$(pwd):/opt/frontend/my-volto-project/src/addons/${DIR}" -e CI="true" plone/volto-addon-ci:alpha
+	${DOCKER_COMPOSE} run -e CI=1 frontend test
 
 .PHONY: test-update
 test-update:	## Update jest tests snapshots
-	docker pull plone/volto-addon-ci:alpha
-	docker run -it --rm -e NAMESPACE="@eeacms" -e GIT_NAME="${DIR}" -e RAZZLE_JEST_CONFIG=jest-addon.config.js -v "$$(pwd):/opt/frontend/my-volto-project/src/addons/${DIR}" -e CI="true" plone/volto-addon-ci:alpha yarn test src/addons/${DIR}/src --watchAll=false -u
+	${DOCKER_COMPOSE} run -e CI=1 frontend test -u
 
 .PHONY: stylelint
 stylelint:		## Stylelint
@@ -84,15 +120,7 @@ i18n:			## i18n
 	rm -rf build/messages
 	NODE_ENV=development $(NODE_MODULES)/.bin/i18n --addon
 
-.PHONY: cypress-run
-cypress-run:	## Run cypress integration tests
-	rm -rf .nyc_output
-	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run
-
-.PHONY: cypress-open
-cypress-open:	## Open cypress integration tests
-	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress open
-
 .PHONY: help
-help:           ## Show this help.
+help:                   ## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
+	head -n 14 Makefile
