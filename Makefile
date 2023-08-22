@@ -70,6 +70,11 @@ start:			## Start development environment
 	echo "Running:	${DOCKER_COMPOSE} up"
 	${DOCKER_COMPOSE} up
 
+.PHONY: shell
+shell:			## Start a shell in the frontend container
+	echo "Running:	${DOCKER_COMPOSE} run frontend bash"
+	${DOCKER_COMPOSE} run --entrypoint=bash frontend
+
 .PHONY: cypress-open
 cypress-open:		## Open cypress integration tests
 	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress open
