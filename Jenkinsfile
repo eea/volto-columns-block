@@ -198,6 +198,31 @@ pipeline {
       }
     }
 
+    stage('SonarQube compare to master') {
+      when {
+        allOf {
+          environment name: 'CHANGE_ID', value: ''
+          branch 'develop'
+          not { changelog '.*^Automated release [0-9\\.]+$' }
+        }
+      }
+      steps {
+        node(label: 'docker') {
+          script {
+            sh '''docker pull eeacms/gitflow'''
+            sh '''echo "Error" > checkresult.txt'''
+            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+               sh '''set -o pipefail; docker run -i --rm --name="$BUILD_TAG-gitflow-sn" -e GIT_BRANCH="$BRANCH_NAME" -e GIT_NAME="$GIT_NAME" eeacms/gitflow /checkSonarqubemaster.sh | grep -v "Found script" | tee checkresult.txt'''
+             }
+
+            publishChecks name: 'SonarQube', title: 'Sonarqube Code Quality Check', summary: "Quality check on the SonarQube metrics from branch develop, comparing it with the ones from master branch. No bugs are allowed",
+                          text: readFile(file: 'checkresult.txt'), conclusion: "${currentBuild.currentResult}",
+                          detailsURL: "${env.BUILD_URL}display/redirect"
+          }
+        }
+      }
+    }
+
     stage('Pull Request') {
       when {
         not {
