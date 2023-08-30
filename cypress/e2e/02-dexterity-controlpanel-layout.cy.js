@@ -81,7 +81,7 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
     cy.get('#toolbar-save').click();
     cy.get('.documentFirstHeading').contains('My First Book');
     cy.get('.columns-view .column-grid .column:nth-child(1)').contains('Text 1');
-    cy.get('.columns-view .column-grid .column:nth-child(2)').should(
+    cy.get('.columns-view .column-grid .image img').should(
         'have.attr',
         'src',
         'https://eea.github.io/volto-eea-design-system/img/eea_icon.png',
