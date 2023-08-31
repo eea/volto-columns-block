@@ -61,6 +61,22 @@ export const slateJsonAfterEach = (contentType = 'slate') => {
   slateAfterEach();
 };
 
+export const slateLayoutBeforeEach = (contentType = 'book') => {
+  cy.autologin();
+  cy.addContentType(contentType);
+  cy.createContent({
+    contentType: 'Document',
+    contentId: 'cypress',
+    contentTitle: 'Cypress',
+  });
+};
+
+export const slateLayoutAfterEach = (contentType = 'book') => {
+  cy.autologin();
+  cy.removeContentType(contentType);
+  cy.removeContent('cypress');
+};
+
 export const getSelectedSlateEditor = () => {
   return cy.get('.slate-editor.selected [contenteditable=true]').click();
 };
