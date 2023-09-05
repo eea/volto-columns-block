@@ -22,11 +22,34 @@
     "@cypress/code-coverage": "^3.10.0",
     "@plone/scripts": "*",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "husky": "*",
+    "lint-staged": "*"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:eea/volto-columns-block.git"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "make lint-fix",
+      "make prettier-fix"
+    ],
+    "src/**/*.{jsx}": [
+      "make i18n"
+    ],
+    "theme/**/*.{css,less}": [
+      "make stylelint-fix"
+    ],
+    "src/**/*.{css,less}": [
+      "make stylelint-fix"
+    ],
+    "theme/**/*.overrides": [
+      "make stylelint-fix"
+    ],
+    "src/**/*.overrides": [
+      "make stylelint-fix"
+    ]
   },
   "scripts": {
     "release": "release-it",
@@ -45,7 +68,8 @@
     "lint:fix": "make lint-fix",
     "i18n": "make i18n",
     "cypress:run": "make cypress-run",
-    "cypress:open": "make cypress-open"
+    "cypress:open": "make cypress-open",
+    "prepare": "husky install"
   },
   "jest": {
     "enableSymlinks": true
