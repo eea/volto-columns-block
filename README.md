@@ -31,26 +31,12 @@ blocks container.
 
 ### Try volto-columns-block with Docker
 
-1. Get the latest Docker images
+      git clone https://github.com/eea/volto-columns-block.git
+      cd volto-columns-block
+      make
+      make start
 
-   ```
-   docker pull plone
-   docker pull plone/volto
-   ```
-
-1. Start Plone backend
-
-   ```
-   docker run -d --name plone -p 8080:8080 -e SITE=Plone -e PROFILES="profile-plone.restapi:blocks" plone
-   ```
-
-1. Start Volto frontend
-
-   ```
-   docker run -it --rm -p 3000:3000 --link plone -e ADDONS="@eeacms/volto-columns-block" plone/volto
-   ```
-
-1. Go to http://localhost:3000
+Go to http://localhost:3000
 
 ### Add volto-columns-block to your Volto project
 
@@ -62,25 +48,25 @@ blocks container.
 
 1. Start Volto frontend
 
-- If you already have a volto project, just update `package.json`:
+* If you already have a volto project, just update `package.json`:
 
-  ```JSON
-  "addons": [
-      "@eeacms/volto-columns-block"
-  ],
+   ```JSON
+   "addons": [
+       "@eeacms/volto-columns-block"
+   ],
 
-  "dependencies": {
-      "@eeacms/volto-columns-block": "^4.0.0"
-  }
-  ```
+   "dependencies": {
+       "@eeacms/volto-columns-block": "*"
+   }
+   ```
 
-- If not, create one:
+* If not, create one:
 
-  ```
-  npm install -g yo @plone/generator-volto
-  yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block
-  cd my-volto-project
-  ```
+   ```
+   npm install -g yo @plone/generator-volto
+   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-columns-block
+   cd my-volto-project
+   ```
 
 1. Install new add-ons and restart Volto:
 
@@ -105,13 +91,6 @@ See [DEVELOP.md](https://github.com/eea/volto-columns-block/blob/master/DEVELOP.
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
-
-See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
-
-## Funding
-
-[European Environment Agency (EU)](http://eea.europa.eu)
-rved.
 
 See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
 
