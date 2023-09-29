@@ -79,47 +79,6 @@ Go to http://localhost:3000
 
 1. Happy editing!
 
-### Add volto-columns-block to your Volto project
-
-1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
-
-   ```Bash
-   docker compose up backend
-   ```
-
-1. Start Volto frontend
-
-- If you already have a volto project, just update `package.json`:
-
-  ```JSON
-  "addons": [
-      "@eeacms/volto-columns-block"
-  ],
-
-  "dependencies": {
-      "@eeacms/volto-columns-block": "^4.0.0"
-  }
-  ```
-
-- If not, create one:
-
-  ```
-  npm install -g yo @plone/generator-volto
-  yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block
-  cd my-volto-project
-  ```
-
-1. Install new add-ons and restart Volto:
-
-   ```
-   yarn
-   yarn start
-   ```
-
-1. Go to http://localhost:3000
-
-1. Happy editing!
-
 ## Release
 
 See [RELEASE.md](https://github.com/eea/volto-columns-block/blob/master/RELEASE.md).
@@ -132,13 +91,6 @@ See [DEVELOP.md](https://github.com/eea/volto-columns-block/blob/master/DEVELOP.
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
-
-See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
-
-## Funding
-
-[European Environment Agency (EU)](http://eea.europa.eu)
-rved.
 
 See [LICENSE.md](https://github.com/eea/volto-columns-block/blob/master/LICENSE.md) for details.
 

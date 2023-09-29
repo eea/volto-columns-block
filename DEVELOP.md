@@ -104,16 +104,3 @@ Or run it:
   ```Bash
   make cypress-run
   ```
-his will build and start with Docker a clean `Plone backend` and `Volto Frontend` with `volto-columns-block` block installed.
-
-Open Cypress Interface:
-
-  ```Bash
-  make cypress-open
-  ```
-
-Or run it:
-
-  ```Bash
-  make cypress-run
-  ```
