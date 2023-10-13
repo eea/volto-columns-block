@@ -1,0 +1,32 @@
+version: "3"
+services:
+  backend:
+    image: eeacms/plone-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SITE: "Plone"
+      PROFILES: "eea.kitkat:testing"
+
+  frontend: 
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        ADDON_NAME: "${ADDON_NAME}"
+        ADDON_PATH: "${ADDON_PATH}"
+        VOLTO_VERSION: ${VOLTO_VERSION:-16}
+    ports:
+    - "3000:3000"
+    - "3001:3001"
+    depends_on:
+      - backend
+    volumes:
+      - ./:/app/src/addons/${ADDON_PATH}
+    environment:
+      CI: "true"
+      NODE_ENV: "development"
+      RAZZLE_JEST_CONFIG: "src/addons/${ADDON_PATH}/jest-addon.config.js"
+      RAZZLE_INTERNAL_API_PATH: "http://backend:8080/Plone"
+      RAZZLE_DEV_PROXY_API_PATH: "http://backend:8080/Plone"
+      HOST: "0.0.0.0"

@@ -1,35 +1,73 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import config from '@plone/volto/registry';
 import { Grid } from 'semantic-ui-react';
 import { RenderBlocks } from '@plone/volto/components';
-import { blocks } from '~/config';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
+import cx from 'classnames';
 
 import { getColumns } from './utils';
 import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
+const getSide = (side, v) => {
+  const v_unit = v.unit ? v.unit : 'px';
+  return `${v?.[side] ? `${v[side]}${v_unit}` : '0'}`;
+};
+
+const getSides = (v) => {
+  return `${getSide('top', v)} ${getSide('right', v)} ${getSide(
+    'bottom',
+    v,
+  )} ${getSide('left', v)}`;
+};
+
 const ColumnsBlockView = (props) => {
-  const { gridSizes } = blocks.blocksConfig[COLUMNSBLOCK];
-  const {
-    coldata = {},
-    gridSize = 12,
-    gridCols = [],
-    block_title,
-  } = props.data;
-  const columnList = getColumns(coldata);
+  const location = useLocation();
+  const { gridSizes } = config.blocks.blocksConfig[COLUMNSBLOCK];
+  const { data = {}, gridSize = 12, gridCols = [] } = props.data;
+  const metadata = props.metadata || props.properties;
+  const columnList = getColumns(data);
+  const customId = props.data?.title
+    ?.toLowerCase()
+    ?.replace(/[^a-zA-Z-\s]/gi, '')
+    ?.trim()
+    ?.replace(/\s+/gi, '-');
+
   return (
-    <div className="columns-view">
-      {block_title ? <h3>{block_title}</h3> : ''}
-      <Grid columns={gridSize} className="column-grid">
+    <div className="columns-view" id={customId}>
+      <Grid
+        columns={gridSize}
+        className={
+          props.data.reverseWrap ? 'column-grid reverse-wrap' : 'column-grid'
+        }
+      >
         {columnList.map(([id, column], index) => {
           return (
             <Grid.Column
               key={id}
               {...(gridSizes[gridCols[index]] || gridCols[index])}
-              className="column-blocks-wrapper"
-              style={getStyle(column.settings || {})}
+              className={cx(
+                'column-blocks-wrapper',
+                column.settings?.column_class,
+              )}
+              {...getStyle(column.settings || {})}
             >
-              {/* <h4>{`Column ${index}`}</h4> */}
-              <RenderBlocks {...props} content={column} />
+              <div
+                style={
+                  column.settings?.padding
+                    ? {
+                        padding: getSides(column.settings?.padding),
+                      }
+                    : {}
+                }
+              >
+                <RenderBlocks
+                  {...props}
+                  location={location}
+                  metadata={metadata}
+                  content={column}
+                />
+              </div>
             </Grid.Column>
           );
         })}

@@ -1,10 +1,50 @@
 import columnSVG from './ColumnsBlock/icons/three-columns.svg';
 
-import { ColumnsBlockView, ColumnsBlockEdit } from './ColumnsBlock';
-import ColumnsWidget from './Widgets/ColumnsWidget';
+import {
+  ColumnsBlockView,
+  ColumnsBlockEdit,
+  ColumnsLayoutSchema,
+} from './ColumnsBlock';
+import {
+  ColumnsWidget,
+  LayoutSelectWidget,
+  SliderWidget,
+  QuadSizeWidget,
+} from './Widgets';
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
+import { cloneColumnsBlockData } from './utils';
+
+import { getBlocks } from '@plone/volto/helpers';
+
+const extendedSchema = (config) => {
+  const choices = Object.keys(config.blocks.blocksConfig)
+    .map((key) => {
+      if (config.blocks.blocksConfig[key]?.restricted) {
+        return false;
+      } else {
+        const title = config.blocks.blocksConfig[key]?.title || key;
+        return [key, title];
+      }
+    })
+    .filter((val) => !!val);
+
+  choices.push(['accordion', 'Accordion']);
+
+  return {
+    ...ColumnsLayoutSchema,
+    properties: {
+      ...ColumnsLayoutSchema.properties,
+      allowedBlocks: {
+        ...ColumnsLayoutSchema.properties.allowedBlocks,
+        items: {
+          choices: choices,
+        },
+      },
+    },
+  };
+};
 
 export default function install(config) {
   config.blocks.blocksConfig[COLUMNSBLOCK] = {
@@ -15,8 +55,9 @@ export default function install(config) {
     view: ColumnsBlockView,
     edit: ColumnsBlockEdit,
     restricted: false,
-    mostUsed: true,
+    mostUsed: false,
     blockHasOwnFocusManagement: true,
+    schema: extendedSchema(config),
     sidebarTab: 1,
     security: {
       addPermission: [],
@@ -43,10 +84,31 @@ export default function install(config) {
       '#BED3F3',
       '#D4C4FB',
     ],
+    tocEntry: (block = {}, tocData) => {
+      // integration with volto-block-toc
+      const headlines = tocData.levels || ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+      let entries = [];
+      const sorted_column_blocks = getBlocks(block?.data || {});
+      sorted_column_blocks.forEach((column_block) => {
+        const sorted_blocks = getBlocks(column_block[1]);
+        sorted_blocks.forEach((block) => {
+          const { value, plaintext } = block[1];
+          const type = value?.[0]?.type;
+          if (headlines.includes(type)) {
+            entries.push([parseInt(type.slice(1)), plaintext, block[0]]);
+          }
+        });
+      });
+      return entries;
+    },
+    cloneData: cloneColumnsBlockData,
   };
 
   config.widgets.type.columns = ColumnsWidget;
   config.widgets.widget.simple_color_picker = ColorPickerWidget;
+  config.widgets.widget.layout_select = LayoutSelectWidget;
+  config.widgets.widget.slider = SliderWidget;
+  config.widgets.widget.quad_size = QuadSizeWidget;
 
   return config;
 }

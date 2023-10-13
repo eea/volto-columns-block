@@ -1,0 +1,243 @@
+@import './globals.less';
+
+@addon: 'volto-addons';
+@addontype: 'columnsBlock';
+@addonelement: 'columns';
+
+.loadAddonVariables();
+
+@type: 'extra';
+@element: 'custom';
+
+@import (multiple, reference, optional) '../../theme.config';
+
+@borderColor: rgba(120, 192, 215, 0.75);
+
+.block-editor-columnsBlock,
+.quanta-block-editor-columnsBlock {
+  .block-column .ui.block.inner {
+    .block {
+      margin-bottom: 0;
+    }
+  }
+
+  .block.columnsBlock.selected::before,
+  .block.columnsBlock:hover::before {
+    border-style: dashed;
+  }
+
+  .ui.grid.column-grid {
+    margin-right: -0.2rem;
+    margin-left: -0.2rem;
+
+    .column:first-child {
+      padding-left: 0.2rem;
+    }
+
+    .column:last-child {
+      padding-right: 0.2rem;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .columns-header {
+    position: absolute;
+    z-index: 3;
+    top: -1.3em;
+    left: 0;
+    width: fit-content;
+    padding: 0 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: @pageBackground;
+    color: @borderColor;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .ui.grid.block-column {
+    padding: 0.3em;
+
+    .blocks-form {
+      padding: 1rem !important;
+    }
+
+    .block {
+      margin-bottom: 1.5em;
+
+      .block.selected::before {
+        border-top-left-radius: 0;
+      }
+
+      .block-add-button {
+        display: none;
+      }
+    }
+  }
+
+  a.ui.card,
+  .ui.cards a.card,
+  .ui.link.cards .card,
+  .ui.link.card {
+    border: 1px solid #edf2f3;
+    box-shadow: none;
+
+    &:hover {
+      border: 1px solid #edf2f3;
+      background-color: #edf2f3;
+      box-shadow: none;
+    }
+  }
+
+  .ui.card .content {
+    padding-top: 1.5em !important;
+    padding-bottom: 1.5em !important;
+    font-size: 10px !important;
+    text-align: center;
+
+    p {
+      color: #717171;
+    }
+
+    svg {
+      fill: #68778d !important;
+    }
+  }
+
+  [data-rbd-draggable-context-id] {
+    margin-bottom: 0.3em;
+  }
+
+  .block.wrapper.multiSelected {
+    .block .block::before {
+      z-index: 1;
+      background-color: rgba(120, 192, 215, 0.375);
+    }
+  }
+
+  .blocks-chooser {
+    right: 0;
+    left: auto !important;
+    margin-top: 50px;
+  }
+
+  .block-toolbar {
+    position: absolute;
+    z-index: 4;
+    right: -9px;
+    display: flex;
+    border: none;
+    border: 1px solid @borderColor;
+    border-bottom: 1px solid @pageBackground;
+    margin-top: -45px;
+    background-color: @pageBackground;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    .ui.basic.button {
+      padding: 8px 5px;
+    }
+
+    .wrapper-column-block {
+      > .ui.basic.button {
+        &:hover {
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    > .ui.basic.button {
+      &:hover {
+        background-color: transparent !important;
+      }
+
+      svg {
+        color: #134448;
+      }
+    }
+
+    .drag.handle.wrapper-column-block {
+      position: initial;
+      left: initial;
+      min-height: 1em;
+      margin-left: initial !important;
+      font-size: 1rem;
+      line-height: 1em;
+      vertical-align: baseline;
+    }
+  }
+}
+
+.quanta-block-editor-columnsBlock {
+  .columns-header {
+    right: 0;
+    left: auto;
+  }
+}
+
+.columns-view {
+  .ui.grid.column-block-grid {
+    display: initial !important;
+  }
+
+  .ui.grid > .column-blocks-wrapper,
+  .ui.grid > .column-blocks-wrapper:not(.row) {
+    padding-top: @columnBlocksWrapperPaddingTop;
+    padding-bottom: @columnBlocksWrapperPaddingBottom;
+  }
+
+  .ui.grid.reverse-wrap {
+    flex-wrap: wrap-reverse;
+  }
+}
+
+.ui.grid.column-grid {
+  padding: @columnGridPadding;
+  margin-top: @columnGridMarginTop;
+  margin-bottom: @columnGridMarginBottom;
+}
+/* remove padding from column-grid when we have styled-with-bg style from volto-block-style */
+.styled-with-bg .grid.column-grid {
+  padding: 0;
+}
+
+.drag-drop-list-widget {
+  .columns-area {
+    padding: 1em 0em;
+
+    [data-rbd-draggable-context-id] {
+      margin-bottom: 0.3em;
+    }
+
+    .drag.handle.wrapper {
+      min-height: auto;
+    }
+
+    .column-area {
+      display: flex;
+
+      .label {
+        flex-grow: 2;
+        padding-left: 1em;
+      }
+
+      button {
+        flex-grow: 0;
+      }
+    }
+  }
+}
+
+.layout-select-widget-selection-icon {
+  margin-right: 1.5rem;
+  vertical-align: middle;
+}
+
+.blocks-form .block.multiSelected ::before {
+  background-color: rgba(120, 192, 215, 0.375);
+}
+
+.loadAddonOverrides();

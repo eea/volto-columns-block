@@ -1,8 +1,9 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { v4 as uuid } from 'uuid';
 import { omit, without } from 'lodash';
 import move from 'lodash-move';
-import { DragDropList, Icon, FormFieldWrapper } from '@plone/volto/components';
+import { Icon, FormFieldWrapper, DragDropList } from '@plone/volto/components';
 import { emptyBlocksForm } from '@plone/volto/helpers';
 
 import dragSVG from '@plone/volto/icons/drag.svg';
@@ -12,8 +13,8 @@ import plusSVG from '@plone/volto/icons/circle-plus.svg';
 export function moveColumn(formData, source, destination) {
   return {
     ...formData,
-    columns_layout: {
-      items: move(formData.columns_layout?.items, source, destination),
+    blocks_layout: {
+      items: move(formData.blocks_layout?.items, source, destination),
     },
   };
 }
@@ -24,13 +25,13 @@ const empty = () => {
 
 const ColumnsWidget = (props) => {
   const { value = {}, id, onChange, maxSize = 4 } = props;
-  const { columns = {} } = value;
-  const columnsList = (value.columns_layout?.items || []).map((id) => [
+  const { blocks = {} } = value;
+  const columnsList = (value.blocks_layout?.items || []).map((id) => [
     id,
-    columns[id],
+    blocks[id],
   ]);
 
-  const showAdd = value.columns_layout?.items?.length < maxSize;
+  const showAdd = value.blocks_layout?.items?.length < maxSize;
   return (
     <FormFieldWrapper
       {...props}
@@ -53,61 +54,68 @@ const ColumnsWidget = (props) => {
             onChange(id, newFormData);
             return true;
           }}
-          renderChild={(child, childId, index, draginfo) => (
-            <div ref={draginfo.innerRef} {...draginfo.draggableProps}>
-              <div style={{ position: 'relative' }}>
-                <div
-                  style={{
-                    visibility: 'visible',
-                    display: 'inline-block',
-                  }}
-                  {...draginfo.dragHandleProps}
-                  className="drag handle wrapper"
-                >
-                  <Icon name={dragSVG} size="18px" />
-                </div>
-                <div className="column-area">
-                  <div className="label">Column {index}</div>
-                  {value.columns_layout?.items?.length > 1 ? (
-                    <button
-                      onClick={() => {
-                        const newFormData = {
-                          ...value,
-                          columns: omit({ ...value.columns }, [childId]),
-                          columns_layout: {
-                            ...value.columns_layout,
-                            items: without(
-                              [...value.columns_layout?.items],
-                              childId,
-                            ),
-                          },
-                        };
-                        onChange(id, newFormData);
-                      }}
-                    >
-                      <Icon name={trashSVG} size="18px" />
-                    </button>
-                  ) : (
-                    ''
-                  )}
+        >
+          {(dragProps) => {
+            const { childId, index, draginfo } = dragProps;
+            return (
+              <div ref={draginfo.innerRef} {...draginfo.draggableProps}>
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      visibility: 'visible',
+                      display: 'inline-block',
+                    }}
+                    {...draginfo.dragHandleProps}
+                    className="drag handle wrapper"
+                  >
+                    <Icon name={dragSVG} size="18px" />
+                  </div>
+                  <div className="column-area">
+                    <div className="label">
+                      <FormattedMessage id="Column" defaultMessage="Column" />{' '}
+                      {index + 1}
+                    </div>
+                    {value.blocks_layout?.items?.length > 1 ? (
+                      <button
+                        onClick={() => {
+                          const newFormData = {
+                            ...value,
+                            blocks: omit({ ...value.blocks }, [childId]),
+                            blocks_layout: {
+                              ...value.blocks_layout,
+                              items: without(
+                                [...value.blocks_layout?.items],
+                                childId,
+                              ),
+                            },
+                          };
+                          onChange(id, newFormData);
+                        }}
+                      >
+                        <Icon name={trashSVG} size="18px" />
+                      </button>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        />
+            );
+          }}
+        </DragDropList>
         {showAdd ? (
           <button
             onClick={() => {
               const [newId, newData] = empty();
               onChange(id, {
                 ...value,
-                columns: {
-                  ...value.columns,
+                blocks: {
+                  ...value.blocks,
                   [newId]: newData,
                 },
-                columns_layout: {
-                  ...value.columns_layout,
-                  items: [...value.columns_layout?.items, newId],
+                blocks_layout: {
+                  ...value.blocks_layout,
+                  items: [...value.blocks_layout?.items, newId],
                 },
               });
             }}

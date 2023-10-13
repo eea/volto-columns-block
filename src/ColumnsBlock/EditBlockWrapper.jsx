@@ -1,12 +1,16 @@
 import React from 'react';
 import { Icon, BlockChooser } from '@plone/volto/components';
-import { blockHasValue } from '@plone/volto/helpers';
-import { blocks } from '~/config';
+import {
+  blockHasValue,
+  buildStyleClassNamesFromData,
+} from '@plone/volto/helpers';
+import config from '@plone/volto/registry';
 import { Button } from 'semantic-ui-react';
 import includes from 'lodash/includes';
 import isBoolean from 'lodash/isBoolean';
 import { defineMessages, injectIntl } from 'react-intl';
 import { doesNodeContainClick } from 'semantic-ui-react/dist/commonjs/lib';
+import cx from 'classnames';
 
 import dragSVG from '@plone/volto/icons/drag.svg';
 import addSVG from '@plone/volto/icons/circle-plus.svg';
@@ -32,7 +36,6 @@ class EditBlockWrapper extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('mount editblockwrapper', this.props.blockProps.block);
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
@@ -65,25 +68,29 @@ class EditBlockWrapper extends React.Component {
       block,
       data,
       onDeleteBlock,
+      onInsertBlock,
       onMutateBlock,
+      onSelectBlock,
       selected,
     } = blockProps;
     const type = data['@type'];
     const { disableNewBlocks } = data;
-
-    // const visible = selected && blockHasValue(block) && !block.fixed;
-    // visibility: visible ? 'visible' : 'hidden',
+    const visible = !data.fixed;
 
     const required = isBoolean(data.required)
       ? data.required
-      : includes(blocks.requiredBlocks, type);
+      : includes(config.blocks.requiredBlocks, type);
+
+    const styles = buildStyleClassNamesFromData(data.styles);
 
     return (
       <div ref={this.blockNode}>
         <div
           ref={draginfo?.innerRef}
           {...(selected ? draginfo?.draggableProps : null)}
-          className={`block-editor-${data['@type']}`}
+          className={cx(`block-editor-${data['@type']}`, styles, {
+            [data.align]: data.align,
+          })}
         >
           {!selected && (
             <div
@@ -98,7 +105,7 @@ class EditBlockWrapper extends React.Component {
             <div className="block-toolbar">
               <div
                 style={{
-                  display: 'inline-block',
+                  display: visible ? 'inline-block' : 'none',
                 }}
                 {...draginfo.dragHandleProps}
                 className="drag handle wrapper-column-block"
@@ -140,8 +147,12 @@ class EditBlockWrapper extends React.Component {
               {this.state.addNewBlockOpened && (
                 <BlockChooser
                   onMutateBlock={(id, value) => {
-                    this.setState({ addNewBlockOpened: false });
                     onMutateBlock(id, value);
+                    this.setState({ addNewBlockOpened: false });
+                  }}
+                  onInsertBlock={(id, value) => {
+                    onSelectBlock(onInsertBlock(id, value));
+                    this.setState({ addNewBlockOpened: false });
                   }}
                   currentBlock={block}
                   allowedBlocks={allowedBlocks}
@@ -150,7 +161,13 @@ class EditBlockWrapper extends React.Component {
             </div>
           )}
 
-          <div className={`ui drag block inner ${type}`}>{children}</div>
+          <div
+            className={cx('ui drag block wrapper inner', type, {
+              multiSelected: this.props.multiSelected,
+            })}
+          >
+            {children}
+          </div>
         </div>
       </div>
     );

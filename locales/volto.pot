@@ -1,0 +1,167 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone\n"
+"POT-Creation-Date: 2023-02-10T13:17:42.630Z\n"
+"Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: volto\n"
+
+#: Styles/schema
+# defaultMessage: A custom CSS class, aplicable to this column
+msgid "A custom CSS class, aplicable to this column"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Advanced
+msgid "Advanced"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Background color
+msgid "Background color"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Bottom
+msgid "Bottom"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+#: Widgets/ColumnsWidget
+# defaultMessage: Column
+msgid "Column"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Column title
+msgid "Column title"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns
+msgid "Columns"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+#: ColumnsBlock/schema
+# defaultMessage: Columns block
+msgid "Columns block"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Columns block friendly name
+msgid "Columns block friendly name"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Custom CSS class
+msgid "Custom CSS class"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Customize
+msgid "Customize"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Default
+msgid "Default"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Edit parent columns block
+msgid "Edit parent columns block"
+msgstr ""
+
+#: ColumnsBlock/ColumnsBlockEdit
+# defaultMessage: Go to Column settings
+msgid "Go to Column settings"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Layout
+msgid "Layout"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Middle
+msgid "Middle"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Padding
+msgid "Padding"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Percentage
+msgid "Percentage"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Reverse wrap
+msgid "Reverse wrap"
+msgstr ""
+
+#: ColumnsBlock/ColumnVariations
+# defaultMessage: Select layout
+msgid "Select layout"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Size
+msgid "Size"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Style
+msgid "Style"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Styling
+msgid "Styling"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Title
+msgid "Title"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Top
+msgid "Top"
+msgstr ""
+
+#: Widgets/QuadSize
+# defaultMessage: Unit
+msgid "Unit"
+msgstr ""
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: Unknown Block {block}
+msgid "Unknown Block"
+msgstr ""
+
+#: Styles/schema
+# defaultMessage: Vertical align
+msgid "Vertical align"
+msgstr ""
+
+#: ColumnsBlock/EditBlockWrapper
+# defaultMessage: delete
+msgid "delete"
+msgstr ""
+
+#: ColumnsBlock/schema
+# defaultMessage: Reverse column order when opening site on mobile.
+msgid "reverseWrapDescription"
+msgstr ""

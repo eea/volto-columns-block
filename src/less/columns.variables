@@ -1,0 +1,9 @@
+@columnGridPadding: 0;
+
+// Column block wrapper
+@columnBlocksWrapperPaddingTop: 0.5em;
+@columnBlocksWrapperPaddingBottom: 0.5em;
+
+// Column grid
+@columnGridMarginTop: 0.8rem;
+@columnGridMarginBottom: 0.8rem;
