@@ -22,8 +22,8 @@
     "@cypress/code-coverage": "^3.10.0",
     "@plone/scripts": "*",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "husky": "*",
-    "lint-staged": "*",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "md5": "^2.3.0"
   },
   "repository": {
