@@ -21,11 +21,11 @@
 This package gives you a block with columns. Each column is its own separate
 blocks container.
 
-![Initializing Columns Layout](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/initialize.png)
-![Columns Edit Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/edit.png)
-![Columns Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/columns-sidebar.png)
-![Single Column Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/single-column-sidebar.png)
-![Columns View Example](https://raw.githubusercontent.com/eea/volto-columns-block/docs/docs/view.png)
+![Initializing Columns Layout](https://raw.githubusercontent.com/eea/volto-columns-block/master/docs/initialize.png)
+![Columns Edit Example](https://raw.githubusercontent.com/eea/volto-columns-block/master/docs/edit.png)
+![Columns Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/master/docs/columns-sidebar.png)
+![Single Column Sidebar](https://raw.githubusercontent.com/eea/volto-columns-block/master/docs/single-column-sidebar.png)
+![Columns View Example](https://raw.githubusercontent.com/eea/volto-columns-block/master/docs/view.png)
 
 ## Getting started
 

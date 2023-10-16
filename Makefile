@@ -97,12 +97,12 @@ stylelint:		## Stylelint
 
 .PHONY: stylelint-overrides
 stylelint-overrides:
-	$(NODE_MODULES)/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'
+	$(NODE_MODULES)/.bin/stylelint --custom-syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides'
 
 .PHONY: stylelint-fix
 stylelint-fix:	## Fix stylelint
 	$(NODE_MODULES)/stylelint/bin/stylelint.js --allow-empty-input 'src/**/*.{css,less}' --fix
-	$(NODE_MODULES)/.bin/stylelint --syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides' --fix
+	$(NODE_MODULES)/.bin/stylelint --custom-syntax less --allow-empty-input 'theme/**/*.overrides' 'src/**/*.overrides' --fix
 
 .PHONY: prettier
 prettier:		## Prettier
