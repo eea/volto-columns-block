@@ -50,6 +50,11 @@ VOLTO_VERSION?=16
 ADDON_PATH="${DIR}"
 ADDON_NAME="@eeacms/${ADDON_PATH}"
 DOCKER_COMPOSE=PLONE_VERSION=${PLONE_VERSION} VOLTO_VERSION=${VOLTO_VERSION} ADDON_NAME=${ADDON_NAME} ADDON_PATH=${ADDON_PATH} docker compose
+RAZZLE_INTERNAL_API_PATH?="${RAZZLE_DEV_PROXY_API_PATH}"
+RAZZLE_DEV_PROXY_API_PATH?="${RAZZLE_INTERNAL_API_PATH}"
+CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}"
+
+
 
 # Top-level targets
 .PHONY: all
@@ -77,11 +82,11 @@ shell:			## Start a shell in the frontend container
 
 .PHONY: cypress-open
 cypress-open:		## Open cypress integration tests
-	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress open
+	CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}" NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress open
 
 .PHONY: cypress-run
 cypress-run:	## Run cypress integration tests
-	NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run
+	CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}" NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run
 
 .PHONY: test
 test:			## Run jest tests
@@ -129,3 +134,31 @@ i18n:			## i18n
 help:                   ## Show this help.
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
 	head -n 14 Makefile
+
+.PHONY: ci-fix
+ci-fix:
+	echo "Running lint-fix"
+	make lint-fix
+	echo "Running prettier-fix"
+	make prettier-fix
+	echo "Running stylelint-fix"
+	make stylelint-fix
+
+.PHONY: test-ci
+test-ci:
+	cd /app
+	RAZZLE_JEST_CONFIG=src/addons/${ADDON_PATH}/jest-addon.config.js CI=true yarn test src/addons/${ADDON_PATH}/src --watchAll=false --reporters=default --reporters=jest-junit --collectCoverage --coverageReporters lcov cobertura text
+
+.PHONY: start-ci
+start-ci:
+	cd ../..
+	yarn start &
+
+.PHONY: cypress-ci
+cypress-ci:
+	cp .coverage.babel.config.js /app/babel.config.js
+	make start-ci
+	$(NODE_MODULES)/.bin/wait-on -t 240000  http://localhost:3000
+	NODE_ENV=development make cypress-run
+
+

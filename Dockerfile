@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG VOLTO_VERSION
-FROM plone/frontend-builder:${VOLTO_VERSION}
+FROM eeacms/frontend-builder:${VOLTO_VERSION}
 
 ARG ADDON_NAME
 ARG ADDON_PATH
