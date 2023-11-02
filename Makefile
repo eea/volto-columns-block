@@ -50,7 +50,7 @@ VOLTO_VERSION?=16
 ADDON_PATH="${DIR}"
 ADDON_NAME="@eeacms/${ADDON_PATH}"
 DOCKER_COMPOSE=PLONE_VERSION=${PLONE_VERSION} VOLTO_VERSION=${VOLTO_VERSION} ADDON_NAME=${ADDON_NAME} ADDON_PATH=${ADDON_PATH} docker compose
-RAZZLE_INTERNAL_API_PATH?="${RAZZLE_DEV_PROXY_API_PATH}"
+RAZZLE_INTERNAL_API_PATH?="http://localhost:8080/Plone"
 RAZZLE_DEV_PROXY_API_PATH?="${RAZZLE_INTERNAL_API_PATH}"
 CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}"
 
@@ -86,7 +86,7 @@ cypress-open:		## Open cypress integration tests
 
 .PHONY: cypress-run
 cypress-run:	## Run cypress integration tests
-	CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}" NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run
+	CYPRESS_API_PATH="${RAZZLE_DEV_PROXY_API_PATH}" NODE_ENV=development  $(NODE_MODULES)/cypress/bin/cypress run --browser chromium
 
 .PHONY: test
 test:			## Run jest tests
