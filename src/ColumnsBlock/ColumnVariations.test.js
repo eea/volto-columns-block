@@ -12,6 +12,7 @@ test('renders column variations component', () => {
     intl: {
       locale: 'en',
       formatMessage: () => 'Select layout',
+      messages: {},
     },
   });
 

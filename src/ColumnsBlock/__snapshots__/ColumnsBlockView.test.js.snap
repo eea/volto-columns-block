@@ -11,16 +11,12 @@ exports[`renders 2 columns 1`] = `
       <div
         class="six wide computer twelve wide mobile six wide tablet column column-blocks-wrapper"
       >
-        <div>
-          left marker
-        </div>
+        left marker
       </div>
       <div
         class="six wide computer twelve wide mobile six wide tablet column column-blocks-wrapper"
       >
-        <div>
-          right
-        </div>
+        right
       </div>
     </div>
   </div>

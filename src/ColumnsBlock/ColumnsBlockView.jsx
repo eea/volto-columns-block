@@ -9,18 +9,6 @@ import cx from 'classnames';
 import { getColumns } from './utils';
 import { getStyle } from '@eeacms/volto-columns-block/Styles';
 
-const getSide = (side, v) => {
-  const v_unit = v.unit ? v.unit : 'px';
-  return `${v?.[side] ? `${v[side]}${v_unit}` : '0'}`;
-};
-
-const getSides = (v) => {
-  return `${getSide('top', v)} ${getSide('right', v)} ${getSide(
-    'bottom',
-    v,
-  )} ${getSide('left', v)}`;
-};
-
 const ColumnsBlockView = (props) => {
   const location = useLocation();
   const { gridSizes } = config.blocks.blocksConfig[COLUMNSBLOCK];
@@ -52,22 +40,12 @@ const ColumnsBlockView = (props) => {
               )}
               {...getStyle(column.settings || {})}
             >
-              <div
-                style={
-                  column.settings?.padding
-                    ? {
-                        padding: getSides(column.settings?.padding),
-                      }
-                    : {}
-                }
-              >
-                <RenderBlocks
-                  {...props}
-                  location={location}
-                  metadata={metadata}
-                  content={column}
-                />
-              </div>
+              <RenderBlocks
+                {...props}
+                location={location}
+                metadata={metadata}
+                content={column}
+              />
             </Grid.Column>
           );
         })}
