@@ -159,7 +159,8 @@ pipeline {
                 script {
                   try {
                     sh '''docker run --pull always --rm -d --name="$IMAGE_NAME-plone" -e SITE="Plone" -e PROFILES="$BACKEND_PROFILES" -e ADDONS="$BACKEND_ADDONS" eeacms/plone-backend'''
-                    sh '''timeout -s 9 3600 docker run --shm-size=2g --cpu-quota=150000 --link $IMAGE_NAME-plone:plone --entrypoint=make --name="$IMAGE_NAME-cypress" --workdir=/app/src/addons/${GIT_NAME} -e "RAZZLE_INTERNAL_API_PATH=http://plone:8080/Plone" $IMAGE_NAME-frontend cypress-ci'''
+                    sh '''docker run -d --shm-size=3g --link $IMAGE_NAME-plone:plone --name="$IMAGE_NAME-cypress" -e "RAZZLE_INTERNAL_API_PATH=http://plone:8080/Plone" --entrypoint=make --workdir=/app/src/addons/$GIT_NAME $IMAGE_NAME-frontend start-ci'''
+                    sh '''timeout -s 9 1800 docker exec --workdir=/app/src/addons/${GIT_NAME} $IMAGE_NAME-cypress make cypress-ci'''
                   } finally {
                     try {
                       sh '''rm -rf cypress-videos cypress-results cypress-coverage cypress-screenshots'''
@@ -189,6 +190,10 @@ pipeline {
                       catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
                         junit testResults: 'cypress-results/**/*.xml', allowEmptyResults: true
                       }
+                      catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                        sh '''docker logs $IMAGE_NAME-cypress'''
+                      }
+                      sh script: "docker stop $IMAGE_NAME-cypress", returnStatus: true
                       sh script: "docker stop $IMAGE_NAME-plone", returnStatus: true
                       sh script: "docker rm -v $IMAGE_NAME-plone", returnStatus: true
                       sh script: "docker rm -v $IMAGE_NAME-cypress", returnStatus: true
