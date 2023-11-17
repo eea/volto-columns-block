@@ -1,4 +1,7 @@
 pipeline {
+  tools {
+    jdk 'Java17'
+  }
   agent {
     node { label 'docker-host' }
   }
