@@ -10,7 +10,7 @@ import ColumnsBlockView from './ColumnsBlockView';
 const mockStore = configureStore();
 
 const blocks = {
-  '1234': {
+  1234: {
     '@type': 'columnsBlock',
     data: {
       blocks: {

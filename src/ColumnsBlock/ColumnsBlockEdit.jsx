@@ -311,14 +311,8 @@ class ColumnsBlockEdit extends React.Component {
   }
 
   render() {
-    const {
-      block,
-      data,
-      onChangeBlock,
-      pathname,
-      selected,
-      manage,
-    } = this.props;
+    const { block, data, onChangeBlock, pathname, selected, manage } =
+      this.props;
 
     const metadata = this.props.metadata || this.props.properties;
     const { gridCols, gridSize } = data;
@@ -331,11 +325,8 @@ class ColumnsBlockEdit extends React.Component {
     const selectedColData = coldata?.blocks?.[selectedCol] || null;
     const selectedBlock = this.state.colSelections[selectedCol];
 
-    const {
-      gridSizes,
-      variants,
-      available_colors,
-    } = config.blocks.blocksConfig[COLUMNSBLOCK];
+    const { gridSizes, variants, available_colors } =
+      config.blocks.blocksConfig[COLUMNSBLOCK];
     const ColumnSchema = makeStyleSchema({ available_colors }, this.props.intl);
     const isInitialized = data?.data && Object.keys(data?.data).length > 0;
 
