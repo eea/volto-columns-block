@@ -1,6 +1,5 @@
 .vscode/
 .history
-.eslintrc.js
 .nyc_output
 project
 coverage
