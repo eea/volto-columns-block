@@ -14,6 +14,7 @@ pipeline {
     BACKEND_PROFILES = "eea.kitkat:testing"
     BACKEND_ADDONS = ""
     VOLTO = "17"
+    VOLTO16_BREAKING_CHANGES = "no"
     IMAGE_NAME = BUILD_TAG.toLowerCase()
   }
 
@@ -257,7 +258,10 @@ pipeline {
 
       stage('Volto 16') { 
         agent { node { label 'integration'} }
-        when { environment name: 'SKIP_TESTS', value: '' }
+        when { 
+          environment name: 'SKIP_TESTS', value: ''
+          not { environment name: 'VOLTO16_BREAKING_CHANGES', value: 'yes' }
+        }
         stages {
       		stage('Build test image') {
             steps {
