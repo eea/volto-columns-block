@@ -1,5 +1,6 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
 
@@ -15,7 +16,7 @@ test('renders a quad size widget component', () => {
     },
   });
 
-  const component = renderer.create(
+  render(
     <Provider store={store}>
       <QuadSize
         id="quadsize-widget"
@@ -27,6 +28,9 @@ test('renders a quad size widget component', () => {
       />
     </Provider>,
   );
-  const json = component.toJSON();
-  expect(json).toMatchSnapshot();
+
+  expect(screen.getByText('QuadSize Widget')).toBeInTheDocument();
+  expect(screen.getByText(/Unit/)).toBeInTheDocument();
+  expect(screen.getAllByText(/Size/)[1]).toBeInTheDocument();
+  expect(screen.getByText(/Customize/)).toBeInTheDocument();
 });
