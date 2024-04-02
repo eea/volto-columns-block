@@ -84,14 +84,14 @@ export default function install(config) {
       '#BED3F3',
       '#D4C4FB',
     ],
-    tocEntry: (block = {}, tocData) => {
+    tocEntries: (block = {}, tocData) => {
       // integration with volto-block-toc
       const headlines = tocData.levels || ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
       let entries = [];
-      const sorted_column_blocks = getBlocks(block?.data || {});
-      sorted_column_blocks.forEach((column_block) => {
-        const sorted_blocks = getBlocks(column_block[1]);
-        sorted_blocks.forEach((block) => {
+      const columns = getBlocks(block?.data || {});
+      columns.forEach((column) => {
+        const blocks = getBlocks(column[1]);
+        blocks.forEach((block) => {
           const { value, plaintext } = block[1];
           const type = value?.[0]?.type;
           if (headlines.includes(type)) {
