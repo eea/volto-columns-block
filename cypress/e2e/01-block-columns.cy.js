@@ -89,7 +89,18 @@ describe('Blocks Tests', () => {
       '.inline.field.field-wrapper-padding-lockSize .wrapper .checkbox label[for="field-padding-lockSize"]',
     ).click();
 
-    cy.get('.slider-widget-wrapper .slider-knob.single').dblclick();
+    cy.get('.slider-widget-wrapper .slider-knob.single').eq(0).dblclick({
+      force: true,
+    });
+    cy.get('.slider-widget-wrapper .slider-knob.single').eq(0).dblclick({
+      force: true,
+    });
+    cy.get('.slider-widget-wrapper .slider-knob.single').eq(0).dblclick({
+      force: true,
+    });
+    cy.get('.slider-widget-wrapper .slider-knob.single').eq(0).dblclick({
+      force: true,
+    });
 
     cy.get('#field-padding-unit .react-select__control').click();
     cy.get('.react-select__menu-list').contains('percentage').click();

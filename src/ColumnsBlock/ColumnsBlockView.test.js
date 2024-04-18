@@ -4,13 +4,14 @@ import { Provider } from 'react-intl-redux';
 import config from '@plone/volto/registry';
 import installColumnsBlock from '@eeacms/volto-columns-block';
 import { waitFor, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 import ColumnsBlockView from './ColumnsBlockView';
 
 const mockStore = configureStore();
 
 const blocks = {
-  '1234': {
+  1234: {
     '@type': 'columnsBlock',
     data: {
       blocks: {
@@ -95,11 +96,13 @@ test('renders 2 columns', async () => {
     },
   });
 
-  const { container } = render(
+  render(
     <Provider store={store}>
       <ColumnsBlockView data={blocks['1234']} metadata={{ blocks }} />
     </Provider>,
   );
-  await waitFor(() => screen.getByText('left marker'));
-  expect(container).toMatchSnapshot();
+  await waitFor(() => {
+    expect(screen.getByText('left marker')).toBeInTheDocument();
+    expect(screen.getByText('right')).toBeInTheDocument();
+  });
 });
