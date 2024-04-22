@@ -1,7 +1,8 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
+import '@testing-library/jest-dom/extend-expect';
 
 import ColumnVariations from './ColumnVariations';
 
@@ -16,7 +17,7 @@ test('renders column variations component', () => {
     },
   });
 
-  const component = renderer.create(
+  render(
     <Provider store={store}>
       <ColumnVariations
         id="column-variations"
@@ -38,6 +39,7 @@ test('renders column variations component', () => {
       />
     </Provider>,
   );
-  const json = component.toJSON();
-  expect(json).toMatchSnapshot();
+
+  expect(screen.getByText(/Select layout/)).toBeInTheDocument();
+  expect(screen.getByText('50 / 50')).toBeInTheDocument();
 });

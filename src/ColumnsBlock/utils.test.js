@@ -16,8 +16,8 @@ describe('getColumns', () => {
         items: ['1', '2'],
       },
       blocks: {
-        '1': { name: 'First' },
-        '2': { name: 'Second' },
+        1: { name: 'First' },
+        2: { name: 'Second' },
       },
     };
     expect(getColumns(data)).toEqual([
@@ -32,8 +32,8 @@ describe('getColumns', () => {
         items: undefined,
       },
       blocks: {
-        '1': { name: 'First' },
-        '2': { name: 'Second' },
+        1: { name: 'First' },
+        2: { name: 'Second' },
       },
     };
     expect(getColumns(data)).toEqual([]);
@@ -63,8 +63,8 @@ describe('forEachColumn', () => {
         items: ['1', '2'],
       },
       blocks: {
-        '1': { name: 'First' },
-        '2': { name: 'Second' },
+        1: { name: 'First' },
+        2: { name: 'Second' },
       },
     };
     const callback = jest.fn();
