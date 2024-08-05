@@ -389,6 +389,7 @@ class ColumnsBlockEdit extends React.Component {
                   {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
                 >
                   <BlocksForm
+                    {...this.props}
                     key={colId}
                     title={data?.placeholder}
                     description={data?.instructions?.data}
