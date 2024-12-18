@@ -79,13 +79,13 @@ export class Slider extends Component {
 
   setValuesAndPositions(value, triggeredByUser) {
     if (this.props.multiple) {
-      const positions = [...this.state.position];
-      value.forEach((val, i) => {
-        this.setValue(val, triggeredByUser, i);
-        positions[i] = this.determinePosition(val);
-      });
-      this.setState({
-        position: positions,
+      this.setState((prevState) => {
+        const positions = [...prevState.position];
+        value.forEach((val, i) => {
+          this.setValue(val, triggeredByUser, i);
+          positions[i] = this.determinePosition(val);
+        });
+        return { position: positions };
       });
     } else {
       this.setValue(value, triggeredByUser);
@@ -211,11 +211,11 @@ export class Slider extends Component {
 
   setValuePosition(value, triggeredByUser, knobIndex) {
     if (this.props.multiple) {
-      const positions = [...this.state.position];
-      positions[knobIndex] = this.determinePosition(value);
-      this.setValue(value, triggeredByUser, knobIndex);
-      this.setState({
-        position: positions,
+      this.setState((prevState) => {
+        const positions = [...prevState.position];
+        positions[knobIndex] = this.determinePosition(value);
+        this.setValue(value, triggeredByUser, knobIndex);
+        return { position: positions };
       });
     } else {
       this.setValue(value, triggeredByUser);
@@ -227,10 +227,10 @@ export class Slider extends Component {
 
   setPosition(position, knobIndex) {
     if (this.props.multiple) {
-      const newPosition = [...this.state.position];
-      newPosition[knobIndex] = position;
-      this.setState({
-        position: newPosition,
+      this.setState((prevState) => {
+        const newPosition = [...prevState.position];
+        newPosition[knobIndex] = position;
+        return { position: newPosition };
       });
     } else {
       this.setState({

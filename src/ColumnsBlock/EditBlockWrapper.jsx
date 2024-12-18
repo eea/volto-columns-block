@@ -123,9 +123,9 @@ class EditBlockWrapper extends React.Component {
                   basic
                   title="Add block"
                   onClick={() => {
-                    this.setState({
-                      addNewBlockOpened: !this.state.addNewBlockOpened,
-                    });
+                    this.setState((prevState) => ({
+                      addNewBlockOpened: !prevState.addNewBlockOpened,
+                    }));
                   }}
                   className="column-block-add-button"
                 >
