@@ -28,7 +28,11 @@ const messages = defineMessages({
   removeBlock: {
     id: 'Remove block',
     defaultMessage: 'Remove block',
-  }
+  },
+  addBlock: {
+    id: 'Add block',
+    defaultMessage: 'Add block',
+  },
 });
 
 class EditBlockWrapper extends React.Component {
@@ -125,7 +129,7 @@ class EditBlockWrapper extends React.Component {
                 <Button
                   icon
                   basic
-                  title="Add block"
+                  title={intl.formatMessage(messages.addBlock)}
                   onClick={() => {
                     this.setState({
                       addNewBlockOpened: !this.state.addNewBlockOpened,

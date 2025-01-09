@@ -16,6 +16,11 @@ msgstr ""
 msgid "A custom CSS class, aplicable to this column"
 msgstr "Uma classe CSS customizada, aplicável a esta coluna"
 
+#. Default: "Add block"
+#: ColumnsBlock/EditBlockWrapper
+msgid "Add block"
+msgstr ""
+
 #. Default: "Advanced"
 #: Styles/schema
 msgid "Advanced"

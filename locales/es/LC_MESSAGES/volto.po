@@ -1,5 +1,3 @@
-#. Translation of volto.pot to Spanish
-#. Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
@@ -24,6 +22,11 @@ msgstr ""
 #: Styles/schema
 msgid "A custom CSS class, aplicable to this column"
 msgstr "Una clase CSS personalizada aplicable a esta columna"
+
+#. Default: "Add block"
+#: ColumnsBlock/EditBlockWrapper
+msgid "Add block"
+msgstr ""
 
 #. Default: "Advanced"
 #: Styles/schema
