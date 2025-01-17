@@ -20,8 +20,8 @@ export class Slider extends Component {
     let value = this.props.value
       ? this.props.value
       : props.multiple
-        ? [...props.settings.start]
-        : props.settings.start;
+      ? [...props.settings.start]
+      : props.settings.start;
     this.state = {
       value: value,
       position: props.multiple ? [] : 0,
