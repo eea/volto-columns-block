@@ -11,155 +11,165 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. Default: "A custom CSS class, aplicable to this column"
 #: Styles/schema
-# defaultMessage: A custom CSS class, aplicable to this column
 msgid "A custom CSS class, aplicable to this column"
 msgstr "Uma classe CSS customizada, aplicável a esta coluna"
 
+#. Default: "Add block"
+#: ColumnsBlock/EditBlockWrapper
+msgid "Add block"
+msgstr ""
+
+#. Default: "Advanced"
 #: Styles/schema
-# defaultMessage: Advanced
 msgid "Advanced"
 msgstr "Avançado"
 
+#. Default: "Background color"
 #: Styles/schema
-# defaultMessage: Background color
 msgid "Background color"
 msgstr "Cor de fundo"
 
+#. Default: "Bottom"
 #: Styles/schema
-# defaultMessage: Bottom
 msgid "Bottom"
 msgstr "Inferior"
 
+#. Default: "Column"
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
 #: Widgets/ColumnsWidget
-# defaultMessage: Column
 msgid "Column"
 msgstr "Coluna"
 
+#. Default: "Column title"
 #: ColumnsBlock/schema
-# defaultMessage: Column title
 msgid "Column title"
 msgstr "Título da coluna"
 
+#. Default: "Columns"
 #: ColumnsBlock/schema
-# defaultMessage: Columns
 msgid "Columns"
 msgstr "Colunas"
 
+#. Default: "Columns block"
 #: ColumnsBlock/ColumnsBlockEdit
 #: ColumnsBlock/schema
-# defaultMessage: Columns block
 msgid "Columns block"
 msgstr "Bloco de colunas"
 
+#. Default: "Columns block friendly name"
 #: ColumnsBlock/schema
-# defaultMessage: Columns block friendly name
 msgid "Columns block friendly name"
 msgstr "Nome amigável do bloco de colunas"
 
+#. Default: "Custom CSS class"
 #: Styles/schema
-# defaultMessage: Custom CSS class
 msgid "Custom CSS class"
 msgstr "Classe CSS customizada"
 
+#. Default: "Customize"
 #: Widgets/QuadSize
-# defaultMessage: Customize
 msgid "Customize"
 msgstr "Customizar"
 
+#. Default: "Default"
 #: ColumnsBlock/schema
-# defaultMessage: Default
 msgid "Default"
 msgstr "Padrão"
 
+#. Default: "Edit parent columns block"
 #: ColumnsBlock/ColumnsBlockEdit
-# defaultMessage: Edit parent columns block
 msgid "Edit parent columns block"
 msgstr "Editar bloco de colunas pai"
 
+#. Default: "Go to Column settings"
 #: ColumnsBlock/ColumnsBlockEdit
-# defaultMessage: Go to Column settings
 msgid "Go to Column settings"
 msgstr "Ir para as configurações da coluna"
 
+#. Default: "Layout"
 #: ColumnsBlock/schema
-# defaultMessage: Layout
 msgid "Layout"
 msgstr "Layout"
 
+#. Default: "Middle"
 #: Styles/schema
-# defaultMessage: Middle
 msgid "Middle"
 msgstr "Centralizado"
 
+#. Default: "Padding"
 #: Styles/schema
-# defaultMessage: Padding
 msgid "Padding"
 msgstr "Preenchimento"
 
+#. Default: "Percentage"
 #: Widgets/QuadSize
-# defaultMessage: Percentage
 msgid "Percentage"
 msgstr "Percentagem"
 
+#. Default: "Remove block"
+#: ColumnsBlock/EditBlockWrapper
+msgid "Remove block"
+msgstr ""
+
+#. Default: "Reverse wrap"
 #: ColumnsBlock/schema
-# defaultMessage: Reverse wrap
 msgid "Reverse wrap"
 msgstr "Quebra reversa"
 
+#. Default: "Select layout"
 #: ColumnsBlock/ColumnVariations
-# defaultMessage: Select layout
 msgid "Select layout"
 msgstr "Selecione o layout"
 
+#. Default: "Size"
 #: Widgets/QuadSize
-# defaultMessage: Size
 msgid "Size"
 msgstr "Tamanho"
 
+#. Default: "Style"
 #: Styles/schema
-# defaultMessage: Style
 msgid "Style"
 msgstr "Estilo"
 
+#. Default: "Styling"
 #: Styles/schema
-# defaultMessage: Styling
 msgid "Styling"
 msgstr "Estilo"
 
+#. Default: "Title"
 #: ColumnsBlock/schema
-# defaultMessage: Title
 msgid "Title"
 msgstr "Título"
 
+#. Default: "Top"
 #: Styles/schema
-# defaultMessage: Top
 msgid "Top"
 msgstr "Topo"
 
+#. Default: "Unit"
 #: Widgets/QuadSize
-# defaultMessage: Unit
 msgid "Unit"
 msgstr "Unidade"
 
+#. Default: "Unknown Block {block}"
 #: ColumnsBlock/EditBlockWrapper
-# defaultMessage: Unknown Block {block}
 msgid "Unknown Block"
 msgstr "Bloco desconhecido"
 
+#. Default: "Vertical align"
 #: Styles/schema
-# defaultMessage: Vertical align
 msgid "Vertical align"
 msgstr "Alinhamento vertical"
 
+#. Default: "delete"
 #: ColumnsBlock/EditBlockWrapper
-# defaultMessage: delete
 msgid "delete"
 msgstr "excluir"
 
+#. Default: "Reverse column order when opening site on mobile."
 #: ColumnsBlock/schema
-# defaultMessage: Reverse column order when opening site on mobile.
 msgid "reverseWrapDescription"
 msgstr "Inverte a ordem das colunas ao abrir o site no celular."

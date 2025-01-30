@@ -25,6 +25,14 @@ const messages = defineMessages({
     id: 'delete',
     defaultMessage: 'delete',
   },
+  removeBlock: {
+    id: 'Remove block',
+    defaultMessage: 'Remove block',
+  },
+  addBlock: {
+    id: 'Add block',
+    defaultMessage: 'Add block',
+  },
 });
 
 class EditBlockWrapper extends React.Component {
@@ -121,7 +129,7 @@ class EditBlockWrapper extends React.Component {
                 <Button
                   icon
                   basic
-                  title="Add block"
+                  title={intl.formatMessage(messages.addBlock)}
                   onClick={() => {
                     this.setState((prevState) => ({
                       addNewBlockOpened: !prevState.addNewBlockOpened,
@@ -136,7 +144,7 @@ class EditBlockWrapper extends React.Component {
                 <Button
                   icon
                   basic
-                  title="Remove block"
+                  title={intl.formatMessage(messages.removeBlock)}
                   onClick={() => onDeleteBlock(block)}
                   className="delete-button-column-block"
                   aria-label={intl.formatMessage(messages.delete)}
