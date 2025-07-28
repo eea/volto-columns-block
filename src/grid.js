@@ -5,6 +5,8 @@ import iconD from './ColumnsBlock/icons/three-third-columns.svg';
 import iconE from './ColumnsBlock/icons/three-columns.svg';
 import iconF from './ColumnsBlock/icons/four-quarter-columns.svg';
 import iconG from './ColumnsBlock/icons/full-column.svg';
+import iconH from './ColumnsBlock/icons/three-columns-hqq.svg';
+import iconI from './ColumnsBlock/icons/three-columns-qqh.svg';
 
 export const gridSizes = {
   full: {
@@ -120,6 +122,15 @@ export const variants = [
     title: '33 / 33 / 33',
   },
   {
+    icon: iconH,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['halfWidthBig', 'oneThirdSmall', 'oneThirdSmall'],
+    },
+    common: true,
+    title: '50 / 25 / 25',
+  },
+  {
     icon: iconE,
     defaultData: {
       gridSize: 12,
@@ -127,6 +138,15 @@ export const variants = [
     },
     common: true,
     title: '25 / 50 / 25',
+  },
+  {
+    icon: iconI,
+    defaultData: {
+      gridSize: 12,
+      gridCols: ['oneThirdSmall', 'oneThirdSmall', 'halfWidthBig'],
+    },
+    common: true,
+    title: '25 / 25 / 50',
   },
   {
     icon: iconF,
