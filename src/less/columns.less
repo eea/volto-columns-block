@@ -190,9 +190,11 @@
 }
 
 .ui.grid.column-grid {
+  min-width: 0;
   padding: @columnGridPadding;
   margin-top: @columnGridMarginTop;
   margin-bottom: @columnGridMarginBottom;
+  overflow-wrap: anywhere;
 }
 /* remove padding from column-grid when we have styled-with-bg style from volto-block-style */
 .styled-with-bg .grid.column-grid {
