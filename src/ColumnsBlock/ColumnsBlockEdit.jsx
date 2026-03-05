@@ -396,6 +396,8 @@ class ColumnsBlockEdit extends React.Component {
                     manage={manage}
                     allowedBlocks={data?.allowedBlocks}
                     metadata={metadata}
+                    isMainForm={false}
+                    stopPropagation={selectedBlock}
                     properties={{
                       ...metadata,
                       ...(isEmpty(column) ? emptyBlocksForm() : column),
