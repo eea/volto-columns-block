@@ -38,11 +38,15 @@ blocks container.
 
 Go to http://localhost:3000
 
+`make start` now defaults to Volto 18. To run the same setup against Volto 17, use:
+
+      VOLTO_VERSION=17 make
+      VOLTO_VERSION=17 make start
+
 ### Add volto-columns-block to your Volto project
 
-For Volto 18 and newer, the official Plone recommendation is to create projects
-with Cookieplone instead of `@plone/generator-volto`. See the official Plone
-documentation for
+For Volto 18 and newer, create projects with Cookieplone. See the official
+Plone documentation:
 [Install Plone with Cookieplone](https://6.docs.plone.org/install/create-project-cookieplone.html)
 and
 [Install an add-on in Volto 18 and 19](https://6.docs.plone.org/volto/development/add-ons/install-an-add-on.html).
@@ -79,6 +83,8 @@ and
 1. Go to http://localhost:3000
 
 1. Happy editing!
+
+For legacy Volto 17 projects, keep using the yarn-based Volto 17 workflow.
 
 ## Release
 

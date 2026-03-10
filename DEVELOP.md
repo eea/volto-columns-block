@@ -32,11 +32,12 @@ See the official Plone documentation for
 and
 [Install an add-on in development mode in Volto 18 and 19](https://6.docs.plone.org/volto/development/add-ons/install-an-add-on-dev-18.html).
 
-1.  Create a new Cookieplone Volto project
+For new Volto 18+ projects, use Cookieplone. It includes `mrs-developer` by default.
+
+1.  Create a new Volto project with Cookieplone
 
         uvx cookieplone project
         cd project-title
-        make install
 
 1.  Add the following to `mrs.developer.json`:
 
@@ -52,7 +53,7 @@ and
 
 1.  Add `@eeacms/volto-columns-block` to the `addons` key of your project's `package.json`
 
-1.  Install
+1.  Install or refresh the project setup
 
         make install
 
@@ -71,6 +72,8 @@ and
 1.  Happy hacking!
 
         cd packages/volto-columns-block/
+
+For legacy Volto 17 projects, keep using the yarn-based workflow from the Volto 17 documentation.
 
 ## Cypress
 
