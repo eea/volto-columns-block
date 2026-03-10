@@ -53,10 +53,30 @@
   }
 
   .ui.grid.block-column {
+    position: relative;
     padding: 0.3em;
 
     .blocks-form {
       padding: 1rem !important;
+    }
+
+    .column-settings-button {
+      position: absolute;
+      z-index: 4;
+      top: 0.25rem;
+      right: 0.25rem;
+      border: 1px solid @borderColor;
+      background-color: @pageBackground;
+      border-radius: 999px;
+
+      &:hover,
+      &:focus {
+        background-color: @pageBackground;
+      }
+
+      svg {
+        color: #134448;
+      }
     }
 
     .block {
@@ -103,66 +123,6 @@
 
   [data-rbd-draggable-context-id] {
     margin-bottom: 0.3em;
-  }
-
-  .block.wrapper.multiSelected {
-    .block .block::before {
-      z-index: 1;
-      background-color: rgba(120, 192, 215, 0.375);
-    }
-  }
-
-  .blocks-chooser {
-    position: absolute;
-    right: 0;
-    left: auto !important;
-    margin-top: 50px;
-  }
-
-  .block-toolbar {
-    position: absolute;
-    z-index: 4;
-    right: -9px;
-    display: flex;
-    border: none;
-    border: 1px solid @borderColor;
-    border-bottom: 1px solid @pageBackground;
-    margin-top: -45px;
-    background-color: @pageBackground;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-
-    .ui.basic.button {
-      padding: 8px 5px;
-    }
-
-    .wrapper-column-block {
-      > .ui.basic.button {
-        &:hover {
-          background-color: transparent !important;
-        }
-      }
-    }
-
-    > .ui.basic.button {
-      &:hover {
-        background-color: transparent !important;
-      }
-
-      svg {
-        color: #134448;
-      }
-    }
-
-    .drag.handle.wrapper-column-block {
-      position: initial;
-      left: initial;
-      min-height: 1em;
-      margin-left: initial !important;
-      font-size: 1rem;
-      line-height: 1em;
-      vertical-align: baseline;
-    }
   }
 }
 

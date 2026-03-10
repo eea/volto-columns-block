@@ -40,39 +40,40 @@ Go to http://localhost:3000
 
 ### Add volto-columns-block to your Volto project
 
-1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
+For Volto 18 and newer, the official Plone recommendation is to create projects
+with Cookieplone instead of `@plone/generator-volto`. See the official Plone
+documentation for
+[Install Plone with Cookieplone](https://6.docs.plone.org/install/create-project-cookieplone.html)
+and
+[Install an add-on in Volto 18 and 19](https://6.docs.plone.org/volto/development/add-ons/install-an-add-on.html).
 
-   ```Bash
-   docker compose up backend
+1. If you do not already have a project, create one:
+
+   ```
+   uvx cookieplone project
+   cd project-title
+   make install
    ```
 
-1. Start Volto frontend
+1. Install the add-on in your Volto project:
 
-* If you already have a volto project, just update `package.json`:
+   ```
+   pnpm --filter <name-of-your-policy-add-on> add @eeacms/volto-columns-block
+   ```
+
+1. Add the add-on to the `addons` key of your project's `package.json`:
 
    ```JSON
    "addons": [
        "@eeacms/volto-columns-block"
-   ],
-
-   "dependencies": {
-       "@eeacms/volto-columns-block": "*"
-   }
+   ]
    ```
 
-* If not, create one:
+1. Start Plone:
 
    ```
-   npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-columns-block
-   cd my-volto-project
-   ```
-
-1. Install new add-ons and restart Volto:
-
-   ```
-   yarn
-   yarn start
+   make backend-start
+   make frontend-start
    ```
 
 1. Go to http://localhost:3000

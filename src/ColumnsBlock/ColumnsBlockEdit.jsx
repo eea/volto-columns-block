@@ -9,7 +9,7 @@ import {
   Icon,
   BlockDataForm,
   BlocksForm,
-} from '@plone/volto/components'; // BlocksForm, Icon,
+} from '@plone/volto/components';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,
@@ -29,7 +29,6 @@ import {
   columnIsEmpty,
 } from './utils';
 import ColumnVariations from './ColumnVariations';
-import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { makeStyleSchema, getStyle } from '../Styles';
@@ -54,22 +53,12 @@ const messages = defineMessages({
   },
 });
 
-/*
- * not pretty, there's a lot of render props passing, to please React
- * reconciliation algos
- *
-
-ColumnsBlockEdit -> passes EditBlockWrapper into
-  -> BlocksForm -> which passes (with EditBlock) into
-    -> DragDropList -> which renders them all
-*/
 class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       multiSelected: [],
       colSelections: {}, // selected block for each column
-      showSidebar: false,
       activeColumn: null,
     };
 
@@ -195,6 +184,24 @@ class ColumnsBlockEdit extends React.Component {
         },
       },
     });
+  };
+
+  openColumnsSettings = () => {
+    this.setState({
+      activeColumn: null,
+      colSelections: {},
+      multiSelected: [],
+    });
+    this.props.setSidebarTab(1);
+  };
+
+  openColumnSettings = (colId) => {
+    this.setState({
+      activeColumn: colId,
+      colSelections: {},
+      multiSelected: [],
+    });
+    this.props.setSidebarTab(1);
   };
 
   onSelectBlock = (
@@ -361,13 +368,7 @@ class ColumnsBlockEdit extends React.Component {
           <>
             <div
               className="columns-header"
-              onClick={() => {
-                this.setState({
-                  showSidebar: true,
-                  colSelections: {},
-                });
-                this.props.setSidebarTab(1);
-              }}
+              onClick={this.openColumnsSettings}
               aria-hidden="true"
             >
               {data.title || (
@@ -388,6 +389,30 @@ class ColumnsBlockEdit extends React.Component {
                   {...(gridSizes[gridCols[index]] || gridCols[index])}
                   {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
                 >
+                  {selected &&
+                  selectedCol === colId &&
+                  selectedBlock &&
+                  !data?.readOnlySettings ? (
+                    <Button
+                      type="button"
+                      icon
+                      basic
+                      className="column-settings-button"
+                      title={this.props.intl.formatMessage(
+                        messages.labelToColSettings,
+                      )}
+                      aria-label={this.props.intl.formatMessage(
+                        messages.labelToColSettings,
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.openColumnSettings(colId);
+                      }}
+                    >
+                      <Icon name={tuneSVG} size="19px" />
+                    </Button>
+                  ) : null}
                   <BlocksForm
                     errors={this.props.errors}
                     key={colId}
@@ -441,42 +466,7 @@ class ColumnsBlockEdit extends React.Component {
                       this.onChangeColumnData(id, value, colId)
                     }
                     pathname={pathname}
-                  >
-                    {({ draginfo }, editBlock, blockProps) => (
-                      <EditBlockWrapper
-                        draginfo={draginfo}
-                        blockProps={blockProps}
-                        extraControls={
-                          <>
-                            {!data?.readOnlySettings && (
-                              <Button
-                                icon
-                                basic
-                                title={this.props.intl.formatMessage(
-                                  messages.labelToColSettings,
-                                )}
-                                onClick={() => {
-                                  this.setState({
-                                    showSidebar: true,
-                                    activeColumn: colId,
-                                    colSelections: {},
-                                  });
-                                  this.props.setSidebarTab(1);
-                                }}
-                              >
-                                <Icon name={tuneSVG} className="" size="19px" />
-                              </Button>
-                            )}
-                          </>
-                        }
-                        multiSelected={this.state.multiSelected.includes(
-                          blockProps.block,
-                        )}
-                      >
-                        {editBlock}
-                      </EditBlockWrapper>
-                    )}
-                  </BlocksForm>
+                  />
                 </Grid.Column>
               ))}
             </Grid>
