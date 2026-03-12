@@ -57,7 +57,9 @@ describe('Blocks Tests', () => {
       .click()
       .type('/description{enter}Third');
 
-    cy.get('.block-toolbar button').eq(1).click();
+    cy.get('.columns-block .column-settings-button:visible').click({
+      force: true,
+    });
 
     cy.get(
       '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',
@@ -115,7 +117,9 @@ describe('Blocks Tests', () => {
     cy.get('.react-select__menu-list').contains('No value').click();
 
     cy.get('.columns-block [contenteditable=true]').eq(0).focus().click();
-    cy.get('.block-toolbar button').eq(1).click();
+    cy.get('.columns-block .column-settings-button:visible').click({
+      force: true,
+    });
 
     cy.get(
       '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',

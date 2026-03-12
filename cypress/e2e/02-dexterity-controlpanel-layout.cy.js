@@ -71,7 +71,11 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
     cy.get(
       '.columns-block .grid .column:nth-child(2) .block-editor-slate',
     ).click();
-    cy.get('.ui.basic.icon.button.block-add-button:visible').click();
+    cy.get(
+      '.columns-block .grid .column:nth-child(2) .ui.basic.icon.button.block-add-button:visible',
+    )
+      .first()
+      .click({ force: true });
     cy.get('.content.active.mostUsed .button.image')
       .contains('Image')
       .click({ force: true });
@@ -80,28 +84,25 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
       'https://eea.github.io/volto-eea-design-system/img/eea_icon.png';
 
     cy.getIfExists(
-      '.columns-block .grid .column:nth-child(2) input[placeholder="Enter a URL to an image"]',
+      '.columns-block .grid .column:nth-child(2) button[aria-label="Enter a URL to an image"]',
       () => {
         cy.get(
-          '.columns-block .grid .column:nth-child(2) input[placeholder="Enter a URL to an image"]',
+          '.columns-block .grid .column:nth-child(2) button[aria-label="Enter a URL to an image"]',
         )
           .first()
-          .click({ force: true })
-          .type(`${imageUrl}{enter}`, { force: true });
-      },
-      () => {
-        cy.get('.columns-block .grid .column:nth-child(2) .block.image')
-          .first()
-          .within(() => {
-            cy.get('button.ui.button, button.icon').last().click({
-              force: true,
-            });
-          });
+          .click({ force: true });
 
         cy.wait(500);
 
+        cy.get('.columns-block .grid .column:nth-child(2) input[type="text"]')
+          .first()
+          .click({ force: true })
+          .clear({ force: true })
+          .type(`${imageUrl}{enter}`, { force: true });
+      },
+      () => {
         cy.get(
-          '.columns-block .grid .column:nth-child(2) input[type="text"], .columns-block .grid .column:nth-child(2) .ui.input input',
+          '.columns-block .grid .column:nth-child(2) .ui.input input, .columns-block .grid .column:nth-child(2) input[type="text"]',
         )
           .first()
           .click({ force: true })
