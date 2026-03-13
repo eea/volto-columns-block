@@ -33,7 +33,6 @@ import ColumnVariations from './ColumnVariations';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { makeStyleSchema, getStyle } from '../Styles';
 
-import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 import eraserSVG from './icons/eraser.svg';
 import '../less/columns.less';
@@ -258,7 +257,13 @@ class ColumnsBlockEdit extends React.Component {
 
   getColumnsBlockSchema = () => {
     const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
-    const schema = ColumnsBlockSchema(this.props.intl);
+    const schema = ColumnsBlockSchema({
+      intl: this.props.intl,
+      formData: {
+        activeColumn: this.state.activeColumn,
+        setActiveColumn: (colId) => this.setState({ activeColumn: colId }),
+      },
+    });
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
     const nrOfColumns = (blocks_layout?.items || []).length;
@@ -389,30 +394,6 @@ class ColumnsBlockEdit extends React.Component {
                   {...(gridSizes[gridCols[index]] || gridCols[index])}
                   {...getStyle(data?.data?.blocks?.[colId]?.settings || {})}
                 >
-                  {selected &&
-                  selectedCol === colId &&
-                  selectedBlock &&
-                  !data?.readOnlySettings ? (
-                    <Button
-                      type="button"
-                      icon
-                      basic
-                      className="column-settings-button"
-                      title={this.props.intl.formatMessage(
-                        messages.labelToColSettings,
-                      )}
-                      aria-label={this.props.intl.formatMessage(
-                        messages.labelToColSettings,
-                      )}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        this.openColumnSettings(colId);
-                      }}
-                    >
-                      <Icon name={tuneSVG} size="19px" />
-                    </Button>
-                  ) : null}
                   <BlocksForm
                     errors={this.props.errors}
                     key={colId}
