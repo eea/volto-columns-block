@@ -65,12 +65,10 @@ and
    pnpm --filter <name-of-your-policy-add-on> add @eeacms/volto-columns-block
    ```
 
-1. Add the add-on to the `addons` key of your project's `package.json`:
+1. Add the add-on to `volto.config.js`:
 
-   ```JSON
-   "addons": [
-       "@eeacms/volto-columns-block"
-   ]
+   ```JavaScript
+   const addons = ['@eeacms/volto-columns-block'];
    ```
 
 1. Start Plone:

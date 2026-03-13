@@ -51,7 +51,7 @@ For new Volto 18+ projects, use Cookieplone. It includes `mrs-developer` by defa
             }
         }
 
-1.  Add `@eeacms/volto-columns-block` to the `addons` key of your project's `package.json`
+1.  Add `@eeacms/volto-columns-block` to the `addons` key of your project's `volto.config.js`
 
 1.  Install or refresh the project setup
 
