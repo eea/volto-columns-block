@@ -61,11 +61,17 @@ describe('Blocks Tests', () => {
       force: true,
     });
 
-    cy.get(
-      '.columns-area .column-area:nth-of-type(3) button[title="Go to Column settings"]',
-    ).click({
-      force: true,
-    });
+    // ...existing code...
+
+    // Ensure the third .column-area exists, regardless of nesting, and click its settings button
+    cy.get('.columns-area .column-area')
+      .should('have.length.at.least', 3)
+      .eq(2) // zero-based index: 2 is the third element
+      .within(() => {
+        cy.get('button[title="Go to Column settings"]').click({ force: true });
+      });
+
+    // ...existing code...
     /* your styles */
 
     cy.get(
@@ -124,9 +130,19 @@ describe('Blocks Tests', () => {
     cy.get('.react-select__menu-list').contains('No value').click();
 
     cy.get('.columns-block [contenteditable=true]').eq(0).focus().click();
-    cy.get('.columns-block .column-settings-button:visible').click({
+    cy.get('.columns-header').click({
       force: true,
     });
+
+    // ...existing code...
+
+    // Ensure the third .column-area exists, regardless of nesting, and click its settings button
+    cy.get('.columns-area .column-area')
+      .should('have.length.at.least', 3)
+      .eq(2) // zero-based index: 2 is the third element
+      .within(() => {
+        cy.get('button[title="Go to Column settings"]').click({ force: true });
+      });
 
     cy.get(
       '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',
