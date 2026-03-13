@@ -57,9 +57,16 @@ describe('Blocks Tests', () => {
       .click()
       .type('/description{enter}Third');
 
-    cy.get('.columns-block .column-settings-button:visible').click({
+    cy.get('.columns-header').click({
       force: true,
     });
+
+    cy.get(
+      '.columns-area .column-area:nth-of-type(3) button[title="Go to Column settings"]',
+    ).click({
+      force: true,
+    });
+    /* your styles */
 
     cy.get(
       '.field-wrapper-grid_vertical_align  #field-grid_vertical_align',
