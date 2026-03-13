@@ -38,46 +38,51 @@ blocks container.
 
 Go to http://localhost:3000
 
+`make start` now defaults to Volto 18. To run the same setup against Volto 17, use:
+
+      VOLTO_VERSION=17 make
+      VOLTO_VERSION=17 make start
+
 ### Add volto-columns-block to your Volto project
 
-1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
+For Volto 18 and newer, create projects with Cookieplone. See the official
+Plone documentation:
+[Install Plone with Cookieplone](https://6.docs.plone.org/install/create-project-cookieplone.html)
+and
+[Install an add-on in Volto 18 and 19](https://6.docs.plone.org/volto/development/add-ons/install-an-add-on.html).
 
-   ```Bash
-   docker compose up backend
-   ```
-
-1. Start Volto frontend
-
-* If you already have a volto project, just update `package.json`:
-
-   ```JSON
-   "addons": [
-       "@eeacms/volto-columns-block"
-   ],
-
-   "dependencies": {
-       "@eeacms/volto-columns-block": "*"
-   }
-   ```
-
-* If not, create one:
+1. If you do not already have a project, create one:
 
    ```
-   npm install -g yo @plone/generator-volto
-   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-columns-block
-   cd my-volto-project
+   uvx cookieplone project
+   cd project-title
+   make install
    ```
 
-1. Install new add-ons and restart Volto:
+1. Install the add-on in your Volto project:
 
    ```
-   yarn
-   yarn start
+   pnpm --filter <name-of-your-policy-add-on> add @eeacms/volto-columns-block
+   ```
+
+1. Add the add-on to `volto.config.js`:
+
+   ```JavaScript
+   const addons = ['@eeacms/volto-columns-block'];
+   ```
+
+1. Start Plone:
+
+   ```
+   make backend-start
+   make frontend-start
    ```
 
 1. Go to http://localhost:3000
 
 1. Happy editing!
+
+For legacy Volto 17 projects, keep using the yarn-based Volto 17 workflow.
 
 ## Release
 

@@ -26,21 +26,24 @@
 
 ### Or add @eeacms/volto-columns-block to your Volto project
 
-Before starting make sure your development environment is properly set. See [Volto Developer Documentation](https://docs.voltocms.com/getting-started/install/)
+Before starting, make sure your development environment is properly set up.
+See the official Plone documentation for
+[Install Plone with Cookieplone](https://6.docs.plone.org/install/create-project-cookieplone.html)
+and
+[Install an add-on in development mode in Volto 18 and 19](https://6.docs.plone.org/volto/development/add-ons/install-an-add-on-dev-18.html).
 
-1.  Make sure you have installed `yo`, `@plone/generator-volto` and `mrs-developer`
+For new Volto 18+ projects, use Cookieplone. It includes `mrs-developer` by default.
 
-        npm install -g yo @plone/generator-volto mrs-developer
+1.  Create a new Volto project with Cookieplone
 
-1.  Create new volto app
-
-        yo @plone/volto my-volto-project --addon @eeacms/volto-columns-block --skip-install
-        cd my-volto-project
+        uvx cookieplone project
+        cd project-title
 
 1.  Add the following to `mrs.developer.json`:
 
         {
             "volto-columns-block": {
+                "output": "packages",
                 "url": "https://github.com/eea/volto-columns-block.git",
                 "package": "@eeacms/volto-columns-block",
                 "branch": "develop",
@@ -48,28 +51,29 @@ Before starting make sure your development environment is properly set. See [Vol
             }
         }
 
-1.  Install
+1.  Add `@eeacms/volto-columns-block` to the `addons` key of your project's `volto.config.js`
 
-        make develop
-        yarn
+1.  Install or refresh the project setup
+
+        make install
 
 1.  Start backend
 
-        docker run --pull always -it --rm --name plone -p 8080:8080 -e SITE=Plone plone/plone-backend
+        make backend-start
 
-    ...wait for backend to setup and start - `Ready to handle requests`:
-
-    ...you can also check http://localhost:8080/Plone
+    ...wait for backend to set up and start with `Ready to handle requests`
 
 1.  Start frontend
 
-        yarn start
+        make frontend-start
 
 1.  Go to http://localhost:3000
 
 1.  Happy hacking!
 
-        cd src/addons/volto-columns-block/
+        cd packages/volto-columns-block/
+
+For legacy Volto 17 projects, keep using the yarn-based workflow from the Volto 17 documentation.
 
 ## Cypress
 
@@ -81,7 +85,7 @@ project where you added `volto-columns-block` to `mrs.developer.json`
 Go to:
 
   ```BASH
-  cd src/addons/volto-columns-block/
+  cd packages/volto-columns-block/
   ```
 
 Start:

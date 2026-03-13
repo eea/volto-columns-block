@@ -1,7 +1,8 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+
 import { v4 as uuid } from 'uuid';
 import { omit, without } from 'lodash';
+import { defineMessages, FormattedMessage } from 'react-intl';
 import move from 'lodash-move';
 import { Icon, FormFieldWrapper, DragDropList } from '@plone/volto/components';
 import { emptyBlocksForm } from '@plone/volto/helpers';
@@ -9,6 +10,7 @@ import { emptyBlocksForm } from '@plone/volto/helpers';
 import dragSVG from '@plone/volto/icons/drag.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
 import plusSVG from '@plone/volto/icons/circle-plus.svg';
+import pencilSVG from '@plone/volto/icons/pencil.svg';
 
 export function moveColumn(formData, source, destination) {
   return {
@@ -18,13 +20,25 @@ export function moveColumn(formData, source, destination) {
     },
   };
 }
+const messages = defineMessages({
+  labelToColSettings: {
+    id: 'Go to Column settings',
+    defaultMessage: 'Go to Column settings',
+  },
+});
 
 const empty = () => {
   return [uuid(), emptyBlocksForm()];
 };
 
 const ColumnsWidget = (props) => {
-  const { value = {}, id, onChange, maxSize = 4 } = props;
+  const { value = {}, id, onChange, maxSize = 4, blockData = {} } = props;
+  const { setActiveColumn = () => {} } = blockData || {};
+
+  const openColumnSettings = (colId) => {
+    setActiveColumn(colId);
+  };
+
   const { blocks = {} } = value;
   const columnsList = (value.blocks_layout?.items || []).map((id) => [
     id,
@@ -76,24 +90,41 @@ const ColumnsWidget = (props) => {
                       {index + 1}
                     </div>
                     {value.blocks_layout?.items?.length > 1 ? (
-                      <button
-                        onClick={() => {
-                          const newFormData = {
-                            ...value,
-                            blocks: omit({ ...value.blocks }, [childId]),
-                            blocks_layout: {
-                              ...value.blocks_layout,
-                              items: without(
-                                [...(value.blocks_layout?.items || [])],
-                                childId,
-                              ),
-                            },
-                          };
-                          onChange(id, newFormData);
-                        }}
-                      >
-                        <Icon name={trashSVG} size="18px" />
-                      </button>
+                      <>
+                        <button
+                          title={props.intl.formatMessage(
+                            messages.labelToColSettings,
+                          )}
+                          aria-label={props.intl.formatMessage(
+                            messages.labelToColSettings,
+                          )}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openColumnSettings(childId);
+                          }}
+                        >
+                          <Icon name={pencilSVG} size="19px" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            const newFormData = {
+                              ...value,
+                              blocks: omit({ ...value.blocks }, [childId]),
+                              blocks_layout: {
+                                ...value.blocks_layout,
+                                items: without(
+                                  [...(value.blocks_layout?.items || [])],
+                                  childId,
+                                ),
+                              },
+                            };
+                            onChange(id, newFormData);
+                          }}
+                        >
+                          <Icon name={trashSVG} size="18px" />
+                        </button>
+                      </>
                     ) : (
                       ''
                     )}

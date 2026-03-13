@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
 
@@ -8,7 +8,7 @@ import QuadSize from './QuadSize';
 
 const mockStore = configureStore();
 
-test('renders a quad size widget component', () => {
+test('renders a quad size widget component', async () => {
   const store = mockStore({
     intl: {
       locale: 'en',
@@ -29,8 +29,8 @@ test('renders a quad size widget component', () => {
     </Provider>,
   );
 
-  expect(screen.getByText('QuadSize Widget')).toBeInTheDocument();
-  expect(screen.getByText(/Unit/)).toBeInTheDocument();
-  expect(screen.getAllByText(/Size/)[1]).toBeInTheDocument();
-  expect(screen.getByText(/Customize/)).toBeInTheDocument();
+  expect(await screen.findByText('QuadSize Widget')).toBeInTheDocument();
+  expect(await screen.findByText(/Unit/)).toBeInTheDocument();
+  expect((await screen.findAllByText(/Size/)).at(-1)).toBeInTheDocument();
+  expect(await screen.findByText(/Customize/)).toBeInTheDocument();
 });

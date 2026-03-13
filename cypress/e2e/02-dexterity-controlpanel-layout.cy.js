@@ -21,6 +21,8 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
     // Wait a bit for draftjs to load, without this the title block
     // custom placeholder is missing and cypress gives a timeout error
     cy.wait(1000);
+    cy.get('.block.title').first().click();
+    cy.contains('.sidebar-container a.item', 'Settings').click();
     cy.get('input[id="field-placeholder"]').type('Book title');
     cy.get('label[for="field-required"]').click();
     cy.get('label[for="field-fixed"]').click();
@@ -34,12 +36,20 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
       .click({ force: true });
     cy.get('.block.inner.columnsBlock .cards .card:nth-child(1)').click();
 
-    cy.get('#field-allowedBlocks.react-select-container')
-      .click()
-      .type('Image{enter}');
-    cy.get('#field-allowedBlocks.react-select-container')
-      .click()
-      .type('Text{enter}');
+    cy.get('#field-allowedBlocks.react-select-container').click();
+    cy.get('#field-allowedBlocks.react-select-container input').type(
+      'Image{enter}',
+      {
+        force: true,
+      },
+    );
+    cy.get('#field-allowedBlocks.react-select-container').click();
+    cy.get('#field-allowedBlocks.react-select-container input').type(
+      'Text{enter}',
+      {
+        force: true,
+      },
+    );
 
     cy.get('.columns-block .grid .column:nth-child(1) .block-editor-slate')
       .click({ force: true })
@@ -61,16 +71,45 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
     cy.get(
       '.columns-block .grid .column:nth-child(2) .block-editor-slate',
     ).click();
-    cy.get('.ui.basic.icon.button.block-add-button:visible').click();
+    cy.get(
+      '.columns-block .grid .column:nth-child(2) .ui.basic.icon.button.block-add-button:visible',
+    )
+      .first()
+      .click({ force: true });
     cy.get('.content.active.mostUsed .button.image')
       .contains('Image')
       .click({ force: true });
 
-    cy.get('.block.image input[type="text"]')
-      .click()
-      .type(
-        'https://eea.github.io/volto-eea-design-system/img/eea_icon.png{enter}',
-      );
+    const imageUrl =
+      'https://eea.github.io/volto-eea-design-system/img/eea_icon.png';
+
+    cy.getIfExists(
+      '.columns-block .grid .column:nth-child(2) button[aria-label="Enter a URL to an image"]',
+      () => {
+        cy.get(
+          '.columns-block .grid .column:nth-child(2) button[aria-label="Enter a URL to an image"]',
+        )
+          .first()
+          .click({ force: true });
+
+        cy.wait(500);
+
+        cy.get('.columns-block .grid .column:nth-child(2) input[type="text"]')
+          .first()
+          .click({ force: true })
+          .clear({ force: true })
+          .type(`${imageUrl}{enter}`, { force: true });
+      },
+      () => {
+        cy.get(
+          '.columns-block .grid .column:nth-child(2) .ui.input input, .columns-block .grid .column:nth-child(2) input[type="text"]',
+        )
+          .first()
+          .click({ force: true })
+          .clear({ force: true })
+          .type(`${imageUrl}{enter}`, { force: true });
+      },
+    );
 
     cy.get('#toolbar-save').click();
     cy.get('.documentFirstHeading').contains('My First Book');
@@ -80,7 +119,7 @@ describe('ControlPanel: Dexterity Content-Types Layout', () => {
     cy.get('.columns-view .column-grid .image img').should(
       'have.attr',
       'src',
-      'https://eea.github.io/volto-eea-design-system/img/eea_icon.png',
+      imageUrl,
     );
   });
 });
