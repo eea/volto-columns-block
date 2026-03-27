@@ -84,6 +84,18 @@ and
 
 For legacy Volto 17 projects, keep using the yarn-based Volto 17 workflow.
 
+## Upgrade
+
+### Upgrading to 9.x
+
+> This version requires `Volto >= 17.18` or `Volto 18+`. It removes the custom `EditBlockWrapper` and uses Volto's built-in block chrome provided by `BlocksForm`.
+
+#### Breaking changes
+
+- **Removed `EditBlockWrapper.jsx`.** Any code importing `EditBlockWrapper` from `@eeacms/volto-columns-block` will break. Use Volto's built-in `EditBlockWrapper` from `@plone/volto/components/manage/Blocks/Block/EditBlockWrapper` if you need a custom wrapper.
+- **Moved the column-settings button into the block sidebar.** The floating `column.svg` icon button that appeared over each column in edit mode has been removed. Column settings are now accessible directly from the block sidebar via the `ColumnsWidget`.
+- **`ColumnsBlockSchema` signature changed.** `ColumnsBlockSchema` now receives a single object `{ intl, formData }` instead of just `intl`. Any code calling `ColumnsBlockSchema(intl)` must be updated to `ColumnsBlockSchema({ intl, formData })`.
+
 ## Release
 
 See [RELEASE.md](https://github.com/eea/volto-columns-block/blob/master/RELEASE.md).
