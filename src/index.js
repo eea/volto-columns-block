@@ -30,7 +30,9 @@ const extendedSchema = (config) => {
     })
     .filter((val) => !!val);
 
-  choices.push(['accordion', 'Accordion']);
+  if (!choices.some(([id]) => id === COLUMNSBLOCK)) {
+    choices.push([COLUMNSBLOCK, 'Columns']);
+  }
 
   return {
     ...ColumnsLayoutSchema,

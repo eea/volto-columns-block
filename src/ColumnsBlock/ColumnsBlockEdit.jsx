@@ -9,7 +9,7 @@ import {
   Icon,
   BlockDataForm,
   BlocksForm,
-} from '@plone/volto/components'; // BlocksForm, Icon,
+} from '@plone/volto/components';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,
@@ -29,12 +29,10 @@ import {
   columnIsEmpty,
 } from './utils';
 import ColumnVariations from './ColumnVariations';
-import EditBlockWrapper from './EditBlockWrapper';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import { makeStyleSchema, getStyle } from '../Styles';
 
-import tuneSVG from '@plone/volto/icons/column.svg';
 import upSVG from '@plone/volto/icons/up.svg';
 import eraserSVG from './icons/eraser.svg';
 import '../less/columns.less';
@@ -54,22 +52,12 @@ const messages = defineMessages({
   },
 });
 
-/*
- * not pretty, there's a lot of render props passing, to please React
- * reconciliation algos
- *
-
-ColumnsBlockEdit -> passes EditBlockWrapper into
-  -> BlocksForm -> which passes (with EditBlock) into
-    -> DragDropList -> which renders them all
-*/
 class ColumnsBlockEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       multiSelected: [],
       colSelections: {}, // selected block for each column
-      showSidebar: false,
       activeColumn: null,
     };
 
@@ -197,6 +185,24 @@ class ColumnsBlockEdit extends React.Component {
     });
   };
 
+  openColumnsSettings = () => {
+    this.setState({
+      activeColumn: null,
+      colSelections: {},
+      multiSelected: [],
+    });
+    this.props.setSidebarTab(1);
+  };
+
+  openColumnSettings = (colId) => {
+    this.setState({
+      activeColumn: colId,
+      colSelections: {},
+      multiSelected: [],
+    });
+    this.props.setSidebarTab(1);
+  };
+
   onSelectBlock = (
     id,
     colId,
@@ -205,6 +211,14 @@ class ColumnsBlockEdit extends React.Component {
     isMultipleSelection,
     event,
   ) => {
+    if (!id) {
+      this.setState({
+        multiSelected: [],
+        colSelections: {},
+      });
+      return;
+    }
+
     let newMultiSelected = [];
     let selected = id;
 
@@ -251,7 +265,13 @@ class ColumnsBlockEdit extends React.Component {
 
   getColumnsBlockSchema = () => {
     const variants = config.blocks.blocksConfig?.[COLUMNSBLOCK]?.variants || [];
-    const schema = ColumnsBlockSchema(this.props.intl);
+    const schema = ColumnsBlockSchema({
+      intl: this.props.intl,
+      formData: {
+        activeColumn: this.state.activeColumn,
+        setActiveColumn: (colId) => this.setState({ activeColumn: colId }),
+      },
+    });
     const { data } = this.props;
     const { blocks_layout = {} } = data.data || {};
     const nrOfColumns = (blocks_layout?.items || []).length;
@@ -361,13 +381,7 @@ class ColumnsBlockEdit extends React.Component {
           <>
             <div
               className="columns-header"
-              onClick={() => {
-                this.setState({
-                  showSidebar: true,
-                  colSelections: {},
-                });
-                this.props.setSidebarTab(1);
-              }}
+              onClick={this.openColumnsSettings}
               aria-hidden="true"
             >
               {data.title || (
@@ -396,11 +410,18 @@ class ColumnsBlockEdit extends React.Component {
                     manage={manage}
                     allowedBlocks={data?.allowedBlocks}
                     metadata={metadata}
+                    isMainForm={false}
+                    stopPropagation={selectedBlock}
                     properties={{
                       ...metadata,
                       ...(isEmpty(column) ? emptyBlocksForm() : column),
                     }}
                     disableEvents={true}
+                    multiSelected={
+                      selected && selectedCol === colId
+                        ? this.state.multiSelected
+                        : []
+                    }
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
                     }
@@ -439,42 +460,7 @@ class ColumnsBlockEdit extends React.Component {
                       this.onChangeColumnData(id, value, colId)
                     }
                     pathname={pathname}
-                  >
-                    {({ draginfo }, editBlock, blockProps) => (
-                      <EditBlockWrapper
-                        draginfo={draginfo}
-                        blockProps={blockProps}
-                        extraControls={
-                          <>
-                            {!data?.readOnlySettings && (
-                              <Button
-                                icon
-                                basic
-                                title={this.props.intl.formatMessage(
-                                  messages.labelToColSettings,
-                                )}
-                                onClick={() => {
-                                  this.setState({
-                                    showSidebar: true,
-                                    activeColumn: colId,
-                                    colSelections: {},
-                                  });
-                                  this.props.setSidebarTab(1);
-                                }}
-                              >
-                                <Icon name={tuneSVG} className="" size="19px" />
-                              </Button>
-                            )}
-                          </>
-                        }
-                        multiSelected={this.state.multiSelected.includes(
-                          blockProps.block,
-                        )}
-                      >
-                        {editBlock}
-                      </EditBlockWrapper>
-                    )}
-                  </BlocksForm>
+                  />
                 </Grid.Column>
               ))}
             </Grid>
@@ -501,7 +487,19 @@ class ColumnsBlockEdit extends React.Component {
             onSetSelectedBlocks={(blockIds) => {
               this.setState({ multiSelected: blockIds });
             }}
-            onSelectBlock={this.onSelectBlock}
+            onSelectBlock={(id, selected, e) => {
+              const isMultipleSelection = e
+                ? e.shiftKey || e.ctrlKey || e.metaKey
+                : false;
+              this.onSelectBlock(
+                id,
+                selectedCol,
+                selectedColData,
+                selectedBlock,
+                isMultipleSelection,
+                e,
+              );
+            }}
           />
         ) : (
           ''
