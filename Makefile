@@ -90,11 +90,11 @@ cypress-run:	## Run cypress integration tests
 
 .PHONY: test
 test:			## Run jest tests
-	${DOCKER_COMPOSE} run -e CI=1 frontend test
+	${DOCKER_COMPOSE} run --no-deps -e CI=1 frontend test
 
 .PHONY: test-update
 test-update:	## Update jest tests snapshots
-	${DOCKER_COMPOSE} run -e CI=1 frontend test -u
+	${DOCKER_COMPOSE} run --no-deps -e CI=1 frontend test -u
 
 .PHONY: stylelint
 stylelint:		## Stylelint
