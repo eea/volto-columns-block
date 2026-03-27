@@ -60,7 +60,7 @@ export const ColumnSchema = (intl) => ({
   required: [],
 });
 
-export const ColumnsBlockSchema = (intl) => ({
+export const ColumnsBlockSchema = ({ intl, formData }) => ({
   title: intl.formatMessage(messages.labelColumnsBlock),
   fieldsets: [
     {
@@ -79,6 +79,7 @@ export const ColumnsBlockSchema = (intl) => ({
       title: intl.formatMessage(messages.labelColumns),
       type: 'columns',
       schema: ColumnSchema(intl),
+      blockData: formData,
     },
     gridCols: {
       title: intl.formatMessage(messages.labelLayout),

@@ -15,7 +15,7 @@ services:
       args:
         ADDON_NAME: "${ADDON_NAME}"
         ADDON_PATH: "${ADDON_PATH}"
-        VOLTO_VERSION: ${VOLTO_VERSION:-16}
+        VOLTO_VERSION: ${VOLTO_VERSION:-18-yarn}
     ports:
     - "3000:3000"
     - "3001:3001"
