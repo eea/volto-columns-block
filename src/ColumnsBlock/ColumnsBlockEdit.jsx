@@ -211,6 +211,14 @@ class ColumnsBlockEdit extends React.Component {
     isMultipleSelection,
     event,
   ) => {
+    if (!id) {
+      this.setState({
+        multiSelected: [],
+        colSelections: {},
+      });
+      return;
+    }
+
     let newMultiSelected = [];
     let selected = id;
 
@@ -409,6 +417,11 @@ class ColumnsBlockEdit extends React.Component {
                       ...(isEmpty(column) ? emptyBlocksForm() : column),
                     }}
                     disableEvents={true}
+                    multiSelected={
+                      selected && selectedCol === colId
+                        ? this.state.multiSelected
+                        : []
+                    }
                     selectedBlock={
                       selected ? this.state.colSelections[colId] : null
                     }
@@ -474,7 +487,19 @@ class ColumnsBlockEdit extends React.Component {
             onSetSelectedBlocks={(blockIds) => {
               this.setState({ multiSelected: blockIds });
             }}
-            onSelectBlock={this.onSelectBlock}
+            onSelectBlock={(id, selected, e) => {
+              const isMultipleSelection = e
+                ? e.shiftKey || e.ctrlKey || e.metaKey
+                : false;
+              this.onSelectBlock(
+                id,
+                selectedCol,
+                selectedColData,
+                selectedBlock,
+                isMultipleSelection,
+                e,
+              );
+            }}
           />
         ) : (
           ''
