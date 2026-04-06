@@ -7,9 +7,10 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
 import loadable from '@loadable/component';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
-import { FormFieldWrapper, Icon } from '@plone/volto/components';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import { FormFieldWrapper } from '@plone/volto/components/manage/Widgets';
 import {
   DropdownIndicator,
   selectTheme,

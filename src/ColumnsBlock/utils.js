@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import { emptyBlocksForm } from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
 
 export const getColumns = (data) => {

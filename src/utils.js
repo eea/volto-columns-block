@@ -3,7 +3,7 @@ import {
   getBlocksFieldname,
   getBlocksLayoutFieldname,
   getBlocks,
-} from '@plone/volto/helpers';
+} from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
 
 const columnConfig = {

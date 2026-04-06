@@ -1,5 +1,5 @@
 import { cloneColumnsBlockData } from './utils';
-import { getBlocks } from '@plone/volto/helpers';
+import { getBlocks } from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
 
 jest.mock('@plone/volto/helpers', () => ({
