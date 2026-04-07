@@ -7,7 +7,7 @@ import { defineMessages, FormattedMessage } from 'react-intl';
 import move from 'lodash-move';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 import DragDropList from '@plone/volto/components/manage/DragDropList/DragDropList';
-import { FormFieldWrapper } from '@plone/volto/components/manage/Widgets';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
 import { emptyBlocksForm } from '@plone/volto/helpers/Blocks/Blocks';
 
 import dragSVG from '@plone/volto/icons/drag.svg';

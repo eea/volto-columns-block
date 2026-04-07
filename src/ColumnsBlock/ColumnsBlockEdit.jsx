@@ -6,11 +6,9 @@ import isEmpty from 'lodash/isEmpty';
 import without from 'lodash/without';
 import SidebarPortal from '@plone/volto/components/manage/Sidebar/SidebarPortal';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
-import {
-  BlocksToolbar,
-  BlockDataForm,
-  BlocksForm,
-} from '@plone/volto/components/manage/Form';
+import BlocksToolbar from '@plone/volto/components/manage/Form/BlocksToolbar';
+import BlockDataForm from '@plone/volto/components/manage/Form/BlockDataForm';
+import BlocksForm from '@plone/volto/components/manage/Blocks/Block/BlocksForm';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,

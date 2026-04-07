@@ -2,7 +2,7 @@ import { cloneColumnsBlockData } from './utils';
 import { getBlocks } from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
 
-jest.mock('@plone/volto/helpers', () => ({
+jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
   getBlocks: jest.fn(),
   getBlocksFieldname: jest.fn(() => 'blocks'),
   getBlocksLayoutFieldname: jest.fn(() => 'blocks_layout'),
