@@ -2,19 +2,18 @@ import React from 'react';
 import { defineMessages, FormattedMessage, injectIntl } from 'react-intl';
 import { compose } from 'redux';
 import { Grid, Segment, Button } from 'semantic-ui-react';
-import { isEmpty, without } from 'lodash';
-import {
-  SidebarPortal,
-  BlocksToolbar,
-  Icon,
-  BlockDataForm,
-  BlocksForm,
-} from '@plone/volto/components';
+import isEmpty from 'lodash/isEmpty';
+import without from 'lodash/without';
+import SidebarPortal from '@plone/volto/components/manage/Sidebar/SidebarPortal';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import BlocksToolbar from '@plone/volto/components/manage/Form/BlocksToolbar';
+import BlockDataForm from '@plone/volto/components/manage/Form/BlockDataForm';
+import BlocksForm from '@plone/volto/components/manage/Blocks/Block/BlocksForm';
 import {
   emptyBlocksForm,
   getBlocksLayoutFieldname,
-} from '@plone/volto/helpers';
-import { setSidebarTab } from '@plone/volto/actions';
+} from '@plone/volto/helpers/Blocks/Blocks';
+import { setSidebarTab } from '@plone/volto/actions/sidebar/sidebar';
 import { connect } from 'react-redux';
 import config from '@plone/volto/registry';
 import cx from 'classnames';

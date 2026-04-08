@@ -1,6 +1,7 @@
 import React from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Field, FormFieldWrapper } from '@plone/volto/components';
+import Field from '@plone/volto/components/manage/Form/Field';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
 import { Grid } from 'semantic-ui-react';
 import { Slider } from './Slider';
 

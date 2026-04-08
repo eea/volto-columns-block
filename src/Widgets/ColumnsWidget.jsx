@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { omit, without } from 'lodash';
+import omit from 'lodash/omit';
+import without from 'lodash/without';
 import { defineMessages, FormattedMessage } from 'react-intl';
 import move from 'lodash-move';
-import { Icon, FormFieldWrapper, DragDropList } from '@plone/volto/components';
-import { emptyBlocksForm } from '@plone/volto/helpers';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import DragDropList from '@plone/volto/components/manage/DragDropList/DragDropList';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
+import { emptyBlocksForm } from '@plone/volto/helpers/Blocks/Blocks';
 
 import dragSVG from '@plone/volto/icons/drag.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';

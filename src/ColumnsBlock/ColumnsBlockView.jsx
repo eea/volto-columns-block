@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import config from '@plone/volto/registry';
 import { Grid } from 'semantic-ui-react';
-import { RenderBlocks } from '@plone/volto/components';
+import RenderBlocks from '@plone/volto/components/theme/View/RenderBlocks';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 import cx from 'classnames';
 

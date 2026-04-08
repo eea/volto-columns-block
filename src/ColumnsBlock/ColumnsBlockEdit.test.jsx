@@ -54,7 +54,7 @@ jest.mock('./utils', () => ({
 
 jest.mock('./ColumnVariations', () => () => <div>ColumnVariations</div>);
 
-jest.mock('@plone/volto/helpers', () => ({
+jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
   emptyBlocksForm: jest.fn(() => ({
     blocks: {},
     blocks_layout: {
@@ -64,34 +64,41 @@ jest.mock('@plone/volto/helpers', () => ({
   getBlocksLayoutFieldname: jest.fn(() => 'blocks_layout'),
 }));
 
-jest.mock('@plone/volto/components', () => ({
-  BlocksForm: jest.fn(
-    ({ multiSelected, onSelectBlock, properties, selectedBlock }) => {
-      const blockList = properties.blocks
-        ? Object.entries(properties.blocks)
-        : [];
+const MockBlocksForm = jest.fn(
+  ({ multiSelected, onSelectBlock, properties, selectedBlock }) => {
+    const blockList = properties.blocks
+      ? Object.entries(properties.blocks)
+      : [];
 
-      return (
-        <div
-          data-testid="column-blocks-form"
-          data-multi-selected={(multiSelected || []).join(',')}
-          data-selected-block={selectedBlock || ''}
-        >
-          {blockList.map(([blockId]) => (
-            <button
-              key={blockId}
-              type="button"
-              aria-label={`Select ${blockId}`}
-              onClick={(event) => onSelectBlock?.(blockId, null, event)}
-            >
-              Select {blockId}
-            </button>
-          ))}
-        </div>
-      );
-    },
-  ),
-  BlocksToolbar: ({ onSelectBlock, selectedBlock, selectedBlocks }) => (
+    return (
+      <div
+        data-testid="column-blocks-form"
+        data-multi-selected={(multiSelected || []).join(',')}
+        data-selected-block={selectedBlock || ''}
+      >
+        {blockList.map(([blockId]) => (
+          <button
+            key={blockId}
+            type="button"
+            aria-label={`Select ${blockId}`}
+            onClick={(event) => onSelectBlock?.(blockId, null, event)}
+          >
+            Select {blockId}
+          </button>
+        ))}
+      </div>
+    );
+  },
+);
+
+jest.mock('@plone/volto/components/manage/Blocks/Block/BlocksForm', () => ({
+  __esModule: true,
+  default: (props) => MockBlocksForm(props),
+}));
+
+jest.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
+  __esModule: true,
+  default: ({ onSelectBlock, selectedBlock, selectedBlocks }) => (
     <div
       data-testid="blocks-toolbar"
       data-selected-block={selectedBlock || ''}
@@ -102,10 +109,22 @@ jest.mock('@plone/volto/components', () => ({
       </button>
     </div>
   ),
-  SidebarPortal: ({ children }) => <div>{children}</div>,
-  Icon: () => <div>Icon</div>,
-  BlockDataForm: () => <div>BlockDataForm</div>,
 }));
+
+jest.mock('@plone/volto/components/manage/Form/BlockDataForm', () => ({
+  __esModule: true,
+  default: () => <div>BlockDataForm</div>,
+}));
+
+jest.mock(
+  '@plone/volto/components/manage/Sidebar/SidebarPortal',
+  () =>
+    ({ children }) => <div>{children}</div>,
+);
+
+jest.mock('@plone/volto/components/theme/Icon/Icon', () => () => (
+  <div>Icon</div>
+));
 
 jest.mock('../less/columns.less', () => ({}), { virtual: true });
 jest.mock('./icons/eraser.svg', () => 'eraser.svg', { virtual: true });

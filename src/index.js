@@ -16,7 +16,7 @@ import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
 import { cloneColumnsBlockData } from './utils';
 
-import { getBlocks } from '@plone/volto/helpers';
+import { getBlocks } from '@plone/volto/helpers/Blocks/Blocks';
 
 const extendedSchema = (config) => {
   const choices = Object.keys(config.blocks.blocksConfig)
