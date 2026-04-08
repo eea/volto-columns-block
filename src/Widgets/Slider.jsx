@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ReactDOM from 'react-dom';
-import { FormFieldWrapper } from '@plone/volto/components';
+import FormFieldWrapper from '@plone/volto/components/manage/Widgets/FormFieldWrapper';
 
 import styles from './range.css.js';
 import './range.css';
@@ -20,8 +20,8 @@ export class Slider extends Component {
     let value = this.props.value
       ? this.props.value
       : props.multiple
-      ? [...props.settings.start]
-      : props.settings.start;
+        ? [...props.settings.start]
+        : props.settings.start;
     this.state = {
       value: value,
       position: props.multiple ? [] : 0,
