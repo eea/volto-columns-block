@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
 import config from '@plone/volto/registry';
 import ColumnsBlockEdit from './ColumnsBlockEdit';
-import { COLUMNSBLOCK } from '../constants';
+import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
 jest.mock(
   '@eeacms/volto-columns-block/constants',
@@ -15,7 +15,7 @@ jest.mock(
   { virtual: true },
 );
 
-jest.mock('../Styles', () => ({
+jest.mock('@eeacms/volto-columns-block/Styles', () => ({
   makeStyleSchema: jest.fn(() => ({})),
   getStyle: jest.fn(() => ({})),
 }));
@@ -126,7 +126,9 @@ jest.mock('@plone/volto/components/theme/Icon/Icon', () => () => (
   <div>Icon</div>
 ));
 
-jest.mock('../less/columns.less', () => ({}), { virtual: true });
+jest.mock('@eeacms/volto-columns-block/less/columns.less', () => ({}), {
+  virtual: true,
+});
 jest.mock('./icons/eraser.svg', () => 'eraser.svg', { virtual: true });
 jest.mock('@plone/volto/icons/up.svg', () => 'up.svg', { virtual: true });
 

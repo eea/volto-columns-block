@@ -30,11 +30,11 @@ import {
 import ColumnVariations from './ColumnVariations';
 
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
-import { makeStyleSchema, getStyle } from '../Styles';
+import { makeStyleSchema, getStyle } from '@eeacms/volto-columns-block/Styles';
 
 import upSVG from '@plone/volto/icons/up.svg';
 import eraserSVG from './icons/eraser.svg';
-import '../less/columns.less';
+import '@eeacms/volto-columns-block/less/columns.less';
 
 const messages = defineMessages({
   labelColumn: {
