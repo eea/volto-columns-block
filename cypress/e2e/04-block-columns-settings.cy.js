@@ -1,79 +1,147 @@
 import { slateBeforeEach, slateAfterEach } from '../support/e2e';
 
+const setPageTitle = (title) => {
+  cy.clearSlateTitle();
+  cy.getSlateTitle().type(title);
+  cy.get('.documentFirstHeading').contains(title);
+};
+
+const addColumnsBlock = () => {
+  cy.getSlate().click();
+  cy.get('.ui.basic.icon.button.block-add-button').first().click();
+  cy.get('.blocks-chooser .title').contains('Common').click();
+  cy.get('.content.active.common .button.columnsBlock')
+    .contains('Columns')
+    .click({ force: true });
+};
+
+const selectColumnsVariation = (label) => {
+  cy.contains('.columns-block .ui.card .content p', label)
+    .should('be.visible')
+    .click({ force: true });
+};
+
+const openColumnsSettings = () => {
+  cy.get('.columns-block .columns-header').first().click({ force: true });
+};
+
+const typeInColumn = (index, text) => {
+  cy.get('.columns-block .block-column')
+    .eq(index)
+    .within(() => {
+      cy.get('[contenteditable=true]')
+        .first()
+        .focus()
+        .click({ force: true })
+        .type(text);
+    });
+};
+
+const openFirstColumnSettings = () => {
+  cy.get(
+    '.field-wrapper-data .columns-area button[title="Go to Column settings"]',
+  )
+    .first()
+    .click({ force: true });
+};
+
+const setColumnVerticalAlign = (label) => {
+  cy.get('body').then(($body) => {
+    if (
+      $body.find('.field-wrapper-grid_vertical_align .react-select__control')
+        .length
+    ) {
+      cy.get('.field-wrapper-grid_vertical_align .react-select__control')
+        .first()
+        .click({ force: true });
+      cy.contains('.react-select__option', label).click({ force: true });
+      return;
+    }
+
+    if (
+      $body.find('.field-wrapper-grid_vertical_align select:visible').length
+    ) {
+      cy.get('.field-wrapper-grid_vertical_align select:visible')
+        .first()
+        .select(label, { force: true });
+      return;
+    }
+
+    cy.get('.field-wrapper-grid_vertical_align #field-grid_vertical_align')
+      .first()
+      .click({ force: true });
+    cy.contains('.menu .item, .item', label).first().click({ force: true });
+  });
+};
+
+const setCheckbox = (field, checked) => {
+  cy.get(`input#field-${field}`).then(($input) => {
+    const isChecked = $input.prop('checked');
+    if (isChecked !== checked) {
+      cy.wrap($input)[checked ? 'check' : 'uncheck']({ force: true });
+    }
+  });
+  cy.get(`input#field-${field}`).should(
+    checked ? 'be.checked' : 'not.be.checked',
+  );
+};
+
+const saveAndAssertViewUrl = () => {
+  cy.get('#toolbar-save').click();
+  cy.url().should('eq', `${Cypress.config().baseUrl}/cypress/my-page`);
+};
+
 describe('Columns Block: Settings Tests', () => {
   beforeEach(slateBeforeEach);
   afterEach(slateAfterEach);
 
-  it('Columns Block: Change grid columns via sidebar', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Columns Grid Test');
+  it('applies column style settings in view mode', () => {
+    setPageTitle('Columns Column Settings');
+    addColumnsBlock();
+    selectColumnsVariation('50 / 50');
 
-    cy.getSlate().click();
+    typeInColumn(0, 'Primary column');
+    typeInColumn(1, 'Secondary column');
+    openColumnsSettings();
+    openFirstColumnSettings();
+    setColumnVerticalAlign('Middle');
 
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock').click({ force: true });
+    saveAndAssertViewUrl();
 
-    // Select layout
-    cy.get('.columns-block .ui.card').eq(2).click();
-
-    // Change grid columns via sidebar - just open and select first option
-    cy.get('.field-wrapper-gridCols #field-gridCols').click();
-    cy.get('.react-select__menu .react-select__option').first().click();
-
-    // Type in column
-    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type('Grid content');
-
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.contains('Columns Grid Test');
+    cy.get('#page-document .columns-view .column-grid .column-blocks-wrapper')
+      .first()
+      .should('have.css', 'vertical-align', 'middle');
+    cy.get('#page-document .columns-view')
+      .should('contain', 'Primary column')
+      .and('contain', 'Secondary column');
   });
 
-  it('Columns Block: Set column title', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Column Title Test');
+  it('toggles reverse wrap in view mode across edit-view cycle', () => {
+    setPageTitle('Columns Reverse Wrap');
+    addColumnsBlock();
+    selectColumnsVariation('50 / 50');
 
-    cy.getSlate().click();
+    typeInColumn(0, 'Column A');
+    typeInColumn(1, 'Column B');
 
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock').click({ force: true });
+    openColumnsSettings();
+    setCheckbox('reverseWrap', true);
 
-    // Select layout
-    cy.get('.columns-block .ui.card').eq(2).click();
+    saveAndAssertViewUrl();
 
-    // Set column title
-    cy.get('.field-wrapper-title #field-title').last().type('My Column Block');
+    cy.get('#page-document .columns-view .column-grid')
+      .should('have.class', 'reverse-wrap')
+      .and('contain', 'Column A')
+      .and('contain', 'Column B');
 
-    // Type in column
-    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type('Content with title');
+    cy.visit('/cypress/my-page/edit');
+    openColumnsSettings();
+    setCheckbox('reverseWrap', false);
+    saveAndAssertViewUrl();
 
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.contains('Column Title Test');
-  });
-
-  it('Columns Block: Add description block in column', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Columns Description Block');
-
-    cy.getSlate().click();
-
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock').click({ force: true });
-
-    // Select layout
-    cy.get('.columns-block .ui.card').eq(2).click();
-
-    // Add description in first column
-    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type('/description{enter}A description block');
-
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.contains('Columns Description Block');
+    cy.get('#page-document .columns-view .column-grid').should(
+      'not.have.class',
+      'reverse-wrap',
+    );
   });
 });

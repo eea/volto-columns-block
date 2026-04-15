@@ -1,92 +1,91 @@
 import { slateBeforeEach, slateAfterEach } from '../support/e2e';
 
+const setPageTitle = (title) => {
+  cy.clearSlateTitle();
+  cy.getSlateTitle().type(title);
+  cy.get('.documentFirstHeading').contains(title);
+};
+
+const addColumnsBlock = () => {
+  cy.getSlate().click();
+  cy.get('.ui.basic.icon.button.block-add-button').first().click();
+  cy.get('.blocks-chooser .title').contains('Common').click();
+  cy.get('.content.active.common .button.columnsBlock')
+    .contains('Columns')
+    .click({ force: true });
+};
+
+const selectColumnsVariation = (label) => {
+  cy.contains('.columns-block .ui.card .content p', label)
+    .should('be.visible')
+    .click({ force: true });
+};
+
+const typeInColumn = (index, text) => {
+  cy.get('.columns-block .block-column')
+    .eq(index)
+    .within(() => {
+      cy.get('[contenteditable=true]')
+        .first()
+        .focus()
+        .click({ force: true })
+        .type(text);
+    });
+};
+
+const saveAndAssertViewUrl = () => {
+  cy.get('#toolbar-save').click();
+  cy.url().should('eq', `${Cypress.config().baseUrl}/cypress/my-page`);
+};
+
 describe('Columns Block: View Mode Tests', () => {
   beforeEach(slateBeforeEach);
   afterEach(slateAfterEach);
 
-  it('Columns Block: Add and view columns block', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Columns View Test');
-    cy.get('.documentFirstHeading').contains('Columns View Test');
+  it('persists columns content across edit-view cycles', () => {
+    setPageTitle('Columns View Persistence');
+    addColumnsBlock();
+    selectColumnsVariation('50 / 50');
 
-    cy.getSlate().click();
+    typeInColumn(0, 'Left column content');
+    typeInColumn(1, 'Right column initial');
 
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock')
-      .contains('Columns')
-      .click({ force: true });
+    saveAndAssertViewUrl();
 
-    // Select a layout
-    cy.get('.columns-block .ui.card').eq(2).click();
+    cy.get('#page-document .columns-view')
+      .should('exist')
+      .and('contain', 'Left column content')
+      .and('contain', 'Right column initial');
 
-    // Type in columns
-    cy.get('.columns-block [contenteditable=true]')
-      .eq(0)
-      .focus()
-      .click()
-      .type('Left column');
+    cy.visit('/cypress/my-page/edit');
+    cy.get('.columns-block').should('contain', 'Left column content');
+    cy.get('.columns-block').should('contain', 'Right column initial');
 
-    cy.get('.columns-block [contenteditable=true]')
-      .eq(1)
-      .focus()
-      .click()
-      .type('Right column');
+    saveAndAssertViewUrl();
 
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.url().should('eq', Cypress.config().baseUrl + '/cypress/my-page');
-
-    // Verify view mode
-    cy.contains('Columns View Test');
-    cy.get('.columns-view').should('exist');
+    cy.get('#page-document .columns-view')
+      .should('exist')
+      .and('contain', 'Left column content')
+      .and('contain', 'Right column initial');
   });
 
-  it('Columns Block: Three column layout', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Three Columns Test');
+  it('renders three-column layout content in view mode', () => {
+    setPageTitle('Three Columns View');
+    addColumnsBlock();
+    selectColumnsVariation('33 / 33 / 33');
 
-    cy.getSlate().click();
+    typeInColumn(0, 'First column text');
+    typeInColumn(1, 'Second column text');
+    typeInColumn(2, 'Third column text');
 
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock').click({ force: true });
+    saveAndAssertViewUrl();
 
-    // Select three-column layout
-    cy.get('.columns-block .ui.card').eq(2).click();
-
-    // Type in first two columns only (third column may not have contenteditable)
-    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type('First col');
-    cy.get('.columns-block [contenteditable=true]').eq(1).focus().click().type('Second col');
-
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.contains('Three Columns Test');
-    cy.get('.columns-view');
-  });
-
-  it('Columns Block: Add text block in column', () => {
-    cy.clearSlateTitle();
-    cy.getSlateTitle().type('Columns With Text');
-
-    cy.getSlate().click();
-
-    // Add columns block
-    cy.get('.ui.basic.icon.button.block-add-button').first().click();
-    cy.get('.blocks-chooser .title').contains('Common').click();
-    cy.get('.content.active.common .button.columnsBlock').click({ force: true });
-
-    // Select layout
-    cy.get('.columns-block .ui.card').eq(2).click();
-
-    // Type text in first column
-    cy.get('.columns-block [contenteditable=true]').eq(0).focus().click().type('Text content here');
-
-    // Save
-    cy.get('#toolbar-save').click();
-    cy.contains('Columns With Text');
-    cy.contains('Text content here');
+    cy.get(
+      '#page-document .columns-view .column-grid .column-blocks-wrapper',
+    ).should('have.length', 3);
+    cy.get('#page-document .columns-view')
+      .should('contain', 'First column text')
+      .and('contain', 'Second column text')
+      .and('contain', 'Third column text');
   });
 });
