@@ -1,71 +1,74 @@
-import { cloneColumnsBlockData } from './utils';
+import { v4 as uuid } from 'uuid';
 import { getBlocks } from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
+import { cloneData } from './utils';
 
 jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
   getBlocks: jest.fn(),
   getBlocksFieldname: jest.fn(() => 'blocks'),
   getBlocksLayoutFieldname: jest.fn(() => 'blocks_layout'),
+  hasBlocksData: jest.fn((block) => !!block.blocks),
 }));
 
-describe('cloneColumnsBlockData', () => {
-  it('should clone the blockData without cloneData', () => {
+describe('cloneData', () => {
+  it('should clone the blockData with calling cloneData directly', () => {
+    const blockId = uuid();
     const mockBlockData = {
       data: {
         '@type': 'columns',
         blocks: {
-          block1: {
+          [blockId]: {
             '@type': 'test',
           },
         },
         blocks_layout: {
-          items: ['block1'],
+          items: [blockId],
         },
       },
     };
-    getBlocks.mockReturnValue([['block1', mockBlockData.data.blocks.block1]]);
-    config.blocks.blocksConfig = {
-      test: {},
-    };
-    const [id, clonedBlockData] = cloneColumnsBlockData(mockBlockData);
-    expect(clonedBlockData.data.blocks.block1).toEqual(
-      mockBlockData.data.blocks.block1,
-    );
+
+    getBlocks.mockReturnValue([[blockId, mockBlockData.data.blocks[blockId]]]);
+
+    const [id, clonedBlockData] = cloneData(mockBlockData);
+    const clonedBlockId = clonedBlockData.data.blocks_layout.items[0];
+    const clonedBlock = clonedBlockData.data.blocks[clonedBlockId];
+    expect(clonedBlock).toBeDefined();
+    expect(clonedBlockId).not.toEqual(blockId);
+    expect(clonedBlock).toEqual(mockBlockData.data.blocks[blockId]);
     expect(id).not.toBeNull();
   });
 
-  it('should clone the blockData with cloneData', () => {
+  it('should clone the blockData with calling cloneData from block config', () => {
+    const blockId = uuid();
     const mockBlockData = {
       data: {
         '@type': 'columns',
         blocks: {
-          block1: {
+          [blockId]: {
             '@type': 'test',
             blocks: {},
           },
         },
         blocks_layout: {
-          items: ['block1'],
+          items: [blockId],
         },
       },
     };
 
-    getBlocks.mockReturnValue([['block1', mockBlockData.data.blocks.block1]]);
+    getBlocks.mockReturnValue([[blockId, mockBlockData.data.blocks[blockId]]]);
+
     config.blocks.blocksConfig = {
       test: {
         cloneData: jest.fn(() => [
           'test_uuid',
-          mockBlockData.data.blocks.block1,
+          mockBlockData.data.blocks[blockId],
         ]),
       },
     };
-    const [id, clonedBlockData] = cloneColumnsBlockData(mockBlockData);
+    const [id, clonedBlockData] = cloneData(mockBlockData);
     expect(id).not.toEqual('test_uuid');
-    expect(clonedBlockData.data.blocks.block1).toEqual(
-      mockBlockData.data.blocks.block1,
-    );
     expect(clonedBlockData.data.blocks['test_uuid']).toEqual(
-      mockBlockData.data.blocks.block1,
+      mockBlockData.data.blocks[blockId],
     );
   });
 });

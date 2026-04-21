@@ -41,7 +41,7 @@ function deepCloneFormData(formData) {
   return [uuid(), newData];
 }
 
-export function cloneColumnsBlockData(blockData) {
+export function cloneData(blockData) {
   const columnsData = blockData.data;
   const cloneWithIds = deepCloneFormData(columnsData);
 

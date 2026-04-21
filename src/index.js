@@ -14,7 +14,7 @@ import {
 import ColorPickerWidget from './Widgets/SimpleColorPickerWidget.jsx';
 import { gridSizes, variants } from './grid';
 import { COLUMNSBLOCK } from './constants';
-import { cloneColumnsBlockData } from './utils';
+import { cloneData } from './utils';
 
 import { getBlocks } from '@plone/volto/helpers/Blocks/Blocks';
 
@@ -103,7 +103,7 @@ export default function install(config) {
       });
       return entries;
     },
-    cloneData: cloneColumnsBlockData,
+    cloneData,
   };
 
   config.widgets.type.columns = ColumnsWidget;
