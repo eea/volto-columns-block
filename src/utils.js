@@ -3,53 +3,47 @@ import {
   getBlocksFieldname,
   getBlocksLayoutFieldname,
   getBlocks,
+  hasBlocksData,
 } from '@plone/volto/helpers/Blocks/Blocks';
 import config from '@plone/volto/registry';
 
-const columnConfig = {
-  cloneData(blockData) {
-    return cloneFormData(blockData);
-  },
-};
+/* --------------------------------------------------------------
+   Inline deep‑clone helpers – used only by the Columns block
+   -------------------------------------------------------------- */
+function deepCloneFormData(formData) {
+  const blocksField = getBlocksFieldname(formData);
+  const layoutField = getBlocksLayoutFieldname(formData);
+  const childBlocks = getBlocks(formData);
 
-function cloneFormData(formData) {
-  const formBlocks = getBlocks(formData);
-
-  const cloneWithIds = formBlocks
-    .filter(([id, blockData]) => {
-      return blockData.blocks ? true : !!blockData['@type']; // support "columns"
+  const cloned = childBlocks
+    .map(([_, child]) => {
+      const childCfg = config.blocks.blocksConfig[child['@type']] || {};
+      if (childCfg.cloneData) {
+        // delegate to block‑specific cloneData if it exists
+        return childCfg.cloneData(child);
+      }
+      // Recurse when the child itself holds blocks
+      return hasBlocksData(child) ? deepCloneFormData(child) : [uuid(), child];
     })
-    .map(([id, blockData]) => {
-      const blockConfig =
-        config.blocks.blocksConfig[blockData['@type']] || columnConfig;
-      return blockConfig.cloneData
-        ? blockConfig.cloneData(blockData)
-        : [uuid(), blockData];
-    })
-    .filter((info) => !!info); // some blocks may refuse to be copied
+    .filter(Boolean);
 
-  const blocksFieldname = getBlocksFieldname(formData);
-  const blocksLayoutFieldname = getBlocksLayoutFieldname(formData);
-
-  const newBlockData = {
-    [blocksFieldname]: {
-      ...formData[blocksFieldname],
-      ...Object.assign(
-        {},
-        ...cloneWithIds.map(([id, data]) => ({ [id]: data })),
-      ),
+  const newData = {
+    ...formData,
+    [blocksField]: {
+      ...Object.fromEntries(cloned.map(([newId, data]) => [newId, data])),
     },
-    [blocksLayoutFieldname]: {
-      ...formData[blocksLayoutFieldname],
-      items: [...cloneWithIds.map(([id]) => id)],
+    [layoutField]: {
+      items: cloned.map(([newId]) => newId),
     },
   };
-  return [uuid(), newBlockData];
+
+  // Return a fresh UUID for the *parent* block and its cloned content
+  return [uuid(), newData];
 }
 
 export function cloneColumnsBlockData(blockData) {
   const columnsData = blockData.data;
-  const cloneWithIds = cloneFormData(columnsData);
+  const cloneWithIds = deepCloneFormData(columnsData);
 
   const [id, newBlockData] = cloneWithIds;
   return [
