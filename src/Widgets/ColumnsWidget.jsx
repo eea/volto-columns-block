@@ -92,24 +92,26 @@ const ColumnsWidget = (props) => {
                       <FormattedMessage id="Column" defaultMessage="Column" />{' '}
                       {index + 1}
                     </div>
+                    <button
+                      type="button"
+                      title={props.intl.formatMessage(
+                        messages.labelToColSettings,
+                      )}
+                      aria-label={props.intl.formatMessage(
+                        messages.labelToColSettings,
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openColumnSettings(childId);
+                      }}
+                    >
+                      <Icon name={pencilSVG} size="19px" />
+                    </button>
                     {value.blocks_layout?.items?.length > 1 ? (
                       <>
                         <button
-                          title={props.intl.formatMessage(
-                            messages.labelToColSettings,
-                          )}
-                          aria-label={props.intl.formatMessage(
-                            messages.labelToColSettings,
-                          )}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            openColumnSettings(childId);
-                          }}
-                        >
-                          <Icon name={pencilSVG} size="19px" />
-                        </button>
-                        <button
+                          type="button"
                           onClick={() => {
                             const newFormData = {
                               ...value,
@@ -139,6 +141,7 @@ const ColumnsWidget = (props) => {
         </DragDropList>
         {showAdd ? (
           <button
+            type="button"
             onClick={() => {
               const [newId, newData] = empty();
               onChange(id, {
