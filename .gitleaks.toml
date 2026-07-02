@@ -1,0 +1,89 @@
+title = "volto-eea-website-theme Betterleaks config"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "secret-literal-assignment"
+description = "Secret-like literal assignment in source, YAML, env and config files"
+regex = '''(?i)([A-Za-z0-9_.-]*(?:password|passwd|pwd|api[_-]?key|apikey|access[_-]?key|secret[_-]?access[_-]?key|private[_-]?key|client[_-]?secret|consumer[_-]?key|consumer[_-]?secret|(?:auth|access|refresh|session|api|bearer|id|jwt|csrf|xsrf|oauth)[_-]?token|translate[_-]?auth|translation[_-]?auth|auth[_-]?password|auth[_-]?key|auth[_-]?credentials|database[_-]?url|connection[_-]?string)[A-Za-z0-9_.-]*)[ \t]*[:=][ \t]*["'']?([^"''[:space:]#{}$.][^"''\n#{}]{2,})["'']?'''
+secretGroup = 2
+keywords = [
+  "password",
+  "passwd",
+  "pwd",
+  "api_key",
+  "apikey",
+  "access_key",
+  "private_key",
+  "client_secret",
+  "consumer_key",
+  "consumer_secret",
+  "auth_token",
+  "access_token",
+  "refresh_token",
+  "session_token",
+  "api_token",
+  "bearer_token",
+  "id_token",
+  "jwt_token",
+  "csrf_token",
+  "xsrf_token",
+  "oauth_token",
+  "translate_auth",
+  "translation_auth",
+  "auth_password",
+  "auth_key",
+  "auth_credentials",
+  "database_url",
+  "connection_string"
+]
+tags = ["literal-secret"]
+
+[[rules]]
+id = "env-short-secret-assignment"
+description = "Uppercase env-style PASS/TOKEN/SECRET assignment"
+regex = '''\b((?:PASS|TOKEN|SECRET|[A-Z0-9_]*(?:_PASS|_TOKEN|_SECRET|PASS_|TOKEN_|SECRET_)[A-Z0-9_]*))[ \t]*[:=][ \t]*["'']?([^"''[:space:]#{}$.][^"''\n#{}]{2,})["'']?'''
+secretGroup = 2
+keywords = [
+  "PASS",
+  "TOKEN",
+  "SECRET"
+]
+tags = ["env", "literal-secret"]
+
+[[rules]]
+id = "standalone-sk-token"
+description = "Standalone sk-* token not attached to a secret-like variable name"
+regex = '''(?i)\b(sk-[A-Za-z0-9][A-Za-z0-9_-]{20,})\b'''
+secretGroup = 1
+entropy = 2.5
+keywords = ["sk-"]
+tags = ["standalone-token", "generic"]
+
+[[rules]]
+id = "dotenv-only-jest-setup"
+description = ".env may only contain the committed Jest setup lines"
+path = '''(?i)(^|/)\.env$'''
+regex = '''(?m)^(.+)$'''
+secretGroup = 1
+tags = ["file", "dotenv"]
+[[rules.allowlists]]
+regexTarget = "match"
+regexes = [
+  '''^JEST_USE_SETUP=OFF # Jest configuration variables: ON, OFF\r?$''',
+]
+
+[[rules]]
+id = "forbidden-secret-file"
+description = "Forbidden secret-bearing file committed to repository"
+path = '''(?i)(^|/)(\.env\..*|\.npmrc|\.pypirc|id_rsa|id_ed25519|.*\.(pem|key|p12|pfx|jks|kubeconfig))$'''
+regex = '''(?s).{1,}'''
+tags = ["file", "secret-file"]
+
+[[allowlists]]
+description = "Allow Jenkins SonarQube token environment variable reference"
+regexTarget = "match"
+regexes = [
+  '''SONAR_AUTH_TOKEN''',
+]

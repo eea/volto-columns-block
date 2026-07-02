@@ -1,0 +1,48 @@
+name: Betterleaks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Scan for secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Betterleaks
+        id: betterleaks
+        continue-on-error: true
+        uses: dortort/betterleaks-action@v0.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          scan-mode: dir
+          scan-path: .
+          config: .gitleaks.toml
+          report-format: json
+          report-path: betterleaks-report.json
+          redact: "true"
+          no-color: "true"
+          no-banner: "true"
+          fail-on-leak: "true"
+
+      - name: Upload Betterleaks report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: betterleaks-report
+          path: betterleaks-report.json
+          if-no-files-found: ignore
+
+      - name: Fail if Betterleaks found leaks
+        if: steps.betterleaks.outcome == 'failure'
+        run: |
+          echo "Betterleaks detected one or more secrets. Download the betterleaks-report artifact from this workflow run for details."
+          exit 1
