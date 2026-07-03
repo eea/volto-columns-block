@@ -11,11 +11,17 @@ jobs:
   scan:
     name: Scan for secrets
     runs-on: ubuntu-latest
+    env:
+      SMTP_URL: ${{ secrets.SMTP_URL }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT || '25' }}
+      SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Run Betterleaks
         id: betterleaks
@@ -40,6 +46,85 @@ jobs:
           name: betterleaks-report
           path: betterleaks-report.json
           if-no-files-found: ignore
+
+      - name: Build Betterleaks email summary
+        id: leak_summary
+        if: steps.betterleaks.outcome == 'failure'
+        shell: bash
+        run: |
+          if [[ -s betterleaks-report.json ]]; then
+            jq -r '
+              def one_line:
+                tostring
+                | gsub("[\r\n]+"; " ")
+                | if length > 240 then .[0:240] + "..." else . end;
+
+              .[:20][]
+              | "- " + (.RuleID // "unknown-rule")
+                + " at " + (.File // "unknown-file")
+                + ":" + ((.StartLine // 0) | tostring)
+                + "\n  match: " + ((.Match // .Secret // "REDACTED") | one_line)
+            ' betterleaks-report.json > betterleaks-email-summary.txt
+
+            count="$(jq 'length' betterleaks-report.json)"
+            if (( count > 20 )); then
+              {
+                echo ""
+                echo "... and $((count - 20)) more finding(s). Download the artifact for full details."
+              } >> betterleaks-email-summary.txt
+            fi
+          else
+            echo "No JSON report was generated. Download the workflow logs for details." > betterleaks-email-summary.txt
+          fi
+
+          {
+            echo "text<<BETTERLEAKS_SUMMARY"
+            cat betterleaks-email-summary.txt
+            echo "BETTERLEAKS_SUMMARY"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Resolve committer email
+        id: committer
+        if: steps.betterleaks.outcome == 'failure'
+        shell: bash
+        run: |
+          committer_email="$(git log -1 --format='%ce')"
+          author_email="$(git log -1 --format='%ae')"
+          email="$committer_email"
+          if [[ -z "$email" || "$email" == *"noreply.github.com"* ]]; then
+            email="$author_email"
+          fi
+          if [[ "$email" =~ ^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$ && "$email" != *"noreply.github.com"* ]]; then
+            echo "email=$email" >> "$GITHUB_OUTPUT"
+          else
+            echo "No deliverable committer email found; skipping Betterleaks email notification."
+            echo "email=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Email committer on Betterleaks failure
+        if: steps.betterleaks.outcome == 'failure' && steps.committer.outputs.email != '' && env.SMTP_URL != '' && env.SMTP_EMAIL != ''
+        uses: dawidd6/action-send-mail@v18
+        with:
+          server_address: ${{ env.SMTP_URL }}
+          server_port: ${{ env.SMTP_PORT }}
+          secure: ${{ env.SMTP_PORT == '465' }}
+          username: ${{ env.SMTP_EMAIL }}
+          password: ${{ env.SMTP_PASSWORD }}
+          from: ${{ env.SMTP_EMAIL }}
+          to: ${{ steps.committer.outputs.email }}
+          subject: "[Betterleaks] Secret scan failed in ${{ github.repository }}"
+          body: |
+            Betterleaks detected one or more potential secrets.
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Findings:
+            ${{ steps.leak_summary.outputs.text }}
+
+            Download the betterleaks-report artifact from the workflow run for details.
 
       - name: Fail if Betterleaks found leaks
         if: steps.betterleaks.outcome == 'failure'
