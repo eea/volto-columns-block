@@ -1,11 +1,10 @@
 {
-  "name": "@eeacms/volto-columns-block",
-  "version": "9.0.4",
+  "name": "@eeacms/volto-columns-block-dev",
+  "version": "1.0.0-alpha.0",
   "description": "volto-columns-block: Volto add-on",
-  "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
-  "license": "MIT",
   "homepage": "https://github.com/eea/volto-columns-block",
+  "license": "MIT",
   "keywords": [
     "volto-addon",
     "volto-block",
@@ -14,66 +13,53 @@
     "plone",
     "react"
   ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto start",
+    "start:prod": "pnpm --filter @plone/volto start:prod",
+    "build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
+    "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
+    "i18n": "pnpm --filter @eeacms/volto-columns-block i18n && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n",
+    "test": "pnpm --filter @eeacms/volto-columns-block exec vitest",
+    "lint": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "prettier": "prettier --check 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write 'packages/**/src/**/*.{js,jsx,ts,tsx}' ",
+    "stylelint": "stylelint 'packages/**/src/**/*.{css,scss,less}' --allow-empty-input",
+    "stylelint:fix": "stylelint 'packages/**/src/**/*.{css,scss,less}' --fix --allow-empty-input",
+    "dry-release": "pnpm --filter @eeacms/volto-columns-block dry-release",
+    "release": "pnpm --filter @eeacms/volto-columns-block release",
+    "release-major-alpha": "pnpm --filter @eeacms/volto-columns-block release-major-alpha",
+    "release-alpha": "pnpm --filter @eeacms/volto-columns-block release-alpha",
+    "storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
+    "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
+  },
   "dependencies": {
-    "react-color": "~2.19.3"
+    "@plone/volto": "workspace:*",
+    "@plone/registry": "workspace:*",
+    "@eeacms/volto-columns-block": "workspace:*"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-export-default-from": "7.18.10",
-    "@cypress/code-coverage": "^3.10.0",
-    "@plone/scripts": "*",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "cypress": "13.1.0",
-    "dotenv": "^16.3.2",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "md5": "^2.3.0"
+    "mrs-developer": "^2.2.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:eea/volto-columns-block.git"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json}": [
-      "make lint-fix",
-      "make prettier-fix"
+  "pnpm": {
+    "overrides": {
+      "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+      "react-refresh": "^0.14.2"
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher"
     ],
-    "src/**/*.{jsx}": [
-      "make i18n"
-    ],
-    "theme/**/*.{css,less}": [
-      "make stylelint-fix"
-    ],
-    "src/**/*.{css,less}": [
-      "make stylelint-fix"
-    ],
-    "theme/**/*.overrides": [
-      "make stylelint-fix"
-    ],
-    "src/**/*.overrides": [
-      "make stylelint-fix"
+    "onlyBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "cypress",
+      "es5-ext",
+      "esbuild",
+      "full-icu",
+      "lightningcss-cli",
+      "unrs-resolver"
     ]
   },
-  "scripts": {
-    "release": "release-it",
-    "release-major-beta": "release-it major --preRelease=beta",
-    "release-beta": "release-it --preRelease=beta",
-    "bootstrap": "npm install -g ejs; npm link ejs; node bootstrap",
-    "test": "make test",
-    "test:fix": "make test-update",
-    "pre-commit": "yarn stylelint:fix && yarn prettier:fix && yarn lint:fix",
-    "stylelint": "make stylelint",
-    "stylelint:overrides": "make stylelint-overrides",
-    "stylelint:fix": "make stylelint-fix",
-    "prettier": "make prettier",
-    "prettier:fix": "make prettier-fix",
-    "lint": "make lint",
-    "lint:fix": "make lint-fix",
-    "i18n": "make i18n",
-    "cypress:run": "make cypress-run",
-    "cypress:open": "make cypress-open",
-    "prepare": "husky install"
-  },
-  "jest": {
-    "enableSymlinks": true
-  }
+  "packageManager": "pnpm@10.20.0"
 }

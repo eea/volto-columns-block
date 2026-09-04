@@ -1,4 +1,7 @@
-jest.mock('./ColumnsBlock', () => ({
+import { vi } from 'vitest';
+import applyConfig from './index';
+import { COLUMNSBLOCK } from './constants';
+vi.mock('./ColumnsBlock', () => ({
   ColumnsBlockView: () => null,
   ColumnsBlockEdit: () => null,
   ColumnsLayoutSchema: {
@@ -12,27 +15,26 @@ jest.mock('./ColumnsBlock', () => ({
   },
 }));
 
-jest.mock('./Widgets', () => ({
+vi.mock('./Widgets', () => ({
   ColumnsWidget: () => null,
   LayoutSelectWidget: () => null,
   SliderWidget: () => null,
   QuadSizeWidget: () => null,
 }));
 
-jest.mock('./Widgets/SimpleColorPickerWidget.jsx', () => () => null);
-jest.mock('./grid', () => ({
+vi.mock('./Widgets/SimpleColorPickerWidget.jsx', () => ({
+  default: () => null,
+}));
+vi.mock('./grid', () => ({
   gridSizes: {},
   variants: [],
 }));
-jest.mock('./utils', () => ({
-  cloneColumnsBlockData: jest.fn(),
+vi.mock('./utils', () => ({
+  cloneColumnsBlockData: vi.fn(),
 }));
-jest.mock('@plone/volto/helpers', () => ({
-  getBlocks: jest.fn(),
+vi.mock('@plone/volto/helpers', () => ({
+  getBlocks: vi.fn(),
 }));
-
-const applyConfig = require('./index').default;
-const { COLUMNSBLOCK } = require('./constants');
 
 describe('applyConfig', () => {
   it('should include columns in allowed blocks schema choices', () => {

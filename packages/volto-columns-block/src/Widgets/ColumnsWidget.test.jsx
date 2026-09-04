@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -5,20 +6,23 @@ import { IntlProvider } from 'react-intl';
 
 import ColumnsWidget from './ColumnsWidget';
 
-jest.mock('@plone/volto/components/theme/Icon/Icon', () => () => (
-  <span>Icon</span>
-));
+vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
+  default: () => <span>Icon</span>,
+}));
 
-jest.mock(
+vi.mock(
   '@plone/volto/components/manage/Widgets/FormFieldWrapper',
-  () =>
-    ({ children, className }) => <div className={className}>{children}</div>,
+  () => ({
+    default: ({ children, className }) => (
+      <div className={className}>{children}</div>
+    ),
+  }),
 );
 
-jest.mock(
+vi.mock(
   '@plone/volto/components/manage/DragDropList/DragDropList',
-  () =>
-    ({ childList, children }) => (
+  () => ({
+    default: ({ childList, children }) => (
       <div>
         {childList.map(([childId], index) => (
           <div key={childId}>
@@ -26,7 +30,7 @@ jest.mock(
               childId,
               index,
               draginfo: {
-                innerRef: jest.fn(),
+                innerRef: vi.fn(),
                 draggableProps: {},
                 dragHandleProps: {},
               },
@@ -35,10 +39,11 @@ jest.mock(
         ))}
       </div>
     ),
+  }),
 );
 
-jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
-  emptyBlocksForm: jest.fn(() => ({
+vi.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
+  emptyBlocksForm: vi.fn(() => ({
     blocks: {},
     blocks_layout: {
       items: [],
@@ -46,16 +51,16 @@ jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
   })),
 }));
 
-jest.mock('@plone/volto/icons/drag.svg', () => 'drag.svg', {
+vi.mock('@plone/volto/icons/drag.svg', () => ({ default: 'drag.svg' }), {
   virtual: true,
 });
-jest.mock('@plone/volto/icons/delete.svg', () => 'delete.svg', {
+vi.mock('@plone/volto/icons/delete.svg', () => ({ default: 'delete.svg' }), {
   virtual: true,
 });
-jest.mock('@plone/volto/icons/circle-plus.svg', () => 'circle-plus.svg', {
+vi.mock('@plone/volto/icons/circle-plus.svg', () => ({ default: 'circle-plus.svg' }), {
   virtual: true,
 });
-jest.mock('@plone/volto/icons/pencil.svg', () => 'pencil.svg', {
+vi.mock('@plone/volto/icons/pencil.svg', () => ({ default: 'pencil.svg' }), {
   virtual: true,
 });
 
@@ -79,7 +84,7 @@ const singleColumnValue = {
 
 describe('ColumnsWidget', () => {
   it('shows column settings for a single-column block', () => {
-    const setActiveColumn = jest.fn();
+    const setActiveColumn = vi.fn();
 
     render(
       <IntlProvider locale="en" messages={{}}>
@@ -88,7 +93,7 @@ describe('ColumnsWidget', () => {
           title="Columns"
           value={singleColumnValue}
           intl={intl}
-          onChange={jest.fn()}
+          onChange={vi.fn()}
           blockData={{ setActiveColumn }}
         />
       </IntlProvider>,
