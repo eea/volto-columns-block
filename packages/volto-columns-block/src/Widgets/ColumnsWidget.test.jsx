@@ -10,37 +10,31 @@ vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   default: () => <span>Icon</span>,
 }));
 
-vi.mock(
-  '@plone/volto/components/manage/Widgets/FormFieldWrapper',
-  () => ({
-    default: ({ children, className }) => (
-      <div className={className}>{children}</div>
-    ),
-  }),
-);
+vi.mock('@plone/volto/components/manage/Widgets/FormFieldWrapper', () => ({
+  default: ({ children, className }) => (
+    <div className={className}>{children}</div>
+  ),
+}));
 
-vi.mock(
-  '@plone/volto/components/manage/DragDropList/DragDropList',
-  () => ({
-    default: ({ childList, children }) => (
-      <div>
-        {childList.map(([childId], index) => (
-          <div key={childId}>
-            {children({
-              childId,
-              index,
-              draginfo: {
-                innerRef: vi.fn(),
-                draggableProps: {},
-                dragHandleProps: {},
-              },
-            })}
-          </div>
-        ))}
-      </div>
-    ),
-  }),
-);
+vi.mock('@plone/volto/components/manage/DragDropList/DragDropList', () => ({
+  default: ({ childList, children }) => (
+    <div>
+      {childList.map(([childId], index) => (
+        <div key={childId}>
+          {children({
+            childId,
+            index,
+            draginfo: {
+              innerRef: vi.fn(),
+              draggableProps: {},
+              dragHandleProps: {},
+            },
+          })}
+        </div>
+      ))}
+    </div>
+  ),
+}));
 
 vi.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
   emptyBlocksForm: vi.fn(() => ({
@@ -57,9 +51,13 @@ vi.mock('@plone/volto/icons/drag.svg', () => ({ default: 'drag.svg' }), {
 vi.mock('@plone/volto/icons/delete.svg', () => ({ default: 'delete.svg' }), {
   virtual: true,
 });
-vi.mock('@plone/volto/icons/circle-plus.svg', () => ({ default: 'circle-plus.svg' }), {
-  virtual: true,
-});
+vi.mock(
+  '@plone/volto/icons/circle-plus.svg',
+  () => ({ default: 'circle-plus.svg' }),
+  {
+    virtual: true,
+  },
+);
 vi.mock('@plone/volto/icons/pencil.svg', () => ({ default: 'pencil.svg' }), {
   virtual: true,
 });

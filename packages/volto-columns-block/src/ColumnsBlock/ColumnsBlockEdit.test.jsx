@@ -119,10 +119,9 @@ vi.mock('@plone/volto/components/manage/Form/BlockDataForm', () => ({
   default: () => <div>BlockDataForm</div>,
 }));
 
-vi.mock(
-  '@plone/volto/components/manage/Sidebar/SidebarPortal',
-  () => ({ default: ({ children }) => <div>{children}</div> }),
-);
+vi.mock('@plone/volto/components/manage/Sidebar/SidebarPortal', () => ({
+  default: ({ children }) => <div>{children}</div>,
+}));
 
 vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   default: () => <div>Icon</div>,
