@@ -244,12 +244,13 @@ class ColumnsBlockEdit extends React.Component {
       }
 
       if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
-        if (this.state.multiSelected.includes(id)) {
-          selected = null;
-          newMultiSelected = without(this.state.multiSelected, id);
-        } else {
-          newMultiSelected = [...(this.state.multiSelected || []), id];
+        const selection = [...this.state.multiSelected];
+        if (activeBlock && !selection.includes(activeBlock)) {
+          selection.push(activeBlock);
         }
+        newMultiSelected = selection.includes(id)
+          ? without(selection, id)
+          : [...selection, id];
       }
     }
 
