@@ -11,10 +11,12 @@ const voltoSlatePath = fs.existsSync(
 module.exports = {
   testMatch: ['**/src/addons/**/?(*.)+(spec|test).[jt]s?(x)'],
   collectCoverageFrom: [
-    'src/addons/**/src/**/*.{js,jsx,ts,tsx}',
+    'src/addons/volto-columns-block/src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
   ],
   moduleNameMapper: {
+    // Use the addon's CommonJS uuid, including for imports inside Volto.
+    '^uuid$': require.resolve('uuid'),
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '@plone/volto/cypress': '<rootDir>/node_modules/@plone/volto/cypress',
     '@plone/volto/babel': '<rootDir>/node_modules/@plone/volto/babel',
