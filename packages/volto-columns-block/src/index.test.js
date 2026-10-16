@@ -30,6 +30,7 @@ vi.mock('./grid', () => ({
   variants: [],
 }));
 vi.mock('./utils', () => ({
+  cloneData: vi.fn(),
   cloneColumnsBlockData: vi.fn(),
 }));
 vi.mock('@plone/volto/helpers', () => ({
