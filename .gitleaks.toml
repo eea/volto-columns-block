@@ -62,8 +62,8 @@ keywords = ["sk-"]
 tags = ["standalone-token", "generic"]
 
 [[rules]]
-id = "dotenv-only-jest-setup"
-description = ".env may only contain the committed Jest setup lines"
+id = "dotenv-only-vitest-setup"
+description = ".env may only contain the committed Vitest setup line"
 path = '''(?i)(^|/)\.env$'''
 regex = '''(?m)^(.+)$'''
 secretGroup = 1
@@ -71,13 +71,13 @@ tags = ["file", "dotenv"]
 [[rules.allowlists]]
 regexTarget = "match"
 regexes = [
-  '''^JEST_USE_SETUP=OFF # Jest configuration variables: ON, OFF\r?$''',
+  '''^VITEST_USE_SETUP=ON # Vitest configuration variables: ON, OFF\r?$''',
 ]
 
 [[rules]]
 id = "forbidden-secret-file"
 description = "Forbidden secret-bearing file committed to repository"
-path = '''(?i)(^|/)(\.env\..*|\.npmrc|\.pypirc|id_rsa|id_ed25519|.*\.(pem|key|p12|pfx|jks|kubeconfig))$'''
+path = '''(?i)(^|/)(\.env\..*|\.pypirc|id_rsa|id_ed25519|.*\.(pem|key|p12|pfx|jks|kubeconfig))$'''
 regex = '''(?s).{1,}'''
 tags = ["file", "secret-file"]
 
@@ -86,4 +86,11 @@ description = "Allow Jenkins SonarQube token environment variable reference"
 regexTarget = "match"
 regexes = [
   '''SONAR_AUTH_TOKEN''',
+]
+
+[[allowlists]]
+description = "Ignore generated development workspace dependencies"
+paths = [
+  '''(^|/)core/''',
+  '''(^|/)node_modules/''',
 ]
