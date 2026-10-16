@@ -259,7 +259,7 @@ export default defineConfig({
       printBasicPrototype: false,
     },
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       reporter: ['text', 'lcov', 'html', 'cobertura'],
       reportsDirectory: process.env.COVERAGE_DIR ?? 'coverage',
       include: [

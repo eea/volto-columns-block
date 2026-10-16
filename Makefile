@@ -142,7 +142,13 @@ test-ci:		## Run unit tests in CI
 
 .PHONY: start-ci
 start-ci:		## Start frontend in production mode (used by CI)
-	pnpm build && pnpm start:prod
+	# Instrument the build (babel-plugin-istanbul) so Cypress can collect
+	# end-to-end coverage; the original babel config is restored on exit.
+	cp core/packages/volto/babel.config.js core/packages/volto/babel.config.js.orig
+	trap 'mv -f core/packages/volto/babel.config.js.orig core/packages/volto/babel.config.js' EXIT
+	cp .coverage.babel.config.js core/packages/volto/babel.config.js
+	pnpm build
+	pnpm start:prod
 
 .PHONY: check-ci
 check-ci:		## Wait for frontend to be ready
