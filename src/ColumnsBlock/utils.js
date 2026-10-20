@@ -47,3 +47,9 @@ export const defaultNewColumn = () => {
     },
   };
 };
+
+// Fill an emptied column right away, keeping its settings. Filling it later,
+// after the empty column was saved, adds an undo history entry that every
+// undo lands on and refills, so undo gets stuck.
+export const fillEmptyColumn = (colData) =>
+  columnIsEmpty(colData) ? { ...colData, ...defaultNewColumn() } : colData;
