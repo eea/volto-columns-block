@@ -22,10 +22,10 @@ import { ColumnsBlockSchema } from './schema';
 import {
   getColumns,
   empty,
-  defaultNewColumn,
   hasColumns,
   forEachColumn,
   columnIsEmpty,
+  fillEmptyColumn,
 } from './utils';
 import ColumnVariations from './ColumnVariations';
 
@@ -153,10 +153,10 @@ class ColumnsBlockEdit extends React.Component {
           ...coldata,
           blocks: {
             ...coldata.blocks,
-            [colId]: {
+            [colId]: fillEmptyColumn({
               ...coldata.blocks?.[colId],
               ...this.blocksState,
-            },
+            }),
           },
         },
       });
@@ -319,7 +319,7 @@ class ColumnsBlockEdit extends React.Component {
               ...data.data,
               blocks: {
                 ...data.data.blocks,
-                [colId]: defaultNewColumn(),
+                [colId]: fillEmptyColumn(colData),
               },
             },
           };
@@ -446,11 +446,11 @@ class ColumnsBlockEdit extends React.Component {
                           ...coldata,
                           blocks: {
                             ...coldata.blocks,
-                            [colId]: {
+                            [colId]: fillEmptyColumn({
                               ...coldata.blocks?.[colId],
                               blocks: newFormData.blocks,
                               blocks_layout: newFormData.blocks_layout,
-                            },
+                            }),
                           },
                         },
                       });
@@ -478,7 +478,10 @@ class ColumnsBlockEdit extends React.Component {
                   ...coldata,
                   blocks: {
                     ...coldata.blocks,
-                    [selectedCol]: { ...selectedColData, ...newBlockData },
+                    [selectedCol]: fillEmptyColumn({
+                      ...selectedColData,
+                      ...newBlockData,
+                    }),
                   },
                 },
               });

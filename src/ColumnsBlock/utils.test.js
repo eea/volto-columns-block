@@ -7,6 +7,7 @@ import {
   columnIsEmpty,
   empty,
   defaultNewColumn,
+  fillEmptyColumn,
 } from './utils';
 
 describe('getColumns', () => {
@@ -105,5 +106,25 @@ describe('defaultNewColumn', () => {
       config.settings.defaultBlockType,
     );
     expect(result.blocks_layout.items).toEqual([id]);
+  });
+});
+
+describe('fillEmptyColumn', () => {
+  it('fills an emptied column and keeps its settings', () => {
+    const result = fillEmptyColumn({
+      blocks: {},
+      blocks_layout: { items: [] },
+      settings: { column_class: 'grey' },
+    });
+    const [id] = result.blocks_layout.items;
+    expect(result.settings).toEqual({ column_class: 'grey' });
+    expect(result.blocks[id]['@type']).toEqual(
+      config.settings.defaultBlockType,
+    );
+  });
+
+  it('returns a column with blocks unchanged', () => {
+    const column = { blocks: { a: {} }, blocks_layout: { items: ['a'] } };
+    expect(fillEmptyColumn(column)).toBe(column);
   });
 });
