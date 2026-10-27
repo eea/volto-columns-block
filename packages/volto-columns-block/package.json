@@ -80,9 +80,6 @@
     "release-major-alpha": "release-it major --preRelease=alpha",
     "release-alpha": "release-it --preRelease=alpha"
   },
-  "jest": {
-    "enableSymlinks": true
-  },
   "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": ">=22.0.0"
