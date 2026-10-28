@@ -1,0 +1,7 @@
+{
+  "title": "Columns Block",
+  "frontend_addon_name": "volto-columns-block",
+  "description": "volto-columns-block: Volto add-on",
+  "volto_version": "19.3.0",
+  "__template__": "frontend_addon"
+}
