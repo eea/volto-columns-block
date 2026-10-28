@@ -7,12 +7,15 @@ import { transformWithEsbuild } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 process.env.TZ = 'UTC';
-const workspaceCandidate = path.resolve(__dirname, '../..');
-const projectRoot = fs.existsSync(
-  path.join(workspaceCandidate, 'core/packages/volto'),
-)
-  ? workspaceCandidate
-  : __dirname;
+// The nearest folder with a Volto checkout in `core/`: the add-on repository
+// when developed standalone, or the frontend project when it is checked out
+// in its `packages/` folder.
+const findProjectRoot = (dir) => {
+  if (fs.existsSync(path.join(dir, 'core/packages/volto'))) return dir;
+  const parent = path.dirname(dir);
+  return parent === dir ? __dirname : findProjectRoot(parent);
+};
+const projectRoot = findProjectRoot(__dirname);
 const voltoRoot = fs.existsSync(path.join(projectRoot, 'core/packages/volto'))
   ? path.join(projectRoot, 'core/packages/volto')
   : path.dirname(
@@ -20,33 +23,16 @@ const voltoRoot = fs.existsSync(path.join(projectRoot, 'core/packages/volto'))
         import.meta.resolve('@plone/volto/package.json'),
       ),
     );
-const voltoSlateRoot = fs.existsSync(
-  path.join(projectRoot, 'core/packages/volto-slate'),
-)
-  ? path.join(projectRoot, 'core/packages/volto-slate')
-  : path.dirname(
-      fileURLToPath(
-        import.meta.resolve('@plone/volto-slate/package.json'),
-      ),
-    );
-const componentsRoot = fs.existsSync(
-  path.join(projectRoot, 'core/packages/components'),
-)
-  ? path.join(projectRoot, 'core/packages/components')
-  : path.dirname(
-      fileURLToPath(
-        import.meta.resolve('@plone/components/package.json'),
-      ),
-    );
-const registryRoot = fs.existsSync(
-  path.join(projectRoot, 'core/packages/registry'),
-)
-  ? path.join(projectRoot, 'core/packages/registry')
-  : path.dirname(
-      fileURLToPath(import.meta.resolve('@plone/registry/package.json')),
-    );
-
 const requireFromVolto = createRequire(path.join(voltoRoot, 'package.json'));
+// The other core packages are dependencies of Volto, not of the add-on.
+const resolveCorePackage = (name, folder) =>
+  fs.existsSync(path.join(projectRoot, 'core/packages', folder))
+    ? path.join(projectRoot, 'core/packages', folder)
+    : path.dirname(requireFromVolto.resolve(`${name}/package.json`));
+const voltoSlateRoot = resolveCorePackage('@plone/volto-slate', 'volto-slate');
+const componentsRoot = resolveCorePackage('@plone/components', 'components');
+const registryRoot = resolveCorePackage('@plone/registry', 'registry');
+
 const requireFromAddon = createRequire(path.join(__dirname, 'package.json'));
 const voltoPackage = JSON.parse(
   fs.readFileSync(path.join(voltoRoot, 'package.json'), 'utf8'),
@@ -131,7 +117,16 @@ function addSourceAlias(packageRoot) {
 const workspacePackages = path.join(projectRoot, 'packages');
 if (fs.existsSync(workspacePackages)) {
   for (const packageDirectory of fs.readdirSync(workspacePackages)) {
-    addSourceAlias(path.join(workspacePackages, packageDirectory));
+    const packageRoot = path.join(workspacePackages, packageDirectory);
+    addSourceAlias(packageRoot);
+    // In a frontend project each add-on repository keeps its add-on in its
+    // own `packages/` folder.
+    const nestedPackages = path.join(packageRoot, 'packages');
+    if (fs.existsSync(nestedPackages)) {
+      for (const nestedDirectory of fs.readdirSync(nestedPackages)) {
+        addSourceAlias(path.join(nestedPackages, nestedDirectory));
+      }
+    }
   }
 }
 const pnpmStore = path.join(projectRoot, 'node_modules/.pnpm');
@@ -173,10 +168,12 @@ for (const dependency of Object.keys({
   const dependencyRoot = resolvePackageRoot(dependency);
   if (dependencyRoot) aliases[dependency] = dependencyRoot;
 }
-const workspaceSearchlib = path.join(
-  projectRoot,
+const workspaceSearchlib = [
   'packages/volto-searchlib/searchlib',
-);
+  'packages/volto-searchlib/packages/volto-searchlib/searchlib',
+]
+  .map((searchlibFolder) => path.join(projectRoot, searchlibFolder))
+  .find((searchlibFolder) => fs.existsSync(searchlibFolder));
 const installedSearchlib = resolvePackageRoot('@eeacms/volto-searchlib');
 const searchlibPath = fs.existsSync(workspaceSearchlib)
   ? workspaceSearchlib
