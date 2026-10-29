@@ -15,6 +15,7 @@ module.exports = {
     '!src/**/*.d.ts',
   ],
   moduleNameMapper: {
+    '^uuid$': '<rootDir>/src/addons/volto-columns-block/jest.uuid.js',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '@plone/volto/cypress': '<rootDir>/node_modules/@plone/volto/cypress',
     '@plone/volto/babel': '<rootDir>/node_modules/@plone/volto/babel',
