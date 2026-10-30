@@ -50,6 +50,15 @@ jest.mock('./utils', () => ({
   columnIsEmpty: jest.fn(
     (colData) => !(colData?.blocks_layout?.items?.length > 0),
   ),
+  fillEmptyColumn: jest.fn((colData) =>
+    colData?.blocks_layout?.items?.length > 0
+      ? colData
+      : {
+          ...colData,
+          blocks: { filled: { '@type': 'text' } },
+          blocks_layout: { items: ['filled'] },
+        },
+  ),
 }));
 
 jest.mock('./ColumnVariations', () => () => <div>ColumnVariations</div>);
@@ -98,7 +107,12 @@ jest.mock('@plone/volto/components/manage/Blocks/Block/BlocksForm', () => ({
 
 jest.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
   __esModule: true,
-  default: ({ onSelectBlock, selectedBlock, selectedBlocks }) => (
+  default: ({
+    onChangeBlocks,
+    onSelectBlock,
+    selectedBlock,
+    selectedBlocks,
+  }) => (
     <div
       data-testid="blocks-toolbar"
       data-selected-block={selectedBlock || ''}
@@ -106,6 +120,14 @@ jest.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
     >
       <button type="button" onClick={() => onSelectBlock?.(null)}>
         Clear selection
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          onChangeBlocks({ blocks: {}, blocks_layout: { items: [] } })
+        }
+      >
+        Delete all
       </button>
     </div>
   ),
@@ -225,5 +247,48 @@ describe('ColumnsBlockEdit', () => {
       '',
     );
     expect(screen.getByText('BlockDataForm')).toBeInTheDocument();
+  });
+
+  it('fills a column emptied from the toolbar in the same change', () => {
+    const onChangeBlock = jest.fn();
+    const data = {
+      ...mockData,
+      data: {
+        ...mockData.data,
+        blocks: {
+          col1: {
+            ...mockData.data.blocks.col1,
+            settings: { column_class: 'grey' },
+          },
+        },
+      },
+    };
+    render(
+      <Provider store={store}>
+        <ColumnsBlockEdit
+          block="columns-block"
+          blockNode={{ current: document.createElement('div') }}
+          data={data}
+          errors={{}}
+          manage={true}
+          metadata={{}}
+          onAddBlock={jest.fn()}
+          onChangeBlock={onChangeBlock}
+          onChangeField={jest.fn()}
+          onFocusNextBlock={jest.fn()}
+          onFocusPreviousBlock={jest.fn()}
+          pathname="/"
+          selected={true}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Select block1' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete all' }));
+
+    const column = onChangeBlock.mock.calls[0][1].data.blocks.col1;
+    expect(onChangeBlock).toHaveBeenCalledTimes(1);
+    expect(column.blocks_layout.items).toEqual(['filled']);
+    expect(column.settings).toEqual({ column_class: 'grey' });
   });
 });

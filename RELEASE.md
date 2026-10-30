@@ -33,7 +33,7 @@ Release-it is a tool that automates 4 important steps in the release process:
 To configure the authentification, you need to export GITHUB_TOKEN for [GitHub](https://github.com/settings/tokens)
 
    ```
-   export GITHUB_TOKEN=XXX-XXXXXXXXXXXXXXXXXXXXXX
+   export GITHUB_TOKEN="${GITHUB_TOKEN}"
    ```
 
  To configure npm, you can use the `npm login` command or use a configuration file with a TOKEN :
