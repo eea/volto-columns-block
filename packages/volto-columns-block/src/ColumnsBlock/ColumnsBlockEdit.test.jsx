@@ -8,13 +8,9 @@ import config from '@plone/volto/registry';
 import ColumnsBlockEdit from './ColumnsBlockEdit';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
-vi.mock(
-  '@eeacms/volto-columns-block/constants',
-  () => ({
-    COLUMNSBLOCK: 'columnsBlock',
-  }),
-  { virtual: true },
-);
+vi.mock('@eeacms/volto-columns-block/constants', () => ({
+  COLUMNSBLOCK: 'columnsBlock',
+}));
 
 vi.mock('@eeacms/volto-columns-block/Styles', () => ({
   makeStyleSchema: vi.fn(() => ({})),
@@ -50,6 +46,15 @@ vi.mock('./utils', () => ({
   }),
   columnIsEmpty: vi.fn(
     (colData) => !(colData?.blocks_layout?.items?.length > 0),
+  ),
+  fillEmptyColumn: vi.fn((colData) =>
+    colData?.blocks_layout?.items?.length > 0
+      ? colData
+      : {
+          ...colData,
+          blocks: { filled: { '@type': 'text' } },
+          blocks_layout: { items: ['filled'] },
+        },
   ),
 }));
 
@@ -101,7 +106,12 @@ vi.mock('@plone/volto/components/manage/Blocks/Block/BlocksForm', () => ({
 
 vi.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
   __esModule: true,
-  default: ({ onSelectBlock, selectedBlock, selectedBlocks }) => (
+  default: ({
+    onChangeBlocks,
+    onSelectBlock,
+    selectedBlock,
+    selectedBlocks,
+  }) => (
     <div
       data-testid="blocks-toolbar"
       data-selected-block={selectedBlock || ''}
@@ -109,6 +119,14 @@ vi.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
     >
       <button type="button" onClick={() => onSelectBlock?.(null)}>
         Clear selection
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          onChangeBlocks({ blocks: {}, blocks_layout: { items: [] } })
+        }
+      >
+        Delete all
       </button>
     </div>
   ),
@@ -127,15 +145,9 @@ vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
   default: () => <div>Icon</div>,
 }));
 
-vi.mock('@eeacms/volto-columns-block/less/columns.less', () => ({}), {
-  virtual: true,
-});
-vi.mock('./icons/eraser.svg', () => ({ default: 'eraser.svg' }), {
-  virtual: true,
-});
-vi.mock('@plone/volto/icons/up.svg', () => ({ default: 'up.svg' }), {
-  virtual: true,
-});
+vi.mock('@eeacms/volto-columns-block/less/columns.less', () => ({}));
+vi.mock('./icons/eraser.svg', () => ({ default: 'eraser.svg' }));
+vi.mock('@plone/volto/icons/up.svg', () => ({ default: 'up.svg' }));
 
 const mockStore = configureStore();
 const store = mockStore({
@@ -230,5 +242,48 @@ describe('ColumnsBlockEdit', () => {
       '',
     );
     expect(screen.getByText('BlockDataForm')).toBeInTheDocument();
+  });
+
+  it('fills a column emptied from the toolbar in the same change', () => {
+    const onChangeBlock = vi.fn();
+    const data = {
+      ...mockData,
+      data: {
+        ...mockData.data,
+        blocks: {
+          col1: {
+            ...mockData.data.blocks.col1,
+            settings: { column_class: 'grey' },
+          },
+        },
+      },
+    };
+    render(
+      <Provider store={store}>
+        <ColumnsBlockEdit
+          block="columns-block"
+          blockNode={{ current: document.createElement('div') }}
+          data={data}
+          errors={{}}
+          manage={true}
+          metadata={{}}
+          onAddBlock={vi.fn()}
+          onChangeBlock={onChangeBlock}
+          onChangeField={vi.fn()}
+          onFocusNextBlock={vi.fn()}
+          onFocusPreviousBlock={vi.fn()}
+          pathname="/"
+          selected={true}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Select block1' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete all' }));
+
+    const column = onChangeBlock.mock.calls[0][1].data.blocks.col1;
+    expect(onChangeBlock).toHaveBeenCalledTimes(1);
+    expect(column.blocks_layout.items).toEqual(['filled']);
+    expect(column.settings).toEqual({ column_class: 'grey' });
   });
 });
