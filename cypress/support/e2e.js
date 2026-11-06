@@ -34,9 +34,11 @@ export const slateBeforeEach = (contentType = 'Document') => {
     contentTitle: 'My Page',
     path: 'cypress',
   });
-  cy.visit('/cypress/my-page');
-  cy.waitForResourceToLoad('my-page');
-  cy.navigate('/cypress/my-page/edit');
+  // Load the edit route directly instead of pushing it through the SPA
+  // history: an appHistory push can race with the client hydration, which
+  // then settles back on the server-rendered view URL and the edit UI
+  // (including the title editor) never mounts.
+  cy.visit('/cypress/my-page/edit');
 };
 
 export const slateAfterEach = () => {

@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -7,21 +8,17 @@ import config from '@plone/volto/registry';
 import ColumnsBlockEdit from './ColumnsBlockEdit';
 import { COLUMNSBLOCK } from '@eeacms/volto-columns-block/constants';
 
-jest.mock(
-  '@eeacms/volto-columns-block/constants',
-  () => ({
-    COLUMNSBLOCK: 'columnsBlock',
-  }),
-  { virtual: true },
-);
-
-jest.mock('@eeacms/volto-columns-block/Styles', () => ({
-  makeStyleSchema: jest.fn(() => ({})),
-  getStyle: jest.fn(() => ({})),
+vi.mock('@eeacms/volto-columns-block/constants', () => ({
+  COLUMNSBLOCK: 'columnsBlock',
 }));
 
-jest.mock('./schema', () => ({
-  ColumnsBlockSchema: jest.fn(() => ({
+vi.mock('@eeacms/volto-columns-block/Styles', () => ({
+  makeStyleSchema: vi.fn(() => ({})),
+  getStyle: vi.fn(() => ({})),
+}));
+
+vi.mock('./schema', () => ({
+  ColumnsBlockSchema: vi.fn(() => ({
     properties: {
       gridCols: {
         choices: [],
@@ -30,27 +27,27 @@ jest.mock('./schema', () => ({
   })),
 }));
 
-jest.mock('./utils', () => ({
-  getColumns: jest.fn((data) =>
+vi.mock('./utils', () => ({
+  getColumns: vi.fn((data) =>
     (data?.blocks_layout?.items || []).map((id) => [id, data.blocks?.[id]]),
   ),
-  empty: jest.fn(),
-  defaultNewColumn: jest.fn(() => ({
+  empty: vi.fn(),
+  defaultNewColumn: vi.fn(() => ({
     blocks: {},
     blocks_layout: {
       items: [],
     },
   })),
-  hasColumns: jest.fn((data) => !!data?.blocks_layout?.items?.length),
-  forEachColumn: jest.fn((data, callback) => {
+  hasColumns: vi.fn((data) => !!data?.blocks_layout?.items?.length),
+  forEachColumn: vi.fn((data, callback) => {
     (data?.blocks_layout?.items || []).forEach((id) =>
       callback([id, data.blocks?.[id]]),
     );
   }),
-  columnIsEmpty: jest.fn(
+  columnIsEmpty: vi.fn(
     (colData) => !(colData?.blocks_layout?.items?.length > 0),
   ),
-  fillEmptyColumn: jest.fn((colData) =>
+  fillEmptyColumn: vi.fn((colData) =>
     colData?.blocks_layout?.items?.length > 0
       ? colData
       : {
@@ -61,19 +58,21 @@ jest.mock('./utils', () => ({
   ),
 }));
 
-jest.mock('./ColumnVariations', () => () => <div>ColumnVariations</div>);
+vi.mock('./ColumnVariations', () => ({
+  default: () => <div>ColumnVariations</div>,
+}));
 
-jest.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
-  emptyBlocksForm: jest.fn(() => ({
+vi.mock('@plone/volto/helpers/Blocks/Blocks', () => ({
+  emptyBlocksForm: vi.fn(() => ({
     blocks: {},
     blocks_layout: {
       items: [],
     },
   })),
-  getBlocksLayoutFieldname: jest.fn(() => 'blocks_layout'),
+  getBlocksLayoutFieldname: vi.fn(() => 'blocks_layout'),
 }));
 
-const MockBlocksForm = jest.fn(
+const MockBlocksForm = vi.fn(
   ({ multiSelected, onSelectBlock, properties, selectedBlock }) => {
     const blockList = properties.blocks
       ? Object.entries(properties.blocks)
@@ -100,12 +99,12 @@ const MockBlocksForm = jest.fn(
   },
 );
 
-jest.mock('@plone/volto/components/manage/Blocks/Block/BlocksForm', () => ({
+vi.mock('@plone/volto/components/manage/Blocks/Block/BlocksForm', () => ({
   __esModule: true,
   default: (props) => MockBlocksForm(props),
 }));
 
-jest.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
+vi.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
   __esModule: true,
   default: ({
     onChangeBlocks,
@@ -133,26 +132,22 @@ jest.mock('@plone/volto/components/manage/Form/BlocksToolbar', () => ({
   ),
 }));
 
-jest.mock('@plone/volto/components/manage/Form/BlockDataForm', () => ({
+vi.mock('@plone/volto/components/manage/Form/BlockDataForm', () => ({
   __esModule: true,
   default: () => <div>BlockDataForm</div>,
 }));
 
-jest.mock(
-  '@plone/volto/components/manage/Sidebar/SidebarPortal',
-  () =>
-    ({ children }) => <div>{children}</div>,
-);
+vi.mock('@plone/volto/components/manage/Sidebar/SidebarPortal', () => ({
+  default: ({ children }) => <div>{children}</div>,
+}));
 
-jest.mock('@plone/volto/components/theme/Icon/Icon', () => () => (
-  <div>Icon</div>
-));
+vi.mock('@plone/volto/components/theme/Icon/Icon', () => ({
+  default: () => <div>Icon</div>,
+}));
 
-jest.mock('@eeacms/volto-columns-block/less/columns.less', () => ({}), {
-  virtual: true,
-});
-jest.mock('./icons/eraser.svg', () => 'eraser.svg', { virtual: true });
-jest.mock('@plone/volto/icons/up.svg', () => 'up.svg', { virtual: true });
+vi.mock('@eeacms/volto-columns-block/less/columns.less', () => ({}));
+vi.mock('./icons/eraser.svg', () => ({ default: 'eraser.svg' }));
+vi.mock('@plone/volto/icons/up.svg', () => ({ default: 'up.svg' }));
 
 const mockStore = configureStore();
 const store = mockStore({
@@ -215,11 +210,11 @@ describe('ColumnsBlockEdit', () => {
           errors={{}}
           manage={true}
           metadata={{}}
-          onAddBlock={jest.fn()}
-          onChangeBlock={jest.fn()}
-          onChangeField={jest.fn()}
-          onFocusNextBlock={jest.fn()}
-          onFocusPreviousBlock={jest.fn()}
+          onAddBlock={vi.fn()}
+          onChangeBlock={vi.fn()}
+          onChangeField={vi.fn()}
+          onFocusNextBlock={vi.fn()}
+          onFocusPreviousBlock={vi.fn()}
           pathname="/"
           selected={true}
         />
@@ -250,7 +245,7 @@ describe('ColumnsBlockEdit', () => {
   });
 
   it('fills a column emptied from the toolbar in the same change', () => {
-    const onChangeBlock = jest.fn();
+    const onChangeBlock = vi.fn();
     const data = {
       ...mockData,
       data: {
@@ -272,11 +267,11 @@ describe('ColumnsBlockEdit', () => {
           errors={{}}
           manage={true}
           metadata={{}}
-          onAddBlock={jest.fn()}
+          onAddBlock={vi.fn()}
           onChangeBlock={onChangeBlock}
-          onChangeField={jest.fn()}
-          onFocusNextBlock={jest.fn()}
-          onFocusPreviousBlock={jest.fn()}
+          onChangeField={vi.fn()}
+          onFocusNextBlock={vi.fn()}
+          onFocusPreviousBlock={vi.fn()}
           pathname="/"
           selected={true}
         />

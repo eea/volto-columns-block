@@ -1,0 +1,10 @@
+.git
+node_modules
+core
+build
+coverage
+*.log
+.DS_Store
+cypress/screenshots
+cypress/videos
+cypress/reports
