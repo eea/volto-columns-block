@@ -1,6 +1,7 @@
 {
   "name": "@eeacms/volto-columns-block-dev",
-  "version": "1.0.0-alpha.0",
+  "private": true,
+  "version": "10.0.0",
   "description": "volto-columns-block: Volto add-on",
   "author": "European Environment Agency: IDM2 A-Team",
   "homepage": "https://github.com/eea/volto-columns-block",
