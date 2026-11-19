@@ -69,6 +69,17 @@ and
 
 ## Upgrade
 
+### Upgrading to 10.x
+
+> This version requires `Volto 18` or `Volto 19` and Node.js 22.
+
+The exports stay the same, but the nested barrels `ColumnsBlock/index.js` and `Widgets/index.js` now use the standard `export { default as X } from` syntax instead of the legacy `export X from` proposal, and the published package moves to `packages/volto-columns-block`.
+
+#### Breaking changes
+
+- **Node.js 22 or newer is required** (`engines.node >= 22`), 9.x declared no engine.
+- **React 18 is required.** The package declares `react` and `react-dom` as `^18.2.0` peers, 9.x declared no peers.
+
 ### Upgrading to 9.x
 
 > This version requires `Volto >= 17.18` or `Volto 18+`. It removes the custom `EditBlockWrapper` and uses Volto's built-in block chrome provided by `BlocksForm`.
