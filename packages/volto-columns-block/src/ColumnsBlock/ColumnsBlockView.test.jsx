@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-intl-redux';
@@ -55,8 +56,8 @@ const TextView = ({ data }) => {
   return data.text;
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useLocation: () => ({
     pathname: '/',
     hash: '',

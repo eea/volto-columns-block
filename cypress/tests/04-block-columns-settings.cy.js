@@ -21,7 +21,17 @@ const selectColumnsVariation = (label) => {
     .click({ force: true });
 };
 
+const selectColumnsBlock = () => {
+  // Volto only renders a block's settings sidebar while the block is selected
+  // (`SidebarPortal` returns null otherwise). `.columns-header` only switches
+  // the sidebar tab (ColumnsBlockEdit.openColumnsSettings) and does not select
+  // the block; on a fresh /edit load the columns block is not the selected
+  // block, so select it explicitly first.
+  cy.get('.block.columnsBlock').first().click({ force: true });
+};
+
 const openColumnsSettings = () => {
+  selectColumnsBlock();
   cy.get('.columns-block .columns-header').first().click({ force: true });
 };
 
