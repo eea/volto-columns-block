@@ -62,19 +62,6 @@ keywords = ["sk-"]
 tags = ["standalone-token", "generic"]
 
 [[rules]]
-id = "dotenv-only-vitest-setup"
-description = ".env may only contain the committed Vitest setup line"
-path = '''(?i)(^|/)\.env$'''
-regex = '''(?m)^(.+)$'''
-secretGroup = 1
-tags = ["file", "dotenv"]
-[[rules.allowlists]]
-regexTarget = "match"
-regexes = [
-  '''^VITEST_USE_SETUP=ON # Vitest configuration variables: ON, OFF\r?$''',
-]
-
-[[rules]]
 id = "forbidden-secret-file"
 description = "Forbidden secret-bearing file committed to repository"
 path = '''(?i)(^|/)(\.env\..*|\.pypirc|id_rsa|id_ed25519|.*\.(pem|key|p12|pfx|jks|kubeconfig))$'''

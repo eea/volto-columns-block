@@ -1,0 +1,29 @@
+name: Betterleaks history audit
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Mondays 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Scan all commits for secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 70 # outer guard; the scan itself stops after timeout-minutes below
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # all commits of all branches
+
+      # Shared EEA secret scan: https://github.com/eea/github-actions/tree/main/betterleaks#weekly-full-history-audit
+      # Findings already handled are listed in .betterleaks-history-baseline.json.
+      - uses: eea/github-actions/betterleaks@v1
+        with:
+          mode: git
+          log-opts: --all
+          baseline: .betterleaks-history-baseline.json
+          timeout-minutes: 60
