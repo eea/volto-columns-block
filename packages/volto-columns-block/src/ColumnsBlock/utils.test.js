@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import config from '@plone/volto/registry';
 
 import {
@@ -68,7 +69,7 @@ describe('forEachColumn', () => {
         2: { name: 'Second' },
       },
     };
-    const callback = jest.fn();
+    const callback = vi.fn();
     forEachColumn(data, callback);
     expect(callback).toHaveBeenCalledTimes(2);
   });
